@@ -1,0 +1,229 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Hasil Laboratorium</h4>
+
+        <div class="p-grid">
+            <div class="p-col-12 p-md-3">
+                <app-head-pasien> </app-head-pasien>
+            </div>
+            <div class="p-col-12 p-md-9">
+
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-12">
+                        <!-- <p-table [value]="dataTable" sortField="detailjenisproduk" sortMode="single" [scrollable]="true" scrollHeight="400px" rowGroupMode="subheader"
+                         groupRowsBy="detailjenisproduk" responsiveLayout="scroll"> -->
+                        <p-table [value]="dataTable" sortField="detailjenisproduk" sortMode="single" dataKey="norec_pp"
+                            (onRowSelect)="onRowSelect($event)" selectionMode="single" [(selection)]="selected"
+                            [rowHover]="true" (onSort)="onSort()">
+                            <ng-template pTemplate="caption">
+                                <div class="p-d-flex">
+                                    <button type="button" pButton pRipple icon="pi pi-file-excel"
+                                        (click)="exportExcel()" class="p-button-success p-mr-2" pTooltip="XLS"
+                                        tooltipPosition="bottom"></button>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th style="width:250px">Pemeriksaan</th>
+                                    <!-- <th style="width:200px">Detail Pemeriksaan</th> -->
+                                    <th style="width:100px">Hasil</th>
+                                    <th style="width:100px">Nilai Normal</th>
+                                    <th style="width:100px">Satuan </th>
+                                    <th style="width:100px">Metode</th>
+                                    <th style="width:4rem"></th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-customer let-rowIndex="rowIndex">
+                                <tr *ngIf="rowGroupMetadata[customer.detailjenisproduk].index === rowIndex">
+                                    <td colspan="6">
+                                        <span class="p-text-bold p-ml-2"><i>{{customer.detailjenisproduk}}</i></span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:250px">
+                                        <span style="margin-left:5px">&nbsp;&nbsp;&nbsp;&nbsp;{{customer.namaproduk}}</span>
+                                    </td>
+
+                                    <!-- <td pEditableColumn [ngClass]="'row-header'" style="width:200px">
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <input pInputText type="text" [(ngModel)]="customer.detailpemeriksaan"
+                                                    required>
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                {{customer.detailpemeriksaan}}
+                                            </ng-template>
+                                        </p-cellEditor>
+                                    </td> -->
+
+                                    <td pEditableColumn [ngClass]="'row-header'" style="width:100px">
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <input pInputText type="text" [(ngModel)]="customer.hasil"
+                                                    (input)="onChange(customer,customer.hasil)" required>
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                <span
+                                                    [class]="'customer-badge status-' + customer.flag">{{customer.hasil}}</span>
+                                            </ng-template>
+                                        </p-cellEditor>
+                                    </td>
+
+
+                                    <td pEditableColumn [ngClass]="'row-header'" style="width:100px">
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <input pInputText type="text" [(ngModel)]="customer.nilaitext" required>
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                {{customer.nilaitext}}
+                                            </ng-template>
+                                        </p-cellEditor>
+                                    </td>
+                                    <td style="width:100px">
+                                        {{customer.satuanstandar}}
+                                    </td>
+                                    <td pEditableColumn [ngClass]="'row-header'" style="width:100px">
+                                        <p-cellEditor>
+                                            <ng-template pTemplate="input">
+                                                <input pInputText type="text" [(ngModel)]="customer.Metode" required>
+                                            </ng-template>
+                                            <ng-template pTemplate="output">
+                                                {{customer.Metode}}
+                                            </ng-template>
+                                        </p-cellEditor>
+                                    </td>
+                                    <td>
+                                        <button type="button" pButton pRipple icon="fa fa-medkit"
+                                            class="p-button p-button-danger" (click)="onRowSelect(customer)"
+                                            pTooltip="Update Nilai Normal"></button>
+                                    </td>
+                                </tr>
+                            </ng-template>
+
+                        </p-table>
+
+                        <!-- <p-table #dt [columns]="column" [value]="dataTable" [(selection)]="selected"
+                            styleClass="p-datatable-customers" [rowHover]="true" [rows]="20"
+                            [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                            scrollable="true" [pageLinks]="5" sortMode="multiple" selectionMode="single"
+                            (onRowSelect)="onRowSelect($event)">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                                        style="width: {{column.width}}">
+                                        {{column.header}} <p-sortIcon field="{{column.field}}"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                    <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                        {{rowData[column.field]}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table> -->
+                    </div>
+
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-2">
+                                <label class="label" for="input">Min </label>
+                                <input type="text" [(ngModel)]="item.min" pInputText placeholder="Nilai Min "
+                                    [disabled]="!isSelected" />
+                            </div>
+                            <div class="p-col-12 p-md-2">
+                                <label class="label" for="input">Max </label>
+                                <input type="text" [(ngModel)]="item.max" pInputText placeholder="Nilai Max "
+                                    [disabled]="!isSelected" />
+                            </div>
+
+                            <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                <button pButton pRipple type="button" class="p-button-warning p-mr-1" label=""
+                                    pTooltip="Update Nilai Normal" icon="pi pi-save" (click)="saveNilai()"
+                                    [disabled]="!isSelected"></button>
+
+                            </div>
+
+                            <div class="p-col-12 p-md-2 p-md-offset-8">
+                                <button pButton type="button" icon="pi pi-save" class="p-button p-mr-2" (click)="save()"
+                                    pTooltip="Simpan" label="Simpan" [disabled]="isSimpan"></button>
+                            </div>
+                            <div class="p-col-12 p-md-2">
+                                <button pButton type="button" icon="pi pi-arrow-left"
+                                    class="p-button p-button-danger p-mr-2" (click)="cancel()"
+                                    pTooltip="Kembali Ke Menu Sebelumnya" label="Batal"></button>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<p-dialog [(visible)]="popupEntry" [style]="{width: '900px'}" header="Detail Nilai Normal" [modal]="true"
+    styleClass="p-fluid">
+    <ng-template pTemplate="content">
+
+        <div class="p-grid">
+            <div class="p-col-12 p-md-6">
+                <label class="label">Nama pemeriksaan</label>
+                <input type="text" [(ngModel)]="item.namaproduk" pInputText placeholder="Nama pemeriksaan" disabled />
+            </div>
+            <div class="p-col-12 p-md-6">
+                <label class="label" for="input">Satuan</label>
+                <p-dropdown [options]="listSatuan" [(ngModel)]="item.satuanstandar" [filter]="true"
+                    [showClear]="true" placeholder="Satuan" optionLabel="satuanstandar" appendTo="body"></p-dropdown>
+
+                <!-- <label class="label">Detail pemeriksaan </label>
+                <input type="text" [(ngModel)]="item.detailpemeriksaan" pInputText placeholder="Detail pemeriksaan"
+                    disabled /> -->
+            </div>
+            <div class="p-col-12 p-md-6">
+                <p-fieldset legend="Laki-laki" [toggleable]="true">
+                    <div class="p-field">
+                        <label class="label">Min </label>
+                        <input type="text" [(ngModel)]="item.nilaiminL" pInputText placeholder="Min" />
+                    </div>
+                    <div class="p-field">
+                        <label class="label">Max </label>
+                        <input type="text" [(ngModel)]="item.nilaimaxL" pInputText placeholder="Max" />
+                    </div>
+                    <div class="p-field">
+                        <label class="label">Nilai Teks </label>
+                        <input type="text" [(ngModel)]="item.nilaiTextL" pInputText placeholder="Nilai Teks" />
+                    </div>
+                </p-fieldset>
+            </div>
+            <div class="p-col-12 p-md-6">
+                <p-fieldset legend="Perempuan" [toggleable]="true">
+                    <div class="p-field">
+                        <label class="label">Min </label>
+                        <input type="text" [(ngModel)]="item.nilaiminP" pInputText placeholder="Min" />
+                    </div>
+                    <div class="p-field">
+                        <label class="label">Max </label>
+                        <input type="text" [(ngModel)]="item.nilaimaxP" pInputText placeholder="Max" />
+                    </div>
+                    <div class="p-field">
+                        <label class="label">Nilai Teks </label>
+                        <input type="text" [(ngModel)]="item.nilaiTextP" pInputText placeholder="Nilai Teks" />
+                    </div>
+                </p-fieldset>
+            </div>
+        </div>
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+
+        <button pButton pRipple label="Simpan" icon="pi pi-save" class="p-button"
+            (click)="simpanUpdateNilaiNormal()"></button>
+        <button pButton pRipple label="Batal" icon="pi pi-times" class="p-button-text"
+            (click)="popupEntry = false"></button>
+    </ng-template>
+</p-dialog>

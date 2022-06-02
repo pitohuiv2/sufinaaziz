@@ -1,0 +1,78 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Laporan Sensus Pasien Rawat Jalan</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-11">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">Periode Awal</label>
+                        <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                            [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                        </p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">Periode Akhir</label>
+                        <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                            [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                        </p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-3">
+                        <label class="label" for="input">Instalasi</label>
+                        <p-dropdown [options]="listDepartemen" [(ngModel)]="item.dataDepartemen" [filter]="true"
+                            [showClear]="true" placeholder="Instalasi" optionLabel="departemen"
+                            (onChange)="isiRuangan()">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-3">
+                        <label class="label" for="input">Ruangan</label>
+                        <p-multiSelect [options]="listRuangan" [(ngModel)]="item.selectedRuangan" optionLabel="ruangan"></p-multiSelect>                        
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">Tipe Pasien</label>
+                        <p-dropdown [options]="listTipePasien" [(ngModel)]="item.dataTipePasien" [filter]="true"
+                            [showClear]="true" placeholder="Tipe Pasien" optionLabel="kelompokpasien"></p-dropdown>
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-1">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-12" style="margin-top: 16px;">
+                        <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-12">
+                <p-table #dt [columns]="column" [value]="dataTable" [(selection)]="selected"
+                    styleClass="p-datatable-customers" [rowHover]="true" [rows]="10" [showCurrentPageReport]="true"
+                    [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                    sortMode="multiple" selectionMode="single">
+                    <ng-template pTemplate="caption">
+                        <div class="p-d-flex">
+                            <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportExcel()"
+                                class="p-button-success p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                        </div>
+                    </ng-template>
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>                            
+                            <th *ngFor="let col of columns" pSortableColumn="{{col.field}}"
+                                style="width: {{col.width}}">
+                                {{col.header}}
+                                <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">                           
+                            <td *ngFor="let col of columns" style="width: {{col.width}}">
+                                <span *ngIf="col.isCurrency != undefined">
+                                    {{formatRupiah(rowData[col.field],'')}}
+                                </span>
+                                <span *ngIf="col.isCurrency == undefined"> {{rowData[col.field]}}</span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+</div>

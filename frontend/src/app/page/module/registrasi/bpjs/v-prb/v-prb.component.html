@@ -1,0 +1,250 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Pencarian Data PRB</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-accordion>
+                    <p-accordionTab header="Cari">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Pencarian Berdasarkan</label>
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-6 p-field-checkbox" *ngFor="let items of listTipe">
+                                            <p-radioButton [inputId]="items.id" [value]="items"
+                                                [(ngModel)]="search.tipe" (onClick)="klikRadio(search.tipe)">
+                                            </p-radioButton>
+                                            <label [for]="items.id">{{items.name}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-col-12 p-md-4" *ngIf="showNomor">
+                                    <label class="label" for="input">Nomor SRB </label>
+                                    <input type="text" [(ngModel)]="search.nosrb" pInputText placeholder="Nomor SRB" />
+                                </div>
+                                <div class="p-col-12 p-md-4" *ngIf="showNomor">
+                                    <label class="label" for="input">Nomor SEP </label>
+                                    <input type="text" [(ngModel)]="search.nosep" pInputText placeholder="Nomor SEP" />
+                                </div>
+
+                                <div class="p-col-12 p-md-4" *ngIf="!showNomor">
+                                    <label class="label" for="input">Dari </label>
+                                    <p-calendar [(ngModel)]="search.dari" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-4" *ngIf="!showNomor">
+                                    <label class="label" for="input">Sampai</label>
+                                    <p-calendar [(ngModel)]="search.sampai" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="button" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        (click)="cari('jsonResult')"></button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-md-12">
+                            <pre style="height:250px">
+                                <code [innerHtml]="jsonResult"  class="language-json" pCode></code>
+                            </pre>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="p-fluid p-formgrid p-mt-3">
+    <div class="card card-w-title">
+        <h4>Pembuatan Rujuk Balik (PRB)</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-accordion>
+                    <p-accordionTab header="Pembuatan PRB">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-6">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-4">
+                                        <label class="label" for="input">Tipe</label>
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6 p-field-checkbox"
+                                                *ngFor="let items of listTipe2">
+                                                <p-radioButton [inputId]="items.id" [value]="items.id"
+                                                    [(ngModel)]="item.tipe" (onClick)="klikRadio2(item.tipe)">
+                                                </p-radioButton>
+                                                <label [for]="items.id">{{items.name}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-md-4" >
+                                        <label class="label" for="input">Nomor SEP </label>
+                                        <input type="text" [(ngModel)]="item.noSep" pInputText
+                                            placeholder="Nomor SEP" />
+                                    </div>
+                                    <div class="p-col-12 p-md-4" *ngIf="!isInsert">
+                                        <label class="label" for="input">Nomor SRB </label>
+                                        <input type="text" [(ngModel)]="item.noSrb" pInputText
+                                            placeholder="Nomor SRB" />
+                                    </div>
+                                    <div class="p-col-12 p-md-4" *ngIf="isInsert">
+                                        <label class="label" for="input">Nomor Kartu </label>
+                                        <input type="text" [(ngModel)]="item.noKartu" pInputText
+                                            placeholder="Nomor Kartu" />
+                                    </div>
+                                    <div class="p-col-12 p-md-4">
+                                        <label class="label" for="input">Alamat </label>
+                                        <input type="text" [(ngModel)]="item.alamat" pInputText placeholder="Alamat" />
+                                    </div>
+                                    <div class="p-col-12 p-md-4">
+                                        <label class="label" for="input">Email </label>
+                                        <input type="text" [(ngModel)]="item.email" pInputText placeholder="Email" />
+                                    </div>
+                                    <div class="p-col-12 p-md-4" *ngIf="isInsert">
+                                        <label class="label" for="input">Program PRB</label>
+                                        <p-dropdown [options]="listProgramPRB" [(ngModel)]="item.programprb"
+                                            [filter]="true" [showClear]="true" placeholder="Program PRB"
+                                            optionLabel="nama" appendTo="body">
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-4">
+                                        <label class="label" for="input">DPJP</label>
+                                        <p-dropdown [options]="listDPJP" [(ngModel)]="item.kodeDPJP" [filter]="true"
+                                            [showClear]="true" placeholder="DPJP" optionLabel="nama" appendTo="body">
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-4">
+                                        <label class="label" for="input">Keterangan </label>
+                                        <input type="text" [(ngModel)]="item.keterangan" pInputText
+                                            placeholder="Keterangan" />
+                                    </div>
+                                    <div class="p-col-12 p-md-4">
+                                        <label class="label" for="input">Saran </label>
+                                        <input type="text" [(ngModel)]="item.saran" pInputText placeholder="Saran" />
+                                    </div>
+
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-plus" (click)="addObat()"></button>
+
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                        <p-table [columns]="column" [value]="dataTable"
+                                            styleClass="p-datatable-customers" [rowHover]="true" [rows]="20"
+                                            scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                            selectionMode="single">
+                                            <ng-template pTemplate="header" let-columns>
+                                                <tr>
+                                                    <th style="width: 130px">Aksi</th>
+                                                    <th *ngFor="let column of columns"
+                                                        pSortableColumn="{{column.field}}"
+                                                        style="width: {{column.width}}">
+                                                        {{column.header}} <p-sortIcon field="{{column.field}}">
+                                                        </p-sortIcon>
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                                let-rowIndex="rowIndex">
+                                                <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                                    <td style="width: 130px">
+                                                        <button pButton type="button" icon="fa fa-trash"
+                                                            class="p-button-rounded p-button-danger p-mr-2"
+                                                            pTooltip="Hapus" label="" (click)="hapus(rowData)"></button>
+                                                    </td>
+                                                    <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                        {{rowData[column.field]}}
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                    <div class="p-col-12 p-md-3" style="margin-top: 16px;">
+                                        <button pButton pRipple type="button" class="p-button-success p-mr-1" label="Simpan"
+                                            icon="pi pi-save" (click)="Save('jsonResult2')"></button>
+
+                                    </div>
+                                    <div class="p-col-12 p-md-3" style="margin-top: 16px;">
+                                        <button pButton pRipple type="button" class="p-button-danger p-mr-1" label="Batal"
+                                            icon="pi pi-refresh" (click)="ClearForm()"></button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <pre style="height:250px">
+                                <code [innerHtml]="jsonResult2"  class="language-json" pCode></code>
+                            </pre>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+
+                    <p-accordionTab header="Hapus PRB">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+             
+                                <div class="p-col-12 p-md-4" >
+                                    <label class="label" for="input">Nomor SRB </label>
+                                    <input type="text" [(ngModel)]="delete.nosrb" pInputText placeholder="Nomor SRB" />
+                                </div>
+                                <div class="p-col-12 p-md-4" >
+                                    <label class="label" for="input">Nomor SEP </label>
+                                    <input type="text" [(ngModel)]="delete.nosep" pInputText placeholder="Nomor SEP" />
+                                </div>
+
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="button" class="p-button-primary p-mr-1" icon="pi pi-trash"
+                                        (click)="deleteDataPRB('jsonResult3')"></button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-md-12">
+                            <pre style="height:250px">
+                                <code [innerHtml]="jsonResult3"  class="language-json" pCode></code>
+                            </pre>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="Tambah" [(visible)]="popUp" [modal]="true" [style]="{width: '20vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="true">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <label class="label" for="input">Obat</label>
+                <p-autoComplete [(ngModel)]="obat.obat" [suggestions]="listObat" [minLength]="3"
+                    (completeMethod)="filter($event)" field="nama" [dropdown]="true"
+                    placeholder="Ketik minimal 3 karakter">
+                </p-autoComplete>
+            </div>
+            <div class="p-col-12 p-md-12">
+                <label class="label" for="input">Signa 1</label>
+                <input type="text" [(ngModel)]="obat.signa1" pInputText placeholder="Signa 1" />
+            </div>
+            <div class="p-col-12 p-md-12">
+                <label class="label" for="input">Signa 2</label>
+                <input type="text" [(ngModel)]="obat.signa2" pInputText placeholder="Signa 2" />
+            </div>
+            <div class="p-col-12 p-md-12">
+                <label class="label" for="input">Jumlah Obat</label>
+                <input type="number" [(ngModel)]="obat.jmlobat" pInputText placeholder="Jumlah Obat" />
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-filter" (click)="addGrid()" label="Tambah" class="p-button-success">
+        </p-button>
+        <p-button icon="pi pi-close" (click)="tutupObat()" label="Tutup" styleClass="p-button-text">
+        </p-button>
+    </ng-template>
+</p-dialog>

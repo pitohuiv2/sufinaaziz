@@ -1,0 +1,287 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Detail Registrasi Pasien</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-3">
+                <p-panel header="Rekam Medis" [toggleable]="true">
+                    <p-scrollPanel [style]="{width: '100%', height: '70vh'}">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-12">
+                                        <label class="label" for="input">No Registrasi </label>
+                                        <div class="p-inputgroup">
+                                            <span class="p-inputgroup-addon"><i class="pi pi-search"></i></span>
+                                            <input type="text" pInputText placeholder="Noregistrasi"
+                                                [(ngModel)]="item.pasien.noregistrasi" (keyup.enter)="cariRegistrasi()">
+                                        </div>
+                                        <!-- <input type="text" [(ngModel)]="item.pasien.noregistrasi" pInputText
+                                        placeholder="Noregistrasi" pInputText (keyup.enter)="cariRegistrasi()" /> -->
+                                    </div>
+                                </div>
+                                <div class="p-grid" *ngIf="loading">
+                                    <div class="p-col-12 p-md-12" *ngFor="let itemzz of numberss">
+                                        <p-skeleton height="2.4rem"></p-skeleton>
+                                    </div>
+                                </div>
+                                <div class="p-grid" *ngIf="loading == false && item.pasien.tglregistrasi!= undefined">
+
+                                    <div class="p-col-12 p-md-12">
+                                        <label class="label" for="input">Tanggal Registrasi</label>
+                                        <input type="text" [(ngModel)]="item.pasien.tglregistrasi" pInputText
+                                            placeholder="No Rekam Medis" disabled />
+
+                                    </div>
+
+                                    <div class="p-col-12 p-md-12">
+                                        <label class="label" for="input">No Rekam Medis </label>
+                                        <input type="text" [(ngModel)]="item.pasien.norm" pInputText
+                                            placeholder="No Rekam Medis" disabled />
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                        <label class="label" for="input">Nama Pasien </label>
+                                        <input type="text" [(ngModel)]="item.pasien.namapasien" pInputText
+                                            placeholder="Nama Pasien" disabled />
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                        <label class="label" for="input">Jenis Kelamin </label>
+                                        <input type="text" [(ngModel)]="item.pasien.jeniskelamin" pInputText
+                                            placeholder="Jenis Kelamin" disabled />
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                        <label class="label" for="input">Tgl Lahir </label>
+                                        <input type="text" [(ngModel)]="item.pasien.tgllahir" pInputText
+                                            placeholder="Tgl Lahir" disabled />
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                        <label class="label" for="input">Umur </label>
+                                        <input type="text" [(ngModel)]="item.pasien.umur" pInputText placeholder="Umur"
+                                            disabled />
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                        <label class="label" for="input">Kelas Rawat </label>
+                                        <input type="text" [(ngModel)]="item.pasien.kelas" pInputText
+                                            placeholder="Kelas" disabled />
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                        <label class="label" for="input">Ruang Rawat </label>
+                                        <input type="text" [(ngModel)]="item.pasien.ruangan" pInputText
+                                            placeholder="Ruang Rawat" disabled />
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                        <label class="label" for="input">Tipe Pasien </label>
+                                        <input type="text" [(ngModel)]="item.pasien.tipepasien" pInputText
+                                            placeholder="Tipe Pasien" disabled />
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                        <label class="label" for="input">Tanggal Pulang</label>
+                                        <input type="text" [(ngModel)]="item.pasien.tglpulang" pInputText
+                                            placeholder="Tanggal Pulang" disabled />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-scrollPanel>
+                </p-panel>
+            </div>
+            <div class="p-col-12 p-md-9">
+                <div class="p-col-12">
+                    <div class="p-grid">
+                        <p-table #dt [columns]="column" [value]="dataTable" [(selection)]="selected"
+                            styleClass="p-datatable-customers" [rowHover]="true" [rows]="20"
+                            [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                            scrollable="true" [pageLinks]="5" sortMode="multiple" selectionMode="single"
+                            (onRowSelect)="onRowSelect($event)">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                                        style="width: {{column.width}}">
+                                        {{column.header}} <p-sortIcon field="{{column.field}}"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                    <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                        {{rowData[column.field]}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                    <div class="p-col-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-2" style="margin-top:10px">
+                                <button pButton type="submit" icon="fa fa-medkit" pTooltip="Input Tindakan"
+                                    (click)="inputTindakan()" label="Input Tindakan"></button>
+                            </div>
+                            <!-- <div class="p-col-12 p-md-2" style="margin-top:10px">
+                                <button pButton type="submit" icon="fa fa-medkit" pTooltip="Order Penunjang"
+                                    (click)="orderPenunjang()" label="Order Penunjang"></button>
+                            </div> -->
+                            <div class="p-col-12 p-md-2" style="margin-top:10px">
+                                <button pButton type="submit" icon="fa fa-stethoscope" pTooltip="Konsultasi"
+                                    (click)="popUpKonsultasi()" label="Konsultasi"></button>
+                            </div>
+                            <div class="p-col-12 p-md-2" style="margin-top:10px">
+                                <button pButton type="submit" icon="pi pi-user-edit" pTooltip="Ubah Dokter"
+                                    (click)="popUpUbahDokter()" label="Ubah Dokter"></button>
+                            </div>
+                            <div class="p-col-12 p-md-2" style="margin-top:10px">
+                                <button pButton type="submit" icon="pi pi-user-edit" pTooltip="Ubah Tipe Pasien"
+                                    (click)="popUpUbahPenjamin()" label="Ubah Tipe Pasien"></button>
+                            </div>
+                            <div class="p-col-12 p-md-2" style="margin-top:10px">
+                                <button pButton type="submit" icon="pi pi-user-edit" pTooltip="Ubah Tanggal"
+                                    (click)="popUpUbahTanggal()" label="Ubah Tanggal"></button>
+                            </div>
+                      
+                            <div class="p-col-12 p-md-2" style="margin-top:10px">
+                                <button pButton type="submit" icon="pi pi-eject" pTooltip="Pindah/ Pulang"
+                                    (click)="pindahPulang()" label="Pindah/ Pulang"></button>
+                            </div>
+                            <div class="p-col-12 p-md-2" style="margin-top:10px">
+                                <button pButton type="submit" icon="pi pi-money-bill" pTooltip="Detail Tagihan"
+                                    (click)="detailTagihan()" label="Detail Tagihan"></button>
+                            </div>
+                            <!-- <div class="p-col-12 p-md-2" style="margin-top:10px">
+                                <button pButton type="submit" icon="pi pi-money-bill" pTooltip="Rekap Tagihan"
+                                    (click)="rekapTagihan()" label="Rekap Tagihan"></button>
+                            </div> -->
+                            <div class="p-col-12 p-md-2" style="margin-top:10px">
+                                <button pButton type="submit" icon="pi pi-trash" class="p-button-danger"
+                                    pTooltip="Hapus Antrian" (click)="hapusAntrian()" label="Hapus Antrian"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-dialog header="Konsultasi Pasien" [(visible)]="pop_Konsultasi" [modal]="true" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [style]="{width: '650px', minWidth: '650px'}">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-4">
+                <label class="label" for="input">Ruangan</label>
+                <p-dropdown [options]="listRuanganApd" [(ngModel)]="item.dataRuanganApd" [filter]="true"
+                    [showClear]="true" placeholder="Ruangan" optionLabel="namaruangan" appendTo="body"></p-dropdown>
+            </div>
+            <div class="p-col-12 p-md-4">
+                <label class="label" for="input">Dokter Penanggung Jawab </label>
+                <p-autoComplete [(ngModel)]="item.dokter" [suggestions]="listDokter"
+                    (completeMethod)="filterDokter($event)" field="namalengkap" [dropdown]="true" placeholder="DPJP"
+                    appendTo="body">
+                </p-autoComplete>
+            </div>
+            <div class="p-col-12 p-md-2" style="margin-top: 15px;">
+                <button pButton type="submit" icon="fa fa-floppy-o" pTooltip="Simpan Konsultasi"
+                    (click)="simpanKonsultasi()" label="Simpan"></button>
+            </div>
+            <div class="p-col-12 p-md-2" style="margin-top: 15px;">
+                <button pButton type="submit" icon="fa fa-ban" pTooltip="Batal Konsultasi" (click)="batalKonsultasi()"
+                    label="Batal" style="background-color: red;"></button>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+<p-dialog header="Dokter Penanggung jawab" [(visible)]="pop_DokterPJawab" [modal]="true" [maximizable]="true"
+    [draggable]="true" [resizable]="true" [style]="{width: '650px', minWidth: '650px'}">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-4">
+                <label class="label" for="input">Dokter Penanggung Jawab </label>
+                <p-autoComplete [(ngModel)]="item.dokterPJawab" [suggestions]="listDokter"
+                    (completeMethod)="filterDokter($event)" field="namalengkap" [dropdown]="true" placeholder="DPJP"
+                    appendTo="body">
+                </p-autoComplete>
+            </div>
+            <div class="p-col-12 p-md-4" style="margin-top: 15px;">
+                <button pButton type="submit" icon="fa fa-floppy-o" pTooltip="Simpan Dokter" (click)="simpanDokter()"
+                    label="Simpan"></button>
+            </div>
+            <div class="p-col-12 p-md-4" style="margin-top: 15px;">
+                <button pButton type="submit" icon="fa fa-ban" pTooltip="Batal" (click)="batalDokter()" label="Batal"
+                    style="background-color: red;"></button>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+<p-dialog header="Tipe Pasien" [(visible)]="pop_TipePasien" [modal]="true" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [style]="{width: '650px', minWidth: '650px'}">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-3">
+                <label class="label" for="input">Tipe Pasien</label>
+                <p-dropdown [options]="listTipePasien" [(ngModel)]="item.tipePasien" [filter]="true" [showClear]="true"
+                    placeholder="Tipe Pasien" optionLabel="kelompokpasien" appendTo="body"></p-dropdown>
+            </div>
+            <div class="p-col-12 p-md-3">
+                <label class="label" for="input">Penjamin</label>
+                <p-autoComplete [(ngModel)]="item.PenjaminPasien" [suggestions]="ListPenjaminPasien"
+                    (completeMethod)="filterPenjaminPasien($event)" field="namarekanan" [dropdown]="true"
+                    placeholder="Penjamin" appendTo="body">
+                </p-autoComplete>
+            </div>
+            <div class="p-col-12 p-md-3" style="margin-top: 15px;">
+                <button pButton type="submit" icon="fa fa-floppy-o" pTooltip="Simpan Tipe Pasien"
+                    (click)="simpanTipePasien()" label="Simpan"></button>
+            </div>
+            <div class="p-col-12 p-md-3" style="margin-top: 15px;">
+                <button pButton type="submit" icon="fa fa-ban" pTooltip="Batal" (click)="batalTipePasien()"
+                    label="Batal" style="background-color: red;"></button>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+<p-dialog header="Ubah Tanggal" [(visible)]="pop_UbahTanggal" [modal]="true" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [style]="{width: '1200px', minWidth: '1200px'}" [contentStyle]="{minHeight: '280px'}">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-3">
+                <p-checkbox label="Tgl Registrasi" [(ngModel)]="item.SelectedtglRegis" binary="true"
+                    inputId="item.SelectedtglRegis">
+                </p-checkbox>
+                <p-calendar [(ngModel)]="item.tglRegistrasi" [showIcon]="true" [monthNavigator]="true"
+                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd" hourFormat="24"
+                    placeholder="Tgl Registrasi" [disabled]="isTglRegistrasi" *ngIf="item.SelectedtglRegis == true"
+                    appendTo="body">
+                </p-calendar>
+            </div>
+            <div class="p-col-12 p-md-3">
+                <p-checkbox label="Tgl Masuk" [(ngModel)]="item.SelectedtglMasuk" binary="true"
+                    inputId="item.SelectedtglMasuk"></p-checkbox>
+                <p-calendar [(ngModel)]="item.tglMasuk" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
+                    yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd" hourFormat="24"
+                    placeholder="Tgl Masuk" *ngIf="item.SelectedtglMasuk == true" appendTo="body">
+                </p-calendar>
+            </div>
+            <div class="p-col-12 p-md-3">
+                <p-checkbox label="Tgl Keluar" [(ngModel)]="item.SelectedtglKeluar" binary="true"
+                    inputId="item.SelectedtglKeluar"></p-checkbox>
+                <p-calendar [(ngModel)]="item.tglKeluar" [showIcon]="true" [monthNavigator]="true"
+                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd" hourFormat="24"
+                    placeholder="Tgl Keluar" *ngIf="item.SelectedtglKeluar == true" appendTo="body">
+                </p-calendar>
+            </div>
+            <div class="p-col-12 p-md-3">
+                <p-checkbox label="Tgl Pulang" [(ngModel)]="item.SelectedtglPulang" binary="true"
+                    inputId="item.SelectedtglPulang"></p-checkbox>
+                <p-calendar [(ngModel)]="item.tglPulang" [showIcon]="true" [monthNavigator]="true"
+                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd" hourFormat="24"
+                    placeholder="Tgl Pulang" *ngIf="item.SelectedtglPulang == true" appendTo="body">
+                </p-calendar>
+            </div>
+            <div class="p-col-12 p-md-6"></div>
+            <div class="p-col-12 p-md-3" style="margin-top: 15px;">
+                <button pButton type="submit" icon="fa fa-floppy-o" pTooltip="Simpan Ubah Tanggal"
+                    (click)="simpanUbahTgl()" label="Simpan"></button>
+            </div>
+            <div class="p-col-12 p-md-3" style="margin-top: 15px;">
+                <button pButton type="submit" icon="fa fa-ban" pTooltip="Batal" (click)="batalUbahTgl()" label="Batal"
+                    style="background-color: red;"></button>
+            </div>
+        </div>
+    </div>
+</p-dialog>

@@ -1,0 +1,166 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Daftar Penerimaan Pembayaran</h4>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-11">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Periode Awal</label>
+                            <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                            </p-calendar>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Periode Akhir</label>
+                            <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                                [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                            </p-calendar>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Cara Bayar</label>
+                            <p-dropdown [options]="listCaraBayar" [(ngModel)]="item.dataCaraBayar" [filter]="true"
+                                [showClear]="true" placeholder="Cara Bayar" optionLabel="carabayar"></p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-3">
+                            <label class="label" for="input">Jenis Transaksi</label>
+                            <p-dropdown [options]="listKelompokTransaksi" [(ngModel)]="item.dataKelTransaksi"
+                                [filter]="true" [showClear]="true" placeholder="Jenis Transaksi (Non Layanan)"
+                                optionLabel="kelompoktransaksi">
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-3">
+                            <label class="label" for="input">Petugas Penerima</label>
+                            <p-multiSelect [options]="listPetugasPenerima" [(ngModel)]="item.selectedKasir"
+                                optionLabel="namalengkap"></p-multiSelect>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-1">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-12" style="margin-top: 16px;">
+                            <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <p-table #dt [columns]="column" [value]="dataTable" [(selection)]="selected"
+                styleClass="p-datatable-customers" [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                sortMode="multiple" selectionMode="single">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" style="width: {{col.width}}">
+                            {{col.header}}
+                            <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                        <td *ngFor="let col of columns" style="width: {{col.width}}">
+                            <span *ngIf="col.isCurrency != undefined">
+                                {{formatRupiah(rowData[col.field],'')}}
+                            </span>
+                            <span *ngIf="col.isCurrency == undefined"> {{rowData[col.field]}}</span>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-7">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">No Bayar </label>
+                                    <input type="text" [(ngModel)]="item.noBuktiBayar" pInputText (keyup.enter)="cari()"
+                                        placeholder="No Bukti Bayar" />
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">No Rekam Medis </label>
+                                    <input type="text" [(ngModel)]="item.noRM" pInputText (keyup.enter)="cari()"
+                                        placeholder="No Rekam Medis" />
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Noregistrasi</label>
+                                    <input type="text" [(ngModel)]="item.Noregistrasi" pInputText (keyup.enter)="cari()"
+                                        placeholder="Noregistrasi" />
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Nama Pasien </label>
+                                    <input type="text" [(ngModel)]="item.namaPasien" pInputText (keyup.enter)="cari()"
+                                        placeholder="Nama Pasien" />
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Deskripsi</label>
+                                    <input type="text" [(ngModel)]="item.Desk" pInputText (keyup.enter)="cari()"
+                                        placeholder="Nama Pasien" />
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-3" style="margin-top:10px">
+                                    <button pButton type="submit" icon="pi pi-user-edit" pTooltip="Ubah Cara Bayar"
+                                        (click)="ubahCaraBayar()" label="Ubah Cara Bayar"></button>
+                                </div>
+                                <div class="p-col-12 p-md-3" style="margin-top:10px">
+                                    <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"
+                                        rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+                                    <button pButton type="submit" icon="fa fa-ban" pTooltip="Batal Pembayaran"
+                                        (click)="batalPembayaran()" label="Batal Pembayaran"
+                                        style="background-color: red;"></button>
+                                </div>
+                                <div class="p-col-12 p-md-3" style="margin-top:10px">
+                                    <button pButton type="submit" icon="pi pi-print" pTooltip="Cetak Kwitansi"
+                                        (click)="cetakKwitansi()" label="Cetak Kwitansi"></button>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-5">
+                    <p-panel header="Rincian Peneriman" [toggleable]="false">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-6">
+                                <label for="input">Total Penerimaan Tunai</label>
+                                <input type="text" [(ngModel)]="item.totalCash" pInputText
+                                    placeholder="Total Penerimaan Tunai" disabled />
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <label for="input">Total Penerimaan Debit</label>
+                                <input type="text" [(ngModel)]="item.totalDebit" pInputText
+                                    placeholder="Total Penerimaan Debit" disabled />
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <label for="input">Total Penerimaan Kredit</label>
+                                <input type="text" [(ngModel)]="item.totalKredit" pInputText
+                                    placeholder="Total Penerimaan Kredit" disabled />
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <label for="input">Total Penerimaan Donasi</label>
+                                <input type="text" [(ngModel)]="item.totalDonasi" pInputText
+                                    placeholder="Total Penerimaan Donasi" disabled />
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <label for="input">Total Penerimaan Mix</label>
+                                <input type="text" [(ngModel)]="item.totalMix" pInputText
+                                    placeholder="Total Penerimaan Mix" disabled />
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <label for="input">Total Penerimaan Transfer Bank</label>
+                                <input type="text" [(ngModel)]="item.totalTrf" pInputText
+                                    placeholder="Total Penerimaan Transfer Bank" disabled />
+                            </div>
+                        </div>
+                    </p-panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,121 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Formulir RL. 1</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-tabView (onChange)="handleChangeTab($event)">
+                    <!-- <p-tabPanel header="RL 1.1 Dasar Rumah Sakit" leftIcon="fa fa-print">
+                   
+                    </p-tabPanel> -->
+                    <p-tabPanel header="RL 1.2 Indikator Pelayanan Rumah Sakit" leftIcon="fa fa-print">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-2">
+                                <label class="label" for="input">Tahun</label>
+                                <input type="number" [(ngModel)]="item.tahun" pInputText (keyup.enter)="cari()"
+                                    placeholder="Tahun" />
+                            </div>
+                            <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                    pTooltip="Cari" (click)="cari()"></button>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-12">
+                                <p-table [columns]="column" [value]="dataSource" styleClass="p-datatable-customers"
+                                    [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                                    [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true"
+                                    [pageLinks]="5" sortMode="multiple">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex">
+                                            <button type="button" pButton pRipple icon="pi pi-file-excel"
+                                                (click)="exportExcel()" class="p-button-success p-mr-2" pTooltip="XLS"
+                                                tooltipPosition="bottom"></button>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                                                style="width: {{column.width}}">
+                                                {{column.header}}
+                                                <p-sortIcon field="{{column.field}}"></p-sortIcon>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                <span class="p-column-title"> {{column.header}} </span>
+                                                {{rowData[column.field]}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="RL 1.3 Fasilitas Tempat Tidur" leftIcon="fa fa-print">
+                        <div class="p-grid">
+
+                            <!-- <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                    pTooltip="Cari" (click)="cari2()"></button>
+                            </div> -->
+
+                            <div class="p-col-12">
+                                <p-table  [value]="dataSource2" styleClass="p-datatable-customers" [rowHover]="true"
+                                    [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                   responsiveLayout="scroll">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex">
+                                            <button type="button" pButton pRipple icon="pi pi-search" (click)="cari2()"
+                                                class="p-button p-mr-2" tooltipPosition="bottom"></button>
+                                            <button type="button" pButton pRipple icon="pi pi-file-excel"
+                                                (click)="exportExcel2()" class="p-button-success p-mr-2" pTooltip="XLS"
+                                                tooltipPosition="bottom"></button>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <!-- <th rowspan="2">Tahun</th> -->
+                                            <th rowspan="2">Jenis Pelayanan</th>
+                                            <th rowspan="2">Jumlah TT</th>
+                                            <th colspan="6" style="text-align:center">Rincian Tempat Tidur Perkelas</th>
+                                        </tr>
+                                        <tr>
+                                            <th>VVIP</th>
+                                            <th>VIP</th>
+                                            <th>I</th>
+                                            <th>II</th>
+                                            <th>III</th>
+                                            <th>Kelas Khusus</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-item>
+                                        <tr>
+
+                                            <!-- <td>{{item.tahun}}</td> -->
+                                            <td>{{item.jenis}}</td>
+                                            <td>{{item.jumlah}}</td>
+                                            <td>{{item.jumlahvvip}}</td>
+                                            <td>{{item.jumlahvip}}</td>
+                                            <td>{{item.jumlah1}}</td>
+                                            <td>{{item.jumlah2}}</td>
+                                            <td>{{item.jumlah3}}</td>
+                                            <td>{{item.jumlahkhusus}}</td>
+
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+
+                    </p-tabPanel>
+
+                </p-tabView>
+            </div>
+        </div>
+    </div>
+</div>

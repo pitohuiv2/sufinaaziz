@@ -1,0 +1,245 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Setting Menu</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-3">
+                        <p-panel header="Sub Sistem" [toggleable]="true">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <button type="button" pButton pRipple icon="pi pi-plus" (click)="tambah('Sub Sistem')"
+                                        class="p-button-success p-mr-2" pTooltip="Tambah" tooltipPosition="bottom">
+                                    </button>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <button type="button" pButton pRipple icon="pi pi-trash" (click)="hapusSub()"
+                                        class="p-button-danger p-mr-2" pTooltip="Hapus" tooltipPosition="bottom">
+                                    </button>
+                                </div>
+                                <div class="p-col-12 p-md-8">
+                                    <span class="p-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <input pInputText type="text"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            placeholder="Pencarian " />
+                                    </span>
+                                </div>
+
+                                <div class="p-col-12">
+                                    <p-table #dt [columns]="columnSubSistem" [value]="dsSubSistem"
+                                        [(selection)]="selectedSub" styleClass="p-datatable-customers" [rowHover]="true"
+                                        [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                        [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                        [globalFilterFields]="['modulaplikasi']" selectionMode="single"
+                                        (onRowSelect)="onSelectSub($event)">
+
+                                        <ng-template pTemplate="header" let-columns>
+                                            <tr>
+                                                <th *ngFor="let col of columns" pSortableColumn="{{col.field}}"
+                                                    style="width: {{col.width}}">
+                                                    {{col.header}}
+                                                    <p-sortIcon field="{{col.field}}">
+                                                    </p-sortIcon>
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                            let-rowIndex="rowIndex">
+                                            <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                                <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                    {{rowData[column.field]}}
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </p-panel>
+                    </div>
+                    <div class="p-col-12 p-md-3">
+                        <p-panel header="Modul Aplikasi" [toggleable]="true">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <button type="button" pButton pRipple icon="pi pi-plus" (click)="tambah('Modul Aplikasi')"
+                                        class="p-button-success p-mr-2" pTooltip="Tambah" tooltipPosition="bottom">
+                                    </button>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <button type="button" pButton pRipple icon="pi pi-trash" (click)="hapusModul()"
+                                        class="p-button-danger p-mr-2" pTooltip="Hapus" tooltipPosition="bottom">
+                                    </button>
+                                </div>
+                                <div class="p-col-12 p-md-8">
+                                    <span class="p-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <input pInputText type="text"
+                                            (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                                            placeholder="Pencarian " />
+                                    </span>
+                                </div>
+
+                                <div class="p-col-12">
+                                    <p-table #dt2 [columns]="columnModulApp" [value]="dsModulApp"
+                                        [(selection)]="selectedMod" styleClass="p-datatable-customers"
+                                        [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                                        [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true"
+                                        [pageLinks]="5" sortMode="multiple" [globalFilterFields]="['modulaplikasi']"
+                                        selectionMode="single" (onRowSelect)="onSelectModul($event)">
+                                        <ng-template pTemplate="header" let-columns>
+                                            <tr>
+                                                <th *ngFor="let col of columns" pSortableColumn="{{col.field}}"
+                                                    style="width: {{col.width}}">
+                                                    {{col.header}}
+                                                    <p-sortIcon field="{{col.field}}">
+                                                    </p-sortIcon>
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                            let-rowIndex="rowIndex">
+                                            <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                                <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                    {{rowData[column.field]}}
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </p-panel>
+                    </div>
+                    <div class="p-col-12 p-md-6">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <p-panel header="Menu" [toggleable]="true">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-2 ">
+                                            <p-toggleButton [(ngModel)]="checked2" onLabel="Expand" offLabel="Collapsed" 
+                                            onIcon="fa fa-expand" offIcon="fa fa-collapsed"  (onChange)="handleChange($event)"></p-toggleButton>
+
+                                            <!-- <button pButton type="button" icon="fa fa-expand" class="p-button p-mr-2"
+                                                (click)="expandAll()" label="Expand all"></button> -->
+                                        </div>
+                                        <div class="p-col-12 p-md-2">
+                                            <!-- <button pButton type="button" icon="fa fa-collapsed" class="p-button p-mr-2"
+                                                (click)="collapseAll()" label="Collapse all"></button> -->
+                                        </div>
+                                    </div>
+                                </p-panel>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <p-tree [value]="treeSourceMenu" [style]="{'width':'100%','height':'280px',
+                                'overflow': 'auto'  }" [loading]="isLoadingNav" selectionMode="single"
+                                    [(selection)]="selectedFile" (onNodeSelect)="nodeSelect($event)" [filter]="true">
+                                    <ng-template let-node pTemplate="default">
+                                        <b pTooltip="No Urut : {{node.nourut}}"
+                                            tooltipPosition="bottom">{{node.subCategoryName}} </b>
+                                    </ng-template>
+
+                                </p-tree>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-6">
+                        <p-panel header="Detail Menu" [toggleable]="true">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Id Head</label>
+                                    <input type="text" [(ngModel)]="item.idHeadMenu" pInputText placeholder="Id Head"
+                                        pTooltip="di isi ID, dari menu dikanan atas" />
+                                </div>
+                            </div>
+                            <div class="p-grid">
+    
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Id Menu</label>
+                                    <input type="text" [(ngModel)]="item.idMenu" pInputText placeholder="Id Menu"
+                                        pTooltip=" " disabled />
+                                </div>
+                                <div class="p-col-12 p-md-5">
+                                    <label class="label" for="input">Nama Menu</label>
+                                    <input type="text" [(ngModel)]="item.nmMenu" pInputText placeholder="Nama Menu" />
+                                </div>
+                                <div class="p-col-12 p-md-5">
+                                    <label class="label" for="input">Fungsi</label>
+                                    <input type="text" [(ngModel)]="item.fungsi" pInputText placeholder="Fungsi " />
+                                </div>
+                                <div class="p-col-12 p-md-4">
+                                    <label class="label" for="input">Keterangan</label>
+                                    <input type="text" [(ngModel)]="item.keterangan" pInputText placeholder="Keterangan " />
+                                </div>
+                                <div class="p-col-12 p-md-4">
+                                    <label class="label" for="input">No Urut</label>
+                                    <input type="text" [(ngModel)]="item.noUrut2" pInputText placeholder="No Urut" />
+                                </div>
+                                <div class="p-col-12 p-md-4">
+                                    <label class="label" for="input">URL</label>
+                                    <input type="text" [(ngModel)]="item.url" pInputText placeholder="URL" />
+                                </div>
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2 p-md-offset-6">
+                                    <button pButton type="button" icon="pi pi-save" class="p-button p-mr-2" (click)="save()"
+                                        pTooltip="Simpan" label="Simpan" [disabled]="isSimpan"></button>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <button pButton type="button" icon="pi pi-trash"
+                                        class="p-button p-button-warning p-mr-2" (click)="hapus()" pTooltip="Hapus"
+                                        label="Hapus"></button>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <button pButton type="button" icon="pi pi-arrow-left"
+                                        class="p-button p-button-danger p-mr-2" (click)="cancel()" pTooltip="Batal"
+                                        label="Batal"></button>
+                                </div>
+    
+                            </div>
+                        </p-panel>
+                    </div>
+                </div>
+              
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<p-dialog header="Tambah " [(visible)]="pop_Tambah" [modal]="true" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [style]="{width: '900px', minWidth: '900px'}">
+    <div class="p-fluid p-grid ">
+        <div class="p-col-12 p-md-12">
+            <p-panel header="Detail {{pop.judul}}" [toggleable]="true">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-4" *ngIf="isModul">
+                        <label class="label" for="input">Sub Sistem</label>
+                        <p-dropdown [options]="d_modulAplikasiHead" [(ngModel)]="pop.subSistemHead" [filter]="true"
+                            [showClear]="true" placeholder="Sub Sistem" optionLabel="modulaplikasi" appendTo="body">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-4"  *ngIf="isModul">
+                        <label class="label" for="input">Modul Aplikasi</label>
+                        <input type="text" [(ngModel)]="pop.modulaplikasi" pInputText placeholder="Modul Aplikasi" />
+                    </div>
+                    <div class="p-col-12 p-md-4"  *ngIf="!isModul">
+                        <label class="label" for="input">Sub Sistem</label>
+                        <input type="text" [(ngModel)]="pop.modulaplikasi" pInputText placeholder="Sub Sistem" />
+                    </div>
+                    <div class="p-col-12 p-md-4"  >
+                        <label class="label" for="input">No Urut</label>
+                        <input type="number" [(ngModel)]="pop.noUrut" pInputText placeholder="No Urut " />
+                    </div>
+                    
+
+                </div>
+            </p-panel>
+        </div>
+      
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton icon="pi pi-save" (click)="simpanModul()" label="Simpan" class="p-button p-button-success p-mr-2" [disabled]="isSimpan"></button>
+        <button pButton icon="fa fa-refresh" (click)="pop_Tambah=false" label="Batal" class="p-button  p-mr-2">
+        </button>
+    </ng-template>
+</p-dialog>

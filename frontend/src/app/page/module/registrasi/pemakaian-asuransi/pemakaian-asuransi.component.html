@@ -1,0 +1,911 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog>
+<div class="p-fluid p-formgrid ">
+    <div class="p-grid">
+        <div class="p-col-12 p-md-4">
+            <div class="card card-w-title">
+                <h4>Info Pasien</h4>
+                <div class="p-grid">
+                    <div class="p-col-12">
+                        <div style="height: 700px; overflow-y: auto;overflow-x: hidden;">
+                            <div class="p-grid" *ngIf="item.pasien.nocm!=undefined">
+                                <div class="p-col-12 p-md-12">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-12">
+                                            <label class="label" for="input">No Registrasi </label>
+                                            <input type="text" [(ngModel)]="item.pasien.noregistrasi" pInputText
+                                                placeholder="" disabled />
+                                        </div>
+                                        <div class="p-col-12 p-md-12">
+                                            <label class="label" for="input">No Rekam Medis </label>
+                                            <input type="text" [(ngModel)]="item.pasien.nocm" pInputText
+                                                placeholder="No Rekam Medis" disabled />
+                                        </div>
+                                        <div class="p-col-12 p-md-12">
+                                            <label class="label" for="input">Nama Pasien </label>
+                                            <input type="text" [(ngModel)]="item.pasien.namapasien" pInputText
+                                                placeholder="Nama Pasien" disabled />
+                                        </div>
+                                        <div class="p-col-12 p-md-12">
+                                            <label class="label" for="input">Tgl Registrasi </label>
+                                            <input type="text" [(ngModel)]="item.pasien.tglregistrasi" pInputText
+                                                placeholder="" disabled />
+                                        </div>
+                                        <div class="p-col-12 p-md-12">
+                                            <label class="label" for="input">Jenis Kelamin </label>
+                                            <input type="text" [(ngModel)]="item.pasien.jeniskelamin" pInputText
+                                                placeholder="Nama Pasien" disabled />
+                                        </div>
+                                        <div class="p-col-12 p-md-12">
+                                            <label class="label" for="input">Tgl Lahir </label>
+                                            <input type="text" [(ngModel)]="item.pasien.tgllahir" pInputText
+                                                placeholder="Tgl Lahir" disabled />
+                                        </div>
+                                        <div class="p-col-12 p-md-12">
+                                            <label class="label" for="input">Umur </label>
+                                            <input type="text" [(ngModel)]="item.pasien.umur" pInputText placeholder=""
+                                                disabled />
+                                        </div>
+                                        <div class="p-col-12 p-md-12">
+                                            <label class="label" for="input">Alamat </label>
+                                            <input type="text" [(ngModel)]="item.pasien.alamatlengkap" pInputText
+                                                placeholder="Alamat" disabled />
+                                        </div>
+                                        <div class="p-col-12 p-md-12">
+                                            <label class="label" for="input">Kelas </label>
+                                            <input type="text" [(ngModel)]="item.pasien.namakelas" pInputText
+                                                placeholder="" disabled />
+                                        </div>
+                                        <div class="p-col-12 p-md-12">
+                                            <label class="label" for="input">Ruangan </label>
+                                            <input type="text" [(ngModel)]="item.pasien.namaruangan" pInputText
+                                                placeholder="" disabled />
+                                        </div>
+                                        <div class="p-col-12 p-md-12">
+                                            <label class="label" for="input">Pendidikan </label>
+                                            <input type="text" [(ngModel)]="item.pasien.pendidikan" pInputText
+                                                placeholder="Pendidikan" disabled />
+                                        </div>
+
+                                        <div class="p-col-12 p-md-12">
+                                            <label class="label" for="input">Jenis Pelayanan </label>
+                                            <input type="text" [(ngModel)]="item.pasien.jenispelayanan" pInputText
+                                                placeholder="" disabled />
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="p-grid" *ngIf="item.pasien.nocm==undefined">
+                                <div class="p-col-12 p-md-12" *ngFor="let itemzz of numberss">
+                                    <p-skeleton height="2.4rem"></p-skeleton>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-12">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12 p-md-8">
+            <div class="card card-w-title">
+                <h4>Asuransi</h4>
+                <div class="p-grid">
+                    <div class="p-col-12">
+                        <div style="height: 700px; overflow-y: auto;overflow-x: hidden;">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-6">
+
+                                    <div class="p-grid p-col-12 p-md-12">
+                                        <p-panel header="Detail Peserta" [toggleable]="true" [collapsed]="true">
+                                            <div class="p-grid">
+                                                <div class="p-col-12 p-md-12">
+                                                    <label class="label" for="input">Jenis Pasien </label>
+                                                    <p-dropdown [options]="listKelompokPasien"
+                                                        [(ngModel)]="item.kelompokPasien" [filter]="true"
+                                                        [showClear]="true" placeholder="Jenis Pasien"
+                                                        optionLabel="kelompokpasien">
+                                                    </p-dropdown>
+                                                </div>
+
+                                                <div class="p-col-12 p-md-12">
+                                                    <label class="label" for="input">Penjamin </label>
+                                                    <p-dropdown [options]="listRekanan"
+                                                        [(ngModel)]="model.institusiAsalPasien" [filter]="true"
+                                                        [showClear]="true" placeholder="Penjamin"
+                                                        optionLabel="namarekanan">
+                                                    </p-dropdown>
+                                                </div>
+
+
+                                                <div class="p-col-12 p-md-12">
+                                                    <label class="label" for="input"> No. KTP / SIM
+                                                        Peserta </label>
+                                                    <i class="pi pi-spin pi-spinner" *ngIf="isLoadingNIK"></i>
+                                                    <input type="text" [(ngModel)]="model.noIdentitas" pInputText
+                                                        placeholder="No. KTP / SIM Peserta"
+                                                        (keyup.enter)="checkKepesertaanByNik()" />
+                                                </div>
+                                                <div class="p-col-12 p-md-12">
+                                                    <label class="label" for="input"> Tgl Lahir </label>
+                                                    <p-calendar [(ngModel)]="model.tglLahir" [showIcon]="true"
+                                                        [monthNavigator]="true" [yearNavigator]="true"
+                                                        yearRange="1980:2030" [showTime]="false" dateFormat="dd-mm-yy"
+                                                        placeholder="Tgl Lahir">
+                                                    </p-calendar>
+                                                </div>
+                                                <div class="p-col-12 p-md-12">
+                                                    <label class="label" for="input"> Alamat Peserta </label>
+                                                    <input type="text" [(ngModel)]="model.alamatPeserta" pInputText
+                                                        placeholder="Alamat Peserta" />
+                                                </div>
+                                                <div class="p-col-12 p-md-12">
+                                                    <label class="label" for="input"> Jenis Peserta </label>
+                                                    <input type="text" [(ngModel)]="model.jenisPeserta" pInputText
+                                                        placeholder="Jenis Peserta " />
+                                                </div>
+                                            </div>
+                                        </p-panel>
+                                    </div>
+                                    <div class="p-grid p-col-12 p-md-12">
+                                        <p-panel header="Rujukan" [toggleable]="true" [collapsed]="false">
+                                            <div class="p-grid">
+
+                                                <div class="p-col-12 p-md-12">
+                                                    <label class="label-required">Asal Rujukan</label>
+                                                    <div class="p-grid">
+                                                        <div class="p-col-12 p-md-6 p-field-checkbox"
+                                                            *ngFor="let items of listAsalRujukan">
+                                                            <p-radioButton [inputId]="items.id" [value]="items"
+                                                                [(ngModel)]="model.asalRujukan">
+                                                            </p-radioButton>
+                                                            <label [for]="items.id">{{items.name}}</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="p-col-12 p-md-12">
+                                                    <div class="p-grid">
+                                                        <div class="p-col-12 p-md-4">
+                                                            <p-checkbox [(ngModel)]="model.sendiri" binary="true"
+                                                                inputId="model.sendiri"
+                                                                (onChange)="Sendiri(model.sendiri)">
+                                                            </p-checkbox>
+                                                            <label class="label" for="model.sendiri"> Sendiri</label>
+                                                        </div>
+                                                        <div class="p-col-12 p-md-4">
+                                                            <p-checkbox [(ngModel)]="model.cekNomorRujukanMulti"
+                                                                binary="true" inputId="model.cekNomorRujukanMulti"
+                                                                (onChange)="ceklisNomorRujukanMulti(model.cekNomorRujukanMulti)">
+                                                            </p-checkbox>
+                                                            <label class="label" for="model.cekNomorRujukanMulti"
+                                                                pTooltip="Cek Rujukan Multi Record">
+                                                                Multi Record </label>
+                                                        </div>
+                                                        <div class="p-col-12 p-md-4">
+                                                            <p-checkbox [(ngModel)]="model.hitori" binary="true"
+                                                                inputId="model.hitori"
+                                                                (onChange)="historiPelayanan(model.hitori)">
+                                                            </p-checkbox>
+                                                            <label class="label" for="model.hitori"
+                                                                pTooltip="Menampilkan history pelayanan Peserta">
+                                                                Histori
+                                                                SEP</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="p-col-12 p-md-12">
+                                                    <p-checkbox [(ngModel)]="model.cekNomorPeserta" binary="true"
+                                                        inputId="model.cekNomorPeserta"
+                                                        (onChange)="ceklisNoKartu(model.cekNomorPeserta)">
+                                                    </p-checkbox>
+                                                    <label class="label-required" for="input"> No. Kartu Peserta
+                                                    </label>
+                                                    <i class="pi pi-spin pi-spinner" *ngIf="isLoadingNoKartu"> </i>
+                                                    <input type="text" [(ngModel)]="model.noKepesertaan" pInputText
+                                                        placeholder="No. Kartu Peserta"
+                                                        (keyup.enter)="checkKepesertaanByNoBpjs()" />
+                                                </div>
+
+                                                <div class="p-col-12 p-md-12">
+                                                    <label class="label" for="input"> Nama Peserta </label>
+                                                    <input type="text" [(ngModel)]="model.namaPeserta" pInputText
+                                                        placeholder="Nama Peserta " />
+                                                </div>
+
+                                                <div class="p-col-12 p-md-12">
+                                                    <label class="label-required" for="input"> No Telpon </label>
+                                                    <input type="text" [(ngModel)]="model.noTelpons" pInputText
+                                                        placeholder="No Telpon " />
+                                                </div>
+                                                <div class="p-col-12 p-md-12">
+                                                    <label class="label-required" for="input">
+                                                        {{captionRujukan}}</label>
+                                                    <i class="pi pi-spin pi-spinner" *ngIf="isLoadingRujukan"> </i>
+                                                    <input type="text" [(ngModel)]="model.noRujukan" pInputText
+                                                        placeholder="{{captionRujukan}}"
+                                                        (keyup.enter)="checkDataRujukan()" />
+                                                </div>
+                                                <div class="p-col-12 p-md-12">
+                                                    <p-checkbox [(ngModel)]="model.faskesRujukan" binary="true"
+                                                        inputId="model.faskesRujukan">
+                                                    </p-checkbox>
+                                                    <label class="label" for="model.faskesRujukan"
+                                                        pTooltip="Cari Faskes Perujuk">
+                                                        Cek Faskes</label>
+                                                </div>
+                                                <div class="p-col-12 p-md-12" *ngIf="model.faskesRujukan != true">
+                                                    <label class="label-required" for="input"> Faskes Perujuk</label>
+                                                    <input type="text" [(ngModel)]="model.namaAsalRujukan" pInputText
+                                                        placeholder="Faskes Perujuk" />
+                                                </div>
+
+                                                <div class="p-col-12 p-md-12" *ngIf="model.faskesRujukan == true">
+                                                    <label class="label-required" for="input"> Faskes Perujuk</label>
+
+                                                    <p-autoComplete [(ngModel)]="model.namaAsalRujukanBrid"
+                                                        [suggestions]="listPpkRujukan"
+                                                        (completeMethod)="filterFaskes($event)" field="nama"
+                                                        [dropdown]="false" placeholder="Ketik minimal 3 Karakter"
+                                                        [minLength]='3'>
+                                                    </p-autoComplete>
+
+                                                </div>
+
+                                                <div class="p-col-12 p-md-12">
+                                                    <label class="label-required" for="input"> Tgl Rujukan </label>
+                                                    <p-calendar [(ngModel)]="model.tglRujukan" [showIcon]="true"
+                                                        [monthNavigator]="true" [yearNavigator]="true"
+                                                        yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd"
+                                                        placeholder="Tgl Rujukan" hourFormat="24">
+                                                    </p-calendar>
+                                                </div>
+                                                <div class="p-col-12 p-md-12">
+                                                    <label class="label-required" for="input"> Diagnosa Rujukan</label>
+                                                    <p-autoComplete [(ngModel)]="model.diagnosa"
+                                                        [suggestions]="listDiagnosa"
+                                                        (completeMethod)="filterDiagnosa($event)" field="nama"
+                                                        [dropdown]="true" placeholder="Diagnosa" appendTo="body">
+                                                    </p-autoComplete>
+
+                                                </div>
+                                                <div class="p-col-12 p-md-12">
+                                                    <p-checkbox [(ngModel)]="model.sendiriaaa" binary="true"
+                                                        inputId="model.sendiriaa"
+                                                        (onChange)="Sendiriaaa(model.sendiriaaa)">
+                                                    </p-checkbox>
+                                                    <label class="label" for="model.sendiriaaa"
+                                                        pTooltip="Munculkan Semua DPJP">
+                                                        Semua DPJP</label>
+                                                </div>
+                                                <div class="p-col-12 p-md-12">
+                                                    <label class="label-required" for="input">DPJP Melayani
+                                                    </label>
+                                                    <p-dropdown [options]="listDPJP2" [(ngModel)]="model.DPJPMelayani"
+                                                        [filter]="true" [showClear]="true" placeholder="DPJP Melayani "
+                                                        optionLabel="nama" appendTo="body">
+                                                    </p-dropdown>
+                                                </div>
+                                            </div>
+                                        </p-panel>
+                                    </div>
+                                </div>
+                                <div class="p-col-12 p-md-6">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-12">
+                                            <p-panel header="SEP" [toggleable]="true">
+                                                <div class="p-grid">
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label" for="input">Hubungan Pasien </label>
+                                                        <p-dropdown [options]="listHubunganPasien"
+                                                            [(ngModel)]="model.hubunganPeserta" [filter]="true"
+                                                            [showClear]="true" placeholder="Hubungan Pasien"
+                                                            optionLabel="hubunganpeserta">
+                                                        </p-dropdown>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12">
+                                                        <p-checkbox [(ngModel)]="model.generateNoSEP" binary="true"
+                                                            inputId="model.generateNoSEP">
+                                                        </p-checkbox>
+                                                        <label class="label" for="model.generateNoSEP"
+                                                            pTooltip="Generate SEP otomatis dari BPJS">
+                                                            SEP Otomatis</label>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label-required" for="input"> No SEP </label>
+                                                        <i class="pi pi-spin pi-spinner" *ngIf="isLoadingSEP"></i>
+                                                        <input type="text" [(ngModel)]="model.noSep" pInputText
+                                                            placeholder="No SEP"
+                                                            (keyup.enter)="checkKepesertaanByNoBpjs()" />
+                                                    </div>
+
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label-required" for="input"> Tgl SEP </label>
+                                                        <p-calendar [(ngModel)]="model.tglSEP" [showIcon]="true"
+                                                            [monthNavigator]="true" [yearNavigator]="true"
+                                                            yearRange="1980:2030" [showTime]="true"
+                                                            dateFormat="yy-mm-dd" placeholder="Tgl SEP" hourFormat="24">
+                                                        </p-calendar>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label-required" for="input">Hak Kelas
+                                                        </label>
+                                                        <p-dropdown [options]="listKelasDitanggung"
+                                                            [(ngModel)]="model.kelasDitanggung" [filter]="true"
+                                                            [showClear]="true" placeholder="Hak Kelas "
+                                                            optionLabel="namakelas">
+                                                        </p-dropdown>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12">
+                                                        <p-checkbox [(ngModel)]="model.naikKelas" binary="true"
+                                                            inputId="model.naikKelas">
+                                                        </p-checkbox>
+                                                        <label class="label" for="model.naikKelas">
+                                                            Naik Kelas</label>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12" *ngIf="model.naikKelas">
+                                                        <label class="label" for="input">Naik Ke Kelas
+                                                        </label>
+                                                        <p-dropdown [options]="listKelasNaik"
+                                                            [(ngModel)]="model.klsRawatNaik" [filter]="true"
+                                                            [showClear]="true" placeholder="Naik Ke Kelas "
+                                                            optionLabel="namakelas">
+                                                        </p-dropdown>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12" *ngIf="model.naikKelas">
+                                                        <label class="label" for="input">Pembiayaan
+                                                        </label>
+                                                        <p-dropdown [options]="listBiaya" [(ngModel)]="model.pembiayaan"
+                                                            [filter]="true" [showClear]="true" placeholder="Pembiayaan "
+                                                            optionLabel="name">
+                                                        </p-dropdown>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12" *ngIf="model.naikKelas">
+                                                        <label class="label" for="input"> Penanggung Jawab
+                                                        </label>
+                                                        <input type="text" [(ngModel)]="model.penanggungJawab"
+                                                            pInputText placeholder="Penanggung Jawab" />
+                                                    </div>
+
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label-required" for="input"> Catatan </label>
+                                                        <input type="text" [(ngModel)]="model.catatan" pInputText
+                                                            placeholder="Catatan" />
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12">
+                                                        <p-checkbox [(ngModel)]="model.nosuratss" binary="true"
+                                                            inputId="model.nosuratss"
+                                                            (onChange)="generateSKDP(model.nosuratss)">
+                                                        </p-checkbox>
+                                                        <label class="label" for="model.nosuratss"
+                                                            pTooltip="Munculkan Semua No.Surat">
+                                                            Cari No.Surat</label>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label-required" for="input"> No.Surat Kontrol/SKDP
+                                                        </label>
+                                                        <input type="text" [(ngModel)]="model.skdp" pInputText
+                                                            placeholder="No.Surat Kontrol/SKDP"
+                                                            (keyup.enter)="generateSKDP(true)" />
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12">
+                                                        <p-checkbox [(ngModel)]="model.sendiriaa" binary="true"
+                                                            inputId="model.sendiriaa"
+                                                            (onChange)="Sendiriaa(model.sendiriaa)">
+                                                        </p-checkbox>
+                                                        <label class="label" for="model.sendiriaa"
+                                                            pTooltip="Munculkan Semua DPJP">
+                                                            Semua DPJP</label>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label-required" for="input">DPJP Pemberi Surat
+                                                            SKDP/SPRI
+                                                        </label>
+                                                        <p-dropdown [options]="listDPJP" [(ngModel)]="model.dokterDPJP"
+                                                            [filter]="true" [showClear]="true"
+                                                            placeholder="DPJP Pemberi Surat SKDP/SPRI "
+                                                            optionLabel="nama">
+                                                        </p-dropdown>
+                                                    </div>
+
+
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label-required" for="input">Tujuan Kunjungan
+                                                        </label>
+                                                        <p-dropdown [options]="listTujuan"
+                                                            [(ngModel)]="model.tujuanKunj" [filter]="true"
+                                                            [showClear]="true" placeholder="Tujuan Kunjungan "
+                                                            appendTo="body" optionLabel="name">
+                                                        </p-dropdown>
+                                                    </div>
+
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label" for="input">Flag Procedure
+                                                        </label>
+                                                        <p-dropdown [options]="listFlag"
+                                                            [(ngModel)]="model.flagProcedure" [filter]="true"
+                                                            [showClear]="true" placeholder="Flag Procedure"
+                                                            appendTo="body" optionLabel="name">
+                                                        </p-dropdown>
+                                                    </div>
+
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label" for="input">Penunjang
+                                                        </label>
+                                                        <p-dropdown [options]="listPenunjang"
+                                                            [(ngModel)]="model.kdPenunjang" [filter]="true"
+                                                            [showClear]="true" placeholder="Penunjang" appendTo="body"
+                                                            optionLabel="name">
+                                                        </p-dropdown>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label" for="input">Assesment
+                                                        </label>
+                                                        <p-dropdown [options]="listAsesmen"
+                                                            [(ngModel)]="model.assesmentPel" [filter]="true"
+                                                            [showClear]="true" placeholder="Assesment" appendTo="body"
+                                                            optionLabel="name">
+                                                        </p-dropdown>
+                                                    </div>
+
+
+                                                </div>
+                                            </p-panel>
+                                        </div>
+                                        <div class="p-col-12 p-md-12">
+                                            <p-panel header="Laka Lantas" [toggleable]="true" [collapsed]="true">
+                                                <div class="p-grid">
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label" for="input">Status Lakalantas</label>
+                                                        <p-dropdown [options]="listLakaLantas"
+                                                            [(ngModel)]="model.lakaLantas" [filter]="true"
+                                                            [showClear]="true" placeholder="Status Lakalantas "
+                                                            appendTo="body" optionLabel="name"
+                                                            (onChange)="cekLaka(true)">
+                                                        </p-dropdown>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label" for="input">Lokasi Provinsi</label>
+                                                        <p-dropdown [options]="listProv" [(ngModel)]="model.prov"
+                                                            [filter]="true" [showClear]="true" placeholder="Provinsi"
+                                                            optionLabel="nama" (onChange)="setData('kab',model.prov)"
+                                                            appendTo="body">
+                                                        </p-dropdown>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label" for="input">Kabupaten</label>
+                                                        <p-dropdown [options]="listKab" [(ngModel)]="model.kab"
+                                                            [filter]="true" [showClear]="true" placeholder="Kabupaten"
+                                                            optionLabel="nama" (onChange)="setData('kec',model.kab)"
+                                                            appendTo="body">
+                                                        </p-dropdown>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label" for="input">Kecamatan</label>
+                                                        <p-dropdown [options]="listKec" [(ngModel)]="model.kec"
+                                                            [filter]="true" [showClear]="true" placeholder="Kecamatan"
+                                                            optionLabel="nama" appendTo="body">
+                                                        </p-dropdown>
+                                                    </div>
+
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label" for="input"> Tgl Lakalantas </label>
+                                                        <p-calendar [(ngModel)]="model.tglLakalantas" [showIcon]="true"
+                                                            [monthNavigator]="true" [yearNavigator]="true"
+                                                            yearRange="1980:2030" [showTime]="false"
+                                                            dateFormat="dd-mm-yy" placeholder="dd-mm-yy">
+                                                        </p-calendar>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label" for="input">Keterangan Lakalantas</label>
+                                                        <input type="text" [(ngModel)]="model.keteranganLaka" pInputText
+                                                            placeholder="Keterangan Lakalantas" />
+                                                    </div>
+
+                                                    <div class="p-col-12 p-md-12">
+                                                        <p-checkbox [(ngModel)]="model.suplesi" binary="true"
+                                                            inputId="model.suplesi">
+                                                        </p-checkbox>
+                                                        <label class="label" for="model.suplesi">Status Suplesi</label>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-12">
+                                                        <label class="label" for="input">No SEP Suplesi</label>
+                                                        <input type="text" [(ngModel)]="model.nomorSepSuplesi"
+                                                            pInputText placeholder="No SEP Suplesi"
+                                                            [disabled]="!model.suplesi" />
+                                                    </div>
+
+                                                </div>
+                                            </p-panel>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12 p-md-1 {{classsimpan}}">
+            <button pButton type="button" icon="pi pi-save" class="p-button p-mr-2" (click)="save()" pTooltip="Simpan"
+                label="Simpan" [disabled]="isSimpan"></button>
+        </div>
+
+        <div class="p-col-12 p-md-1">
+            <button pButton type="button" icon="pi pi-arrow-left" class="p-button p-button-danger p-mr-2"
+                (click)="cancel()" pTooltip="Kembali" label="Batal"></button>
+        </div>
+        <div class="p-col-12 p-md-1" *ngIf="isNext">
+            <p-splitButton label="Action" styleClass="p-button-success" icon="pi pi-ellipsis-v" [model]="listBtn">
+            </p-splitButton>
+        </div>
+
+    </div>
+</div>
+
+<p-dialog header="Histori Pelayanan Peserta" [(visible)]="isHistory" [modal]="true" [style]="{width: '80vw'}"
+    [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <div class="p-col-12">
+                <p-table [value]="dataSourceHistoriPeserta" styleClass="p-datatable-customers" [rows]="20"
+                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                    scrollable="true" [pageLinks]="5">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 30px">No</th>
+                            <th style="width: 150px"> No SEP</th>
+                            <th style="width: 120px"> Tgl SEP</th>
+                            <th style="width: 250px"> No Rujukan</th>
+                            <th style="width: 120px"> No Kartu </th>
+                            <th style="width: 120px"> Nama </th>
+                            <th style="width: 120px"> Kelas </th>
+                            <th style="width: 120px"> Spesialis</th>
+                            <th style="width: 200px"> Diagnosa</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                        <tr>
+                            <td style="width: 30px">{{index}}</td>
+                            <td style="width: 150px;cursor: pointer;" (click)="setSep(item)">
+                                <p-tag severity="info" value="{{item.noSep}}"></p-tag>
+                            </td>
+                            <td style="width: 120px">{{item.tglSep}}</td>
+                            <td style="width: 250px">{{item.noRujukan}}</td>
+                            <td style="width: 120px">{{item.noKartu}}</td>
+                            <td style="width: 120px">{{item.namaPeserta}}</td>
+                            <td style="width: 120px">{{item.kelasRawat}}</td>
+                            <td style="width: 120px">{{item.poli}}</td>
+                            <td style="width: 200px">{{item.diagnosa}}</td>
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="isHistory=false" label="Tutup" styleClass="p-button-text">
+        </p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Rujukan" [(visible)]="isRujukan" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <div class="p-col-12">
+                <p-table [value]="listNoRujukanMulti" styleClass="p-datatable-customers" [rows]="20"
+                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                    scrollable="true" [pageLinks]="5">
+                    <ng-template pTemplate="header">
+                        <tr>
+                            <th style="width: 30px">No</th>
+                            <th style="width: 150px"> No Kunjungan</th>
+                            <th style="width: 120px"> Spesialis</th>
+                            <th style="width: 100px"> Tgl Kunjungan</th>
+                            <th style="width: 100px"> Kode Faskes </th>
+                            <th style="width: 200px"> Nama Faskes </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                        <tr>
+
+                            <td style="width: 30px">{{index}}</td>
+                            <td style="width: 150px;cursor: pointer;" (click)="setRujukan(item)">
+                                <p-tag severity="info" value="{{item.noKunjungan}}"></p-tag>
+                            </td>
+                            <td style="width: 120px">{{item.poliRujukan.nama}}</td>
+                            <td style="width: 100px">{{item.tglKunjungan}}</td>
+                            <td style="width: 100px">{{item.provPerujuk.kode}}</td>
+                            <td style="width: 200px">{{item.provPerujuk.nama}}</td>
+
+                        </tr>
+                    </ng-template>
+
+                </p-table>
+            </div>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="isRujukan=false" label="Tutup" styleClass="p-button-text">
+        </p-button>
+    </ng-template>
+</p-dialog>
+<p-dialog header="Rencana Kontrol/SPRI " [(visible)]="popUpRSPRI" [modal]="true" [maximizable]="true" [draggable]="true"
+    [style]="{'width': '70vw'}" [resizable]="true">
+
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <p-tabView [(activeIndex)]="index">
+                <p-tabPanel header="Riwayat" leftIcon="fa fa-th-list">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Filter</label>
+                                    <p-dropdown [options]="listFilter" [(ngModel)]="kontrol.filter" [filter]="true"
+                                        [showClear]="true" placeholder="Filter" optionLabel="nama" appendTo="body">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Awal</label>
+                                    <p-calendar [(ngModel)]="kontrol.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                        appendTo="body" [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Akhir</label>
+                                    <p-calendar [(ngModel)]="kontrol.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                                        appendTo="body" [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+
+
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        pTooltip="Cari" (click)="loadGridKontrol()"></button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-col-12">
+                            <p-table [value]="dataSourceSPRI" styleClass="p-datatable-customers" [rows]="20"
+                                [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                                scrollable="true" [pageLinks]="5">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th style="width: 130px">Aksi</th>
+                                        <th style="width: 30px">No</th>
+                                        <th style="width: 150px"> No Surat</th>
+                                        <th style="width: 120px"> Jenis</th>
+                                        <th style="width: 100px"> Tgl Rencana Kontrol</th>
+                                        <th style="width: 200px"> No SEP Asal </th>
+                                        <th style="width: 200px"> Poli Asal </th>
+                                        <th style="width: 200px"> Poli Tujuan </th>
+                                        <th style="width: 200px"> DPJP </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                                    <tr>
+                                        <td style="width: 130px">
+                                            <button pButton type="button" icon="fa fa-edit"
+                                                class="p-button-rounded p-button-success p-mr-2" pTooltip="Edit"
+                                                label="" (click)="edit(item)"></button>
+
+                                            <button pButton type="button" icon="fa fa-trash"
+                                                class="p-button-rounded p-button-danger p-mr-2"
+                                                (click)="hapusRuj(item)" pTooltip="Hapus" label=""></button>
+
+                                            <button pButton type="button" icon="fa fa-print"
+                                                class="p-button-rounded p-button-info p-mr-2"
+                                                (click)="cetak(item)" pTooltip="Cetak" label=""></button>
+
+                                        </td>
+                                        <td style="width: 30px">{{index}}</td>
+                                        <td style="width: 150px;cursor: pointer;" (click)="setKontrol(item)">
+                                            <p-tag severity="info" value="{{item.noSuratKontrol}}"></p-tag>
+                                        </td>
+                                        <td style="width: 120px">{{item.namaJnsKontrol}}</td>
+                                        <td style="width: 100px">{{item.tglRencanaKontrol}}</td>
+                                        <td style="width: 200px">{{item.noSepAsalKontrol}}</td>
+                                        <td style="width: 200px">{{item.namaPoliAsal}}</td>
+                                        <td style="width: 200px">{{item.namaPoliTujuan}}</td>
+                                        <td style="width: 200px">{{item.namaDokter}}</td>
+
+                                    </tr>
+                                </ng-template>
+
+                            </p-table>
+                        </div>
+                    </div>
+                </p-tabPanel>
+                <p-tabPanel header="Buat Baru" leftIcon="fa fa-plus">
+
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-12">
+
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-6">
+                                            <p-radioButton inputId="ri" name="pelayanan" [value]="1"
+                                                [(ngModel)]="kon.jenisPelayanan"
+                                                (onClick)="clickRad(kon.jenisPelayanan)">
+                                            </p-radioButton>
+                                            <label for="ri"> SPRI</label>
+                                        </div>
+                                        <div class="p-col-12 p-md-6">
+                                            <p-radioButton inputId="rj" name="pelayanan" [value]="2"
+                                                [(ngModel)]="kon.jenisPelayanan"
+                                                (onClick)="clickRad(kon.jenisPelayanan)">
+                                            </p-radioButton>
+                                            <label for="rj"> Rencana Kontrol</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-6" *ngIf="kon.jenisPelayanan == '2'">
+                                            <label class="label" for="input">No SEP </label>
+                                            <input type="text" [(ngModel)]="kon.sep" pInputText placeholder="No SEP" />
+                                        </div>
+                                        <div class="p-col-12 p-md-6" *ngIf="kon.jenisPelayanan != '2'">
+                                            <label class="label" for="input">No Kartu </label>
+                                            <input type="text" [(ngModel)]="kon.noKartu" pInputText
+                                                placeholder="No Kartu" />
+
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-md-12" *ngIf="enabledDetail">
+                                        <div class="p-grid">
+
+                                            <div class="p-col-12 p-md-3">
+                                                <label class="label" for="input">Tgl SEP </label>
+                                                <input type="text" [(ngModel)]="kon.tglSep" pInputText [disabled]="true"
+                                                    placeholder="Tgl SEP" />
+                                            </div>
+
+                                            <div class="p-col-12 p-md-3">
+                                                <label class="label" for="input">Jenis Pelayanan </label>
+                                                <input type="text" [(ngModel)]="kon.jnsPelayanan" pInputText
+                                                    [disabled]="true" placeholder="Jenis Pelayanan" />
+                                            </div>
+                                            <div class="p-col-12 p-md-3">
+                                                <label class="label" for="input">Spesialis </label>
+                                                <input type="text" [(ngModel)]="kon.poli" pInputText [disabled]="true"
+                                                    placeholder="Spesialis" />
+                                            </div>
+                                            <div class="p-col-12 p-md-3">
+                                                <label class="label" for="input">Diagnosa </label>
+                                                <input type="text" [(ngModel)]="kon.diagnosa" pInputText
+                                                    [disabled]="true" placeholder="Diagnosa" />
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-md-12" *ngIf="enabledDetail2">
+                                        <div class="p-grid">
+
+                                            <div class="p-col-12 p-md-3">
+                                                <label class="label" for="input">Status </label>
+                                                <input type="text" [(ngModel)]="kon.peserta.statusPeserta.keterangan"
+                                                    pInputText [disabled]="true" placeholder="Status" />
+                                            </div>
+                                            <div class="p-col-12 p-md-3">
+                                                <label class="label" for="input">Hak Kelas </label>
+                                                <input type="text" [(ngModel)]="kon.peserta.hakKelas.keterangan"
+                                                    pInputText [disabled]="true" placeholder="Hak Kelas" />
+                                            </div>
+                                            <div class="p-col-12 p-md-3">
+                                                <label class="label" for="input">Provider </label>
+                                                <input type="text" [(ngModel)]="kon.peserta.provUmum.nmProvider"
+                                                    pInputText [disabled]="true" placeholder="Provider" />
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-12" *ngIf="enabledDetail2 || enabledDetail">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-3">
+                                                <label class="label" for="input"> Surat Kontrol /SPRI </label>
+                                                <input type="text" [(ngModel)]="kon.noSuratKontrol" pInputText
+                                                    placeholder="Isi Untuk Edit" [disabled]="true" />
+                                            </div>
+                                            <div class="p-col-12 p-md-3">
+                                                <label class="label" for="input">Tgl Rencana Kontrol</label>
+                                                <p-calendar [(ngModel)]="kon.tglRencanaKontrol" [showIcon]="true"
+                                                    [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                                    [showTime]="false" dateFormat="yy-mm-dd" placeholder="yy-mm-dd"
+                                                    appendTo="body">
+                                                </p-calendar>
+                                            </div>
+                                            <div class="p-col-12 p-md-3">
+                                                <label class="label" for="input">Poli </label>
+                                                <p-autoComplete [(ngModel)]="kon.poliKontrol" [suggestions]="listPoli"
+                                                    (completeMethod)="filterAutoCom($event,'listPoli','referensi/poli/' + $event.query,'poli')"
+                                                    field="nama" [dropdown]="true"
+                                                    placeholder="Ketik minimal 3 karakter"
+                                                    (onSelect)="selectPoli($event)" appendTo="body">
+                                                </p-autoComplete>
+                                            </div>
+                                            <div class="p-col-12 p-md-3">
+                                                <label class="label" for="input">DPJP </label>
+                                                <p-dropdown [options]="listDPJPKontrol" [(ngModel)]="kon.kodeDokter"
+                                                    [filter]="true" [showClear]="true" placeholder="DPJP"
+                                                    optionLabel="nama" appendTo="body">
+                                                </p-dropdown>
+
+                                            </div>
+
+                                        </div>
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-2 p-md-offset-6" style="margin-top: 16px;"
+                                                *ngIf="kon.jenisPelayanan == '2'">
+                                                <button pButton pRipple type="button" icon="pi pi-save"
+                                                    class="p-button-primary p-mr-1" pTooltip="Simpan" label="Simpan"
+                                                    (click)="post('RencanaKontrol/insert','insertRencana', 'jsonResult5')"></button>
+
+                                            </div>
+                                            <div class="p-col-12 p-md-2" style="margin-top: 16px;"
+                                                *ngIf="kon.jenisPelayanan == '1'">
+                                                <button pButton pRipple type="button" icon="pi pi-save"
+                                                    class="p-button-primary p-mr-1" pTooltip="Simpan" label="Simpan"
+                                                    (click)="post('RencanaKontrol/InsertSPRI','insertSPRI', 'jsonResult5')"></button>
+
+                                            </div>
+                                            <div class="p-col-12 p-md-2" style="margin-top: 16px;">
+                                                <button pButton pRipple label="Batal" icon="pi pi-times"
+                                                    class="p-button-danger p-mr-1" (click)="clear()"></button>
+
+                                            </div>
+                                            <div class="p-col-12 p-md-2" style="margin-top: 16px;">
+                                                <button pButton pRipple label="Cetak" icon="pi pi-print"
+                                                    [disabled]="disabledCetak" class="p-button-help"
+                                                    (click)="cetakAfter()"></button>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </p-tabPanel>
+            </p-tabView>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-check" (click)="popUpRSPRI=false" label="Tutup" styleClass="p-button-text">
+        </p-button>
+    </ng-template>
+</p-dialog>
+
+<p-dialog header="Qty Print" [(visible)]="pop_cetakLabelPasien" [modal]="true" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [style]="{width: '450px', minWidth: '450px'}">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+
+            <div class="p-col-12 p-md-8">
+                <label class="label" for="input">Qty </label>
+                <p-inputNumber [(ngModel)]="item.qtyPrint" [showButtons]="true" placeholder="Qty" inputId="stacked">
+                </p-inputNumber>
+            </div>
+            <div class="p-col-12 p-md-4" style="margin-top: 15px;">
+                <button pButton type="submit" icon="fa fa-print" pTooltip="Cetak Label Pasien"
+                    (click)="cetakLabelPrint()" label="Cetak"></button>
+            </div>
+        </div>
+    </div>
+</p-dialog>

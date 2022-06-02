@@ -1,0 +1,296 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog>
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>INACBG's E-Klaim</h4>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Instalasi</label>
+                    <p-dropdown [options]="listDepartemen" [(ngModel)]="item.instalasi" [filter]="true"
+                        [showClear]="true" placeholder="Instalasi" optionLabel="departemen" (onChange)="isiRuangan()">
+                    </p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Ruangan</label>
+                    <p-dropdown [options]="listRuangan" [(ngModel)]="item.ruangan" [filter]="true" [showClear]="true"
+                        placeholder="Ruangan" optionLabel="ruangan"></p-dropdown>
+                </div>
+               
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Periode Awal</label>
+                    <p-calendar [(ngModel)]="item.periodeAwal" [showIcon]="true" [monthNavigator]="true"
+                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd"
+                        [disabled]="disableTgl">
+                    </p-calendar>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Periode Akhir</label>
+                    <p-calendar [(ngModel)]="item.periodeAkhir" [showIcon]="true" [monthNavigator]="true"
+                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd"
+                        [disabled]="disableTgl">
+                    </p-calendar>
+                </div>
+               
+                <div class="p-col-12 p-md-3">
+                    <label class="label" for="input">Nama Pasien </label>
+                    <input type="text" [(ngModel)]="item.nama" pInputText (keyup.enter)="cari()"
+                        placeholder="Nama Pasien" />
+                </div>
+                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                    <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()" class="p-mr-1"></button>
+                    <button pButton type="button" class="p-button-success" icon="pi pi-filter" pTooltip="Filter Detail"
+                    (click)="filter()"></button>
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12">
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="left">
+
+                    <button type="button" pButton pRipplee label="New Klaim" icon="pi pi-plus" (click)="new_claim()"
+                        class="p-button-success p-mr-2" pTooltip="Kirim semua data ke INACBGs" tooltipPosition="bottom"></button>
+                </ng-template>
+
+            </p-toolbar>
+            <p-table #dt [columns]="column" [value]="dataTable" [(selection)]="selected"
+                styleClass="p-datatable-customers" [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                sortMode="multiple" selectionMode="single">
+        
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th width="100px">
+                            Aksi
+                        </th>
+
+                        <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                            style="width: {{column.width}}">
+                            {{column.header}} <p-sortIcon field="{{column.field}}"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                        <td width="100px">
+                            <p-splitButton label="" styleClass="p-button-help p-ml-auto"
+                                [style]="{'display':'inline-flex'}" icon="pi pi-ellipsis-v" [model]="listBtn"
+                                (onDropdownClick)="selectData(rowData)" appendTo="body" ></p-splitButton>
+                        </td>
+
+                        <td *ngFor="let column of columns" style="width: {{column.width}}">
+                            <!-- <span [class]="'label-badge ' + rowData[column.field]==false ? 'danger':'green'">  -->
+                            {{rowData[column.field]}}
+                            <!-- </span> -->
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="loadingbody" let-columns="columns">
+                    <tr style="height:34px">
+                        <td *ngFor="let col of columns">
+                            <div class="loading-text"></div>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <!-- <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-grid">
+                   
+
+
+                </div>
+            </div>
+        </div> -->
+        <!-- <div class="p-grid">
+            <div class="p-col-12 p-md-2">
+                <button pButton pRipple label="New Klaim" icon="pi pi-plus" class="p-button p-mr-2"
+                    (click)="new_claim()"></button>
+            </div>
+            <div class="p-col-12 p-md-2">
+                <button pButton pRipple label="Grouping" icon="pi pi-clone" class="p-button p-mr-2"
+                    (click)="grouping()"></button>
+            </div>
+            <div class="p-col-12 p-md-2">
+                <button pButton pRipple label="Final Klaim" icon="pi pi-check-circle" class="p-button p-mr-2"
+                    (click)="claim_final()"></button>
+
+            </div>
+            <div class="p-col-12 p-md-2">
+                <button pButton pRipple label="Klaim Individual" icon="pi pi-user" class="p-button p-mr-2"
+                    (click)="send_claim_individual()"></button>
+            </div>
+            <div class="p-col-12 p-md-2">
+                <button pButton pRipple label="Cetak Klaim" icon="pi pi-print" class="p-button p-mr-2"
+                    (click)="claim_print()"></button>
+            </div>
+            <div class="p-col-12 p-md-2">
+                <button pButton pRipple label="Top UP" icon="pi pi-cloud-upload" class="p-button p-mr-2"
+                    (click)="grouper_2()"></button>
+            </div>
+            <div class="p-col-12 p-md-2">
+                <button pButton pRipple label="Edit Klaim" icon="pi pi-user-edit" class="p-button p-mr-2"
+                    (click)="edit_claim()"></button>
+            </div>
+            <div class="p-col-12 p-md-2">
+                <button pButton pRipple label="Hapus Klaim" icon="pi pi-trash" class="p-button p-mr-2"
+                    (click)="delete_claim()"></button>
+            </div>
+   
+            <div class="p-col-12 p-md-2">
+                <button pButton pRipple label="Pengajuan Covid-19" icon="pi pi-file" class="p-button p-mr-2"
+                    (click)="genPengajuan()"></button>
+            </div>
+            <div class="p-col-12 p-md-2">
+                <button pButton pRipple label="Upload File Covid-19" icon="pi pi-upload" class="p-button p-mr-2"
+                    (click)="uploadFile()"></button>
+            </div>
+            <div class="p-col-12 p-md-2">
+                <button pButton pRipple label="Detail Tagihan" icon="pi pi-th-large" class="p-button p-mr-2"
+                    (click)="detailTagihan()"></button>
+            </div>
+        </div> -->
+    </div>
+
+    <p-dialog header="Pilih Prosedur Top Up" [(visible)]="popupCMG" [modal]="true" [maximizable]="true"
+        [draggable]="true" [resizable]="true" [style]="{width: '450px', minWidth: '450px'}">
+        <div class="p-fluid p-formgrid ">
+            <div class="p-grid">
+
+                <div class="p-col-12 p-md-12">
+                    <label class="label" for="input">Special Procedure</label>
+                    <p-dropdown [options]="listspecialprocedure" [(ngModel)]="item.specialprocedure" [filter]="true"
+                        [showClear]="true" placeholder="" optionLabel="description" appendTo="body"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-12">
+                    <label class="label" for="input">Special Prosthesis</label>
+                    <p-dropdown [options]="listspecialprosthesis" [(ngModel)]="item.specialprosthesis" [filter]="true"
+                        [showClear]="true" placeholder="" optionLabel="description" appendTo="body"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-12">
+                    <label class="label" for="input">Special Investigation</label>
+                    <p-dropdown [options]="listspecialinvestigation" [(ngModel)]="item.specialinvestigation"
+                        [filter]="true" [showClear]="true" placeholder="" optionLabel="description" appendTo="body">
+                    </p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-12">
+                    <label class="label" for="input">Special Drug</label>
+                    <p-dropdown [options]="listspecialdrug" [(ngModel)]="item.specialdrug" [filter]="true"
+                        [showClear]="true" placeholder="" optionLabel="description" appendTo="body">
+                    </p-dropdown>
+                </div>
+
+                <div class="p-col-12 p-md-6" style="margin-top: 15px;">
+                    <button pButton type="submit" icon="fa fa-save" pTooltip="Simpan" (click)="simpangrouper2()"
+                        label="Simpan"></button>
+                </div>
+            </div>
+        </div>
+    </p-dialog>
+
+    <p-dialog header="Pengajuan Klaim" [(visible)]="popupPengajuanKlaim" [modal]="true" [maximizable]="true"
+        [draggable]="true" [resizable]="true" [style]="{width: '450px', minWidth: '450px'}">
+        <div class="p-fluid p-formgrid ">
+            <div class="p-grid">
+
+                <div class="p-col-12 p-md-12">
+                    <label class="label" for="input">ICU dengan ventilator</label>
+                    <input type="text" [(ngModel)]="item.icusatu" pInputText />
+                </div>
+                <div class="p-col-12 p-md-12">
+                    <label class="label" for="input">ICU tanpa ventilator</label>
+                    <input type="text" [(ngModel)]="item.icudua" pInputText />
+                </div>
+                <div class="p-col-12 p-md-12">
+                    <label class="label" for="input">Isolasi tekanan negatif dengan ventilator</label>
+                    <input type="text" [(ngModel)]="item.isosatu" pInputText />
+                </div>
+                <div class="p-col-12 p-md-12">
+                    <label class="label" for="input">Isolasi tekanan negatif tanpa ventilator</label>
+                    <input type="text" [(ngModel)]="item.isodua" pInputText />
+                </div>
+                <div class="p-col-12 p-md-12">
+                    <label class="label" for="input">Isolasi non tekanan negatif dengan ventilator</label>
+                    <input type="text" [(ngModel)]="item.isotiga" pInputText />
+                </div>
+                <div class="p-col-12 p-md-12">
+                    <label class="label" for="input"> Isolasi non tekanan negatif tanpa ventilator</label>
+                    <input type="text" [(ngModel)]="item.isoempat" pInputText />
+                </div>
+                <div class="p-col-12 p-md-6" style="margin-top: 15px;">
+                    <button pButton type="submit" icon="fa fa-save" pTooltip="Simpan" (click)="push_pengajuan()"
+                        label="Simpan"></button>
+                </div>
+            </div>
+        </div>
+    </p-dialog>
+
+    <p-dialog header="Upload File Covid-19" [(visible)]="popupUploadFile" [modal]="true" [maximizable]="true"
+        [draggable]="true" [resizable]="true" [style]="{width: '450px', minWidth: '450px'}">
+        <div class="p-fluid p-formgrid ">
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <!-- <label class="label-required">Pilih File</label> -->
+                    <p-fileUpload #fileUpload mode="basic" name="demo[]" chooseLabel="Browse" maxFileSize="1000000"
+                        (onSelect)="onSelect($event)" accept=".xlsx,application/msexcel" multiple="false">
+                    </p-fileUpload>
+
+                </div>
+                <div class="p-col-12">
+                    <textarea [(ngModel)]="item.base64textarea" rows="5" cols="30" pInputTextarea
+                        placeholder="Base64 will appear here"></textarea>
+                </div>
+                <div class="p-col-12">
+                    <label class="label-required">Jenis</label>
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-6 p-field-checkbox" *ngFor="let items of listFaskes">
+                            <p-radioButton [inputId]="items.id" [value]="items" [(ngModel)]="item.jenisfaskes">
+                            </p-radioButton>
+                            <label [for]="items.id">{{items.name}}</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-6" style="margin-top: 15px;">
+                    <button pButton type="submit" icon="fa fa-save" pTooltip="Upload File" (click)="upload()"
+                        label="Upload"></button>
+                </div>
+            </div>
+        </div>
+    </p-dialog>
+
+    <p-dialog header="Filter" [(visible)]="popFilter" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="true">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-3">
+                <label class="label" for="input">No Rekam Medis </label>
+                <input type="text" [(ngModel)]="item.noRm" pInputText (keyup.enter)="cari()"
+                    placeholder="No Rekam Medis" />
+            </div>
+            <div class="p-col-12 p-md-3">
+                <label class="label" for="input">Noregistrasi</label>
+                <input type="text" [(ngModel)]="item.noReg" pInputText (keyup.enter)="cari()"
+                    placeholder="Noregistrasi" />
+            </div>
+            <div class="p-col-12 p-md-4">
+                <label class="label" for="input">Tipe Pasien</label>
+                <p-dropdown [options]="listKelompokPasien" [(ngModel)]="item.kelompokpasien" [filter]="true"
+                    [showClear]="true" placeholder="Tipe Pasien" optionLabel="kelompokpasien"></p-dropdown>
+            </div>
+            <div class="p-col-12 p-md-2">
+                <label class="label" for="input">Rows</label>
+                <input type="text" [(ngModel)]="item.jmlRows" pInputText (keyup.enter)="cari()"
+                    placeholder="Jml Rows" />
+            </div>
+
+
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-filter" (click)="cariFilter()" label="Filter" class="p-button-success">
+        </p-button>
+        <p-button icon="pi pi-close" (click)="clearFilter()" label="Clear" styleClass="p-button-text">
+        </p-button>
+    </ng-template>
+</p-dialog>

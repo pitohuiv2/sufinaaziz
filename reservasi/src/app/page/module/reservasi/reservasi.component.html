@@ -1,0 +1,1385 @@
+<p-confirmDialog header="Konfirmasi" icon="fa fa-question-circle"></p-confirmDialog>
+
+<!-- <p-tabMenu [model]="items2" [activeItem]="activeItem" (click)="activateMenu()" #menuItems></p-tabMenu> -->
+<!-- <p-tabMenu [model]="items2" [activeItem]="activeItem" (click)="activateMenu()" #menuItems>
+  <ng-template pTemplate="item" let-item let-i="index">
+    <div style="  position: relative;
+    text-align: center;
+    min-width: 10em;">
+      <div class="ui-menuitem-icon ui-menu-template-icon" [ngClass]="item.icon" *ngIf="item.icon"></div>
+      <div class="ui-menuitem-text">
+        {{item.label}}
+      </div>
+    </div>
+  </ng-template>
+</p-tabMenu> -->
+<div style="padding:0 10px 0 10px">
+    <div *ngIf="activeItem.label == 'Reservasi' && !isBuktiReservasi">
+        <div class="card" style="margin-top: 5px;">
+            <p-steps [model]="stepsMenuItems" [(activeIndex)]="activeIndex" [readonly]="true"></p-steps>
+        </div>
+        <form [formGroup]="formGroup">
+            <div class="card card-w-title" *ngIf="activeIndex == 0">
+                <h4>Pilih Jenis Pasien</h4>
+                <div class="p-grid">
+                    <!-- <div class="p-col-12"> -->
+                    <div class="p-col-6 p-md-6 p-lg-6" *ngFor="let items of listJenisPasien"
+                        (click)="selectedJenis2(items)">
+                        <mat-card class="example-card" [class.selected]="selection.selectedJenis2 == items"
+                            [class.kanan]="items.style == 'kanan'">
+                            <mat-card-header>
+                                <div mat-card-avatar class="{{items.images}}"></div>
+                                <mat-card-title>{{items.jenis}}</mat-card-title>
+                            </mat-card-header>
+                            <img class="img-responsive img-thumbnail-humas" src="{{items.src}}" alt="Baru">
+                        </mat-card>
+                    </div>
+
+                    <!-- </div> -->
+                    <div class="p-col" *ngIf="isLama || isBaru">
+                        <p-fieldset legend="Identitas Pasien" [toggleable]="true">
+                            <div class="p-grid" *ngIf="isBaru">
+                                <div class="p-col-12 p-md-12 p-lg-3"
+                                    matTooltip="Pencarian NIK Dukcapil, Klik Tombol Cari untuk memproses data">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>NIK</mat-label>
+                                        <input matInput placeholder="NIK" formControlName="nik"
+                                            (keyup.enter)="getNik()">
+                                        <mat-icon (click)="getNik()" matSuffix>search</mat-icon>
+                                        <mat-hint *ngIf="formGroup.get('nik').value">Pencarian NIK Dukcapil</mat-hint>
+                                    </mat-form-field>
+
+                                </div>
+
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <!-- <input type="password" id="ssn" maxlength=9 /> -->
+                                    <mat-form-field appearance="fill" *ngIf="!isDukcapil">
+                                        <mat-label>Nama Pasien</mat-label>
+                                        <input matInput placeholder="Nama Pasien" formControlName="namaPasien">
+                                        <mat-icon matSuffix>account_circle</mat-icon>
+                                    </mat-form-field>
+
+                                    <mat-form-field appearance="fill" *ngIf="isDukcapil">
+                                        <mat-label>Nama Pasien</mat-label>
+                                        <input matInput placeholder="Nama Pasien" formControlName="namaPasienDukcapil">
+                                        <mat-icon matSuffix>account_circle</mat-icon>
+                                    </mat-form-field>
+
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Tgl Lahir</mat-label>
+                                        <input matInput [matDatepicker]="picker" placeholder="Tgl lahir"
+                                            formControlName="tglLahir">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                        <!-- <mat-hint *ngIf="formGroup.get('tglLahir').value">ddMMyyyy</mat-hint>  -->
+                                        <!-- <mat-icon matSuffix>search</mat-icon>
+                    -->
+                                    </mat-form-field>
+                                    <!-- <mat-form-field>
+                  <input matInput [matDatepicker]="picker" placeholder="Tgl lahir" formControlName="tglLahir">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field> -->
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Jenis Kelamin</mat-label>
+                                        <mat-select formControlName="jenisKelamin">
+                                            <mat-option *ngFor="let food of listJK" [value]="food">
+                                                {{food.jeniskelamin}}
+                                            </mat-option>
+                                        </mat-select>
+                                    </mat-form-field>
+                                    <!-- <mat-form-field>
+                  <mat-label>Jenis Kelamin</mat-label>
+                  <mat-select formControlName="jenisKelamin">
+                    <mat-option *ngFor="let food of listJK" [value]="food">
+                      {{food.jeniskelamin}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+                                </div>
+
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>No Telpon</mat-label>
+                                        <input matInput placeholder="No Telpon" formControlName="noTelpon">
+                                        <mat-icon matSuffix>phone</mat-icon>
+                                    </mat-form-field>
+                                </div>
+
+                            </div>
+                            <div class="p-col-12" *ngIf="isLama">
+                                <div class="p-col-12 p-md-12 p-lg-12">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>No RM / NIK</mat-label>
+                                        <input matInput placeholder="No RM / NIK" formControlName="noCm">
+                                        <button mat-button *ngIf="formGroup.get('noCm').value" matSuffix mat-icon-button
+                                            aria-label="Clear" (click)="formGroup.get('noCm').setValue('')">
+                                            <mat-icon>close</mat-icon>
+                                        </button>
+                                    </mat-form-field>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-6" *ngIf="isTglLahir">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Tgl lahir</mat-label>
+                                        <input matInput [matDatepicker]="picker" placeholder="Tgl lahir"
+                                            formControlName="tglLahirLama">
+                                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                                        <mat-datepicker #picker></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                            <div class="p-grid " *ngIf="isLama || isBaru && activeIndex ==0">
+
+                                <div class="p-col-12 p-md-12 p-lg-1 p-lg-offset-11">
+                                    <button type="button" pButton icon="fa fa-arrow-right" (click)="nextWizard(1)"
+                                        label="Selanjutnya"></button>
+                                </div>
+                            </div>
+                        </p-fieldset>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card card-w-title" *ngIf="activeIndex ==1">
+                <!-- <div class="card card-form-header"> -->
+                <h4>Pilih Poliklinik </h4>
+                <!-- </div> -->
+                <div class="p-grid p-fluid">
+                    <!-- <div class="p-col-12"> -->
+
+                    <!-- <div class="p-col-12 p-md-12 p-lg-1" *ngIf="isSloting">
+            <mat-form-field>
+              <input matInput type="time" placeholder="Jam Reservasi" formControlName="jamReservasi" />
+              <mat-datepicker-toggle matSuffix>
+                <mat-icon matDatepickerToggleIcon>alarm</mat-icon>
+              </mat-datepicker-toggle>
+            </mat-form-field>
+          </div> -->
+                    <div class="p-col-12 p-md-12 p-lg-3">
+                        <mat-form-field appearance="fill">
+                            <!-- <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="picker" placeholder="Choose a date">
+                  <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                  <mat-datepicker #picker></mat-datepicker> -->
+
+
+                            <mat-label>Tgl Reservasi</mat-label>
+                            <input matInput [matDatepickerFilter]="myFilter" [matDatepicker]="dp3" [min]="minDate"
+                                [max]="maxDate" placeholder="Tgl Reservasi" formControlName="tglReservasi"
+                                (dateChange)="getSlotting( $event)">
+                            <mat-datepicker-toggle matSuffix [for]="dp3"></mat-datepicker-toggle>
+                            <mat-datepicker #dp3 disabled="false"></mat-datepicker>
+                        </mat-form-field>
+                        <!-- <mat-form-field>
+              <input matInput [matDatepicker]="picker" [min]="minDate" [max]="maxDate"  placeholder="Tgl Reservasi"
+                formControlName="tglReservasi" disabled>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker disabled="false"></mat-datepicker>
+            </mat-form-field> -->
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-3">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Poliklinik </mat-label>
+                            <mat-select formControlName="poliKlinik" (selectionChange)="getSlotting($event)">
+                                <mat-option *ngFor="let ruang of listRuangan" [value]="ruang">
+                                    {{ruang.namaruangan}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="p-col-12 p-md-12 p-lg-3">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Jam Reservasi </mat-label>
+                            <mat-select formControlName="jamReservasi">
+                                <mat-option *ngFor="let jam of listJam" [value]="jam" [disabled]="jam.disable">
+                                    {{jam.jam}}
+
+                                </mat-option>
+                            </mat-select>
+
+                        </mat-form-field>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-3" *ngIf="isSloting">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Dokter </mat-label>
+                            <mat-select formControlName="dokter">
+                                <mat-option *ngFor="let dok of listDokter" [value]="dok">
+                                    {{dok.namalengkap}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                    <div class="p-col-12 p-md-12 p-lg-3">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Tipe Pembayaran </mat-label>
+                            <mat-select formControlName="tipePembayaran" (selectionChange)="changeTipeBayar($event)">
+                                <mat-option *ngFor="let tipe of listTipePembayaran" [value]="tipe">
+                                    {{tipe.kelompokpasien}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-3" *ngIf="isBPJS">
+                        <mat-form-field appearance="fill">
+                            <!-- (input)="onCariNoRujukan($event.target.value)" -->
+                            <mat-label>No Kartu Peserta</mat-label>
+                            <input matInput placeholder="No Kartu Peserta" formControlName="noKartuPeserta">
+                            <button mat-button *ngIf="formGroup.get('noKartuPeserta').value" matSuffix mat-icon-button
+                                aria-label="Clear" (click)="formGroup.get('noKartuPeserta').setValue('')">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-3" *ngIf="isBPJS">
+                        <mat-form-field appearance="fill">
+                            <mat-label>No Rujukan</mat-label>
+                            <input matInput placeholder="No Rujukan" formControlName="noRujukan">
+                            <button mat-button *ngIf="formGroup.get('noRujukan').value" matSuffix mat-icon-button
+                                aria-label="Clear" (click)="formGroup.get('noRujukan').setValue('')">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                        </mat-form-field>
+                    </div>
+                    <!-- <div class="p-col-12 p-md-6 p-lg-4" *ngFor="let ruang of listRuangan">
+
+          <mat-card class="poliklinik-card" (click)="selectedJenis(2)">
+            <mat-card-header>
+              <div mat-card-avatar class="example-header-image"></div>
+              <mat-card-title>{{ruang.namaruangan}}</mat-card-title>
+            </mat-card-header>
+            <img class="img-responsive img-thumbnail-humas"
+              src="../../../../../assets/humastemplate/images/kamar-perawatan-available.png" alt="Lama">
+          </mat-card> -->
+                    <!-- </div> -->
+
+                </div>
+                <div class="p-grid" *ngIf="isLama || isBaru && activeIndex ==1">
+                    <!-- <div class="p-col-12 p-md-12 p-lg-10">
+        </div> -->
+                    <div class="p-col-6 p-md-6 p-lg-1 p-lg-offset-10">
+                        <button type="button" pButton icon="fa fa-arrow-left" (click)="activeIndex = 0"
+                            label="Kembali"></button>
+                    </div>
+                    <div class="p-col-6 p-md-6 p-lg-1">
+                        <button type="button" pButton icon="fa fa-arrow-right" (click)="nextWizard(2)"
+                            label="Selanjutnya"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="card card-w-title" *ngIf="activeIndex ==2">
+                <!-- <div class="card card-form-header"> -->
+                <h4>Resume Jadwal Reservasi</h4>
+                <!-- </div> -->
+
+                   
+                <div class="p-grid p-fluid">
+                     <div class="p-col-12 tambah-panjang">
+                  
+                                <div class="p-grid">
+                    <!-- <div class="p-col-12"> -->
+                    <!-- <p-fieldset legend="Resume" [toggleable]="true"> -->
+                        <div class="p-col-12 p-md-12 p-lg-3" *ngIf="isLama">
+                            <mat-form-field appearance="fill">
+                                <mat-label>NIK</mat-label>
+                                <input matInput placeholder="NIK" disabled="true" formControlName="resumeNIK">
+                            </mat-form-field>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-3" *ngIf="isLama">
+                            <mat-form-field appearance="fill">
+                                <mat-label>No RM</mat-label>
+                                <input matInput placeholder="No RM" disabled="true" formControlName="resumeNoRM">
+                            </mat-form-field>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-3">
+                            <mat-form-field appearance="fill" *ngIf="!isDukcapil">
+                                <mat-label>Nama Pasien</mat-label>
+                                <input matInput placeholder="Nama Pasien" disabled="true" formControlName="resumeNama">
+                            </mat-form-field>
+                            <mat-form-field appearance="fill" *ngIf="isDukcapil">
+                                <mat-label>Nama Pasien</mat-label>
+                                <input matInput placeholder="Nama Pasien" disabled="true"
+                                    formControlName="resumeNamaDukcapil">
+                            </mat-form-field>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Tgl Lahir</mat-label>
+                                <input matInput placeholder="Tgl Lahir" disabled="true" formControlName="resumeTglLahir">
+                            </mat-form-field>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Jenis Kelamin</mat-label>
+                                <input matInput placeholder="Jenis Kelamin" disabled="true" formControlName="resumeJK">
+                            </mat-form-field>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>No Telpon</mat-label>
+                                <input matInput placeholder="No Telpon" disabled="true" formControlName="resumeNoTelp">
+                            </mat-form-field>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Tgl Reservasi</mat-label>
+                                <input matInput placeholder="Tgl Reservasi" disabled="true"
+                                    formControlName="resumeTglReservasi">
+                            </mat-form-field>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Poliklinik</mat-label>
+                                <input matInput placeholder="Poliklinik" disabled="true" formControlName="resumePoli">
+                            </mat-form-field>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Dokter</mat-label>
+                                <input matInput placeholder="Dokter" disabled="true" formControlName="resumeDokter">
+                            </mat-form-field>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>Tipe Pembayaran</mat-label>
+                                <input matInput placeholder="Tipe Pembayaran" disabled="true" formControlName="resumeTipe">
+                            </mat-form-field>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>No Kartu Peserta</mat-label>
+                                <input matInput placeholder="No Kartu Peserta" disabled="true" formControlName="resumNoka">
+                            </mat-form-field>
+                        </div>
+                        <div class="p-col-12 p-md-12 p-lg-3">
+                            <mat-form-field appearance="fill">
+                                <mat-label>No Rujukan</mat-label>
+                                <input matInput placeholder="No Rujukan" disabled="true" formControlName="resumNoRujukan">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <!-- </p-fieldset> -->
+                    <!-- </div> -->
+                   
+                </div>
+            </div>
+                <div class="p-grid" *ngIf="isLama || isBaru && activeIndex ==2" style="margin-top:-20px; ;">
+
+                    <div class="p-col-6 p-md-6 p-lg-1 p-lg-offset-10">
+                        <button type="button" pButton icon="fa fa-arrow-left" (click)="activeIndex = 1"
+                            label="Kembali"></button>
+                    </div>
+                    <div class="p-col-6 p-md-6 p-lg-1" *ngIf="simpanVisible">
+                        <button type="button" pButton icon="fa fa-save" (click)="save()" label="Simpan"></button>
+                    </div>
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div *ngIf="activeItem.label == 'History' && !isBuktiReservasi">
+
+        <form [formGroup]="formHistory">
+            <div class="card card-w-title" style="margin-top:10px">
+                <!-- <div class="card card-form-header"> -->
+                <h4>History Reservasi</h4>
+                <!-- </div> -->
+
+                <div class="p-grid p-fluid">
+                    <div class="p-col-12">
+                        <p-fieldset legend="Pencarian" [toggleable]="true">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>No RM / Nama Pasien</mat-label>
+                                        <input matInput placeholder="No RM / Nama Pasien" formControlName="noCm">
+                                        <mat-icon matSuffix>account_circle</mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <!-- <div class="p-col-12 p-md-12 p-lg-3">
+              <mat-form-field>
+                <input matInput placeholder="Nama Pasien" formControlName="namaPasien">
+              </mat-form-field>
+            </div> -->
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Tgl Lahir</mat-label>
+                                        <input matInput [matDatepicker]="pickerssss" placeholder="Tgl Lahir"
+                                            formControlName="tglLahir">
+                                        <mat-datepicker-toggle matSuffix [for]="pickerssss"></mat-datepicker-toggle>
+                                        <mat-datepicker #pickerssss></mat-datepicker>
+                                    </mat-form-field>
+                                </div>
+                                <div class="p-col-6 p-md-6 p-lg-1">
+                                    <button type="button" pButton icon="fa fa-search" (click)="findHistory()"
+                                        label="Cari"></button>
+                                </div>
+                                <div class="p-col-6 p-md-6  p-lg-1">
+                                    <button type="button" pButton icon="fa fa-refresh" (click)="clearHistory()"
+                                        label="Clear"></button>
+                                </div>
+                            </div>
+                        </p-fieldset>
+                    </div>
+                    <div class="p-col-12">
+                        <p-panel header="Data Pasien" [toggleable]="true" [collapsed]="isCollalsedPasien">
+                            <div class="p-grid">
+                                <!-- <p-fieldset legend="Data Pasien  " [toggleable]="true" [collapsed]="isCollalsedPasien"> -->
+                                <!-- <div class="p-col-12 p-md-12 p-lg-3" >
+              <mat-form-field>
+                <input matInput placeholder="No RM" disabled="true" formControlName="noCm">
+              </mat-form-field>
+            </div> -->
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>NIK</mat-label>
+                                        <input matInput placeholder="NIK" disabled="true" formControlName="nik">
+                                    </mat-form-field>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Nama Pasien</mat-label>
+                                        <input matInput placeholder="Nama Pasien" disabled="true"
+                                            formControlName="namaPasien">
+                                    </mat-form-field>
+                                </div>
+                                <!-- <div class="p-col-12 p-md-12 p-lg-3">
+              <mat-form-field>
+                <input matInput [matDatepicker]="picker2" placeholder="Tgl lahir" formControlName="tglLahir2">
+                <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                <mat-datepicker #picker2></mat-datepicker>
+              </mat-form-field>
+            </div> -->
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Tempat Lahir</mat-label>
+                                        <input matInput placeholder="Tempat Lahir" disabled="true"
+                                            formControlName="tempatLahir">
+                                    </mat-form-field>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Jenis Kelamin</mat-label>
+                                        <input matInput placeholder="Jenis Kelamin" disabled="true"
+                                            formControlName="jenisKelamin">
+                                    </mat-form-field>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>No Telpon</mat-label>
+                                        <input matInput placeholder="No Telpon" disabled="true"
+                                            formControlName="noTelpon">
+                                    </mat-form-field>
+                                </div>
+                                <!-- <div class="p-col-12 p-md-12 p-lg-3">
+              <mat-form-field>
+                <input matInput placeholder="No BPJS" disabled="true" formControlName="noBPJS">
+              </mat-form-field>
+            </div> -->
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>No BPJS / Asuransi</mat-label>
+                                        <input matInput placeholder="No BPJS / Asuransi" disabled="true"
+                                            formControlName="noAsuransi">
+                                    </mat-form-field>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Alamat</mat-label>
+                                        <input matInput placeholder="Alamat" disabled="true" formControlName="alamat">
+                                    </mat-form-field>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Pekerjaan</mat-label>
+                                        <input matInput placeholder="Pekerjaan" disabled="true"
+                                            formControlName="pekerjaan">
+                                    </mat-form-field>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>Pendidikan</mat-label>
+                                        <input matInput placeholder="Pendidikan" disabled="true"
+                                            formControlName="pendidikan">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </p-panel>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-12">
+                        <p-panel header="History" [toggleable]="true" [style]="{'margin-bottom':'20px'}">
+                            <div class="p-grid">
+                                <!-- <div class="p-col-12 p-md-12 p-lg-4">
+                <mat-form-field appearance="fill">
+                  <mat-label>Pencarian</mat-label>
+                  <input matInput placeholder="Pencarian" #gs>
+                  <mat-icon matSuffix>search</mat-icon>
+                </mat-form-field>
+
+              </div> -->
+                                <div class="p-col-12 p-md-12 p-lg-12">
+                                    <p-dataView #dv [value]="dataSource" [paginator]="true" [rows]="9"
+                                        filterBy="namaruangan" [sortField]="sortField2" [sortOrder]="sortOrder2"
+                                        layout="grid">
+                                        <ng-template pTemplate="header">
+                                            <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+                                                <p-dropdown [options]="sortOptions2" formControlName="sortKey2"
+                                                    placeholder="Urutkan" (onChange)="onSortChange2($event)"
+                                                    styleClass="p-mb-2 p-mb-md-0"></p-dropdown>
+                                                <span class="p-input-icon-left p-mb-2 p-mb-md-0">
+                                                    <i class="pi pi-search"></i>
+                                                    <input type="search" pInputText placeholder="Filter by Poli"
+                                                        (input)="dv.filter($event.target.value)">
+                                                </span>
+                                                <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template let-product pTemplate="listItem">
+                                            <div class="p-col-12">
+                                                <div class="product-list-item">
+                                                    <img [src]="'assets/layout/images/dashboard/icon-1.svg'"
+                                                        [alt]="product.namaruangan" />
+                                                    <div class="product-list-detail">
+                                                        <div class="product-name">{{product.namaruangan}}</div>
+                                                        <div class="product-description">{{product.tanggalreservasi}}
+                                                        </div>
+                                                        <!-- <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating> -->
+                                                        <i class="pi pi-tag product-category-icon"></i><span
+                                                            class="product-category">{{product.noreservasi}}</span>
+                                                    </div>
+                                                    <div class="product-list-action">
+                                                        <!-- <span class="product-price">{{product.noreservasi}}</span> -->
+                                                        <p-button icon="pi pi-print" label="Bukti Reservasi"
+                                                            (click)="cetakHistory(product)"
+                                                            pTooltip="Lihat Bukti Reservasi"></p-button>
+                                                        <span
+                                                            [class]="' product-badge status-' + product.status.toLowerCase()"
+                                                            style="margin-top: 5px;">{{product.status}}</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template let-product pTemplate="gridItem">
+                                            <div class="p-col-12 p-md-4">
+                                                <div class="product-grid-item card">
+                                                    <div class="product-grid-item-top">
+                                                        <div>
+                                                            <i class="pi pi-tag product-category-icon"></i>
+                                                            <span
+                                                                class="product-category">{{product.namaruangan}}</span>
+                                                        </div>
+                                                        <span
+                                                            [class]="'product-badge status-' + product.status.toLowerCase()">{{product.status}}</span>
+                                                    </div>
+                                                    <div class="product-grid-item-content">
+                                                        <img [src]="'assets/layout/images/dashboard/icon-1.svg'"
+                                                            [alt]="product.namaruangan" />
+                                                        <div class="product-name">{{product.namaruangan}}</div>
+                                                        <div class="product-description">{{product.tanggalreservasi}}
+                                                        </div>
+                                                        <!-- <p-rating [ngModel]="product.rating" [readonly]="true" [cancel]="false"></p-rating> -->
+                                                    </div>
+                                                    <div class="product-grid-item-bottom">
+                                                        <span class="product-price">{{product.noreservasi}}</span>
+                                                        <p-button icon="pi pi-print" (click)="cetakHistory(product)"
+                                                            pTooltip="Lihat Bukti Reservasi">
+                                                        </p-button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </ng-template>
+                                    </p-dataView>
+                                    <!-- <p-dataTable [globalFilter]="gs" [value]="dataSource" [rows]="10" [paginator]="true" [pageLinks]="3"
+                  [rowsPerPageOptions]="[5,10,20]" selectionMode="single" [(selection)]="selected"
+                  [loading]="loadingHistory" loadingIcon="fa fa-spinner" (onRowSelect)="onRowSelect($event)"
+                  scrollable="true" expandableRows="true">
+
+                  <p-column field="tanggalreservasi" header="Tanggal" [sortable]="true"></p-column>
+                  <p-column field="namaruangan" header="Poliklinik" [sortable]="true"></p-column>
+
+                  <p-column [style]="{'min-width':'100px','width':'100px'}">
+                    <ng-template let-h="rowData" pTemplate="body">
+                      <button pButton type="button" (click)="cetakHistory(h)" icon="fa-print" label="Cetak"
+                        pTooltip="Lihat Bukti Reservasi" tooltipPosition="top"></button>
+
+                    </ng-template>
+                  </p-column>
+                </p-dataTable> -->
+                                </div>
+
+                            </div>
+                        </p-panel>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="card card-w-title" *ngIf="isBuktiReservasi" style="margin-top:10px">
+        <!-- <div class="card card-form-header"> -->
+        <h4>Bukti Reservasi</h4>
+        <!-- </div> -->
+        <div class="p-grid p-fluid">
+            <!-- <div class="p-col-12"> -->
+            <div class="p-col-6 p-md-6 p-lg-6">
+                <div class="p-col-12 p-md-12 p-lg-12">
+                    <label for="input">Kode Reservasi</label>
+                </div>
+                <div class="p-col-12 p-md-12 p-lg-12">
+                    <label for="input" class="label-popup-gede">{{kodeReservasi}}</label>
+                </div>
+            </div>
+            <div class="p-col-6 p-md-6 p-lg-6">
+                <!-- <img src='{{barCode}}' alt='Barcode Generator TEC-IT'
+          style=" width: 100%; height: auto;    max-width: 200px;-webkit-user-select: none;cursor:pointer"
+          (click)="popUpQR()" /> -->
+                <img style="-webkit-user-select: none;cursor:pointer" (click)="popUpQR()" src="{{qrCode}}">
+            </div>
+            <div class="p-col-6 p-md-6 p-lg-6">
+                <div class="p-col-12 p-md-12 p-lg-12"> <label for="input">Tgl Reservasi</label></div>
+                <div class="p-col-12 p-md-12 p-lg-12"> <label for="input" class="label-popup">{{tglReservasi}}</label>
+                </div>
+            </div>
+            <div class="p-col-6 p-md-6 p-lg-6">
+                <div class="p-col-12 p-md-12 p-lg-12"><label for="input">Poli Tujuan</label></div>
+                <div class="p-col-12 p-md-12 p-lg-12"> <label for="input" class="label-popup">{{poliTujuan}}</label>
+                </div>
+            </div>
+            <div class="p-col-6 p-md-6 p-lg-6">
+                <div class="p-col-12 p-md-12 p-lg-12"> <label for="input">Dokter</label></div>
+                <div class="p-col-12 p-md-12 p-lg-12"> <label for="input" class="label-popup">{{dokter}}</label></div>
+            </div>
+            <!-- </div> -->
+
+            <!-- <div class="p-col-12"> -->
+            <div class="p-col-6 p-md-6 p-lg-11">
+
+                <span style="color:red;font-size:10px">* </span> <span style="font-size:10px;font-style:italic">Harap
+                    Check-in
+                    30 menit sebelum jam reservasi</span>
+            </div>
+
+            <!-- </div> -->
+            <!-- <div class="p-col-12" style="margin-top: -20px"> -->
+
+            <div class="p-col-6 p-md-6 p-lg-11">
+
+                <span style="font-size:10px;font-style:italic">Selanjutnya Bukti
+                    Reservasi bisa dilihat di data History</span>
+            </div>
+            <div class="p-col-6 p-md-6 p-lg-1">
+                <button pButton type="button" (click)="isBuktiReservasi = false" label="Tutup"
+                    icon="fa fa-angle-left"></button>
+            </div>
+            <!-- </div> -->
+        </div>
+    </div>
+    <p-dialog header="Barcode Reservasi" [(visible)]="displayPopUpQr" [modal]="true" [responsive]="true"
+        [style]="{width: '350px', minWidth: '200px'}" appendTo="body" [baseZIndex]="10000">
+        <div class="p-col">
+            <div class="p-col-12 p-md-12 p-lg-12">
+                <img style="webkit-user-select: none;cursor:pointer;width: 100%;max-width: 400px" src="{{qrCode}}">
+                <!-- <img style="-webkit-user-select: none;cursor:pointer;width: 100%;max-width: 400px;" src="{{barCode}}"> -->
+            </div>
+        </div>
+
+        <p-footer>
+            <span style="color:red;font-size:10px">* </span><span
+                style="font-size:10px;font-style:italic;margin-right: 10px">Scan Barcode
+                pada Mesin Antrian , Harap Check-in 30 menit sebelum</span>
+            <!-- <button type="button" pButton icon="pi pi-check" (click)="display=false" label="Yes"></button> -->
+            <button type="button" pButton icon="fa fa-angle-left" (click)="displayPopUpQr=false" label="Tutup"
+                class="ui-button-secondary"></button>
+        </p-footer>
+    </p-dialog>
+
+    <div *ngIf="activeItem.label == 'Slotting' && !isBuktiReservasi">
+        <form [formGroup]="formHistory">
+            <div class="card card-w-title" style="margin-top:10px">
+                <!-- <div class="card card-form-header"> -->
+                <h4>Slotting Poliklinik</h4>
+                <!-- </div> -->
+                <div class="p-grid p-fluid">
+                    <div class="p-col-12">
+                        <p-fieldset legend="Pencarian" [toggleable]="true">
+                            <div class="p-col-12 p-md-12 p-lg-3">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="pickers" placeholder="Tgl Awal"
+                                        formControlName="tglAwal">
+                                    <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+                                    <mat-datepicker #pickers></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-3">
+                                <mat-form-field>
+                                    <input matInput [matDatepicker]="pickers" placeholder="Tgl Akhir"
+                                        formControlName="tglAkhir">
+                                    <mat-datepicker-toggle matSuffix [for]="pickers"></mat-datepicker-toggle>
+                                    <mat-datepicker #pickers></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="p-col-6 p-md-6 p-lg-1">
+                                <button type="button" pButton icon="fa fa-search" (click)="getDaftarSlot()"
+                                    label="Cari"></button>
+                            </div>
+                            <div class="p-col-6 p-md-6  p-lg-1">
+                                <button type="button" pButton icon="fa fa-refresh" (click)="clearSlot()"
+                                    label="Clear"></button>
+                            </div>
+                        </p-fieldset>
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-12">
+                        <p-fieldset legend="Data History" [toggleable]="true">
+                            <div class="p-col-12 p-md-12 p-lg-4">
+                                <mat-form-field>
+                                    <input matInput placeholder="Pencarian" #gss>
+                                    <mat-icon matSuffix>search</mat-icon>
+                                </mat-form-field>
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-12">
+                                <p-dataTable [globalFilter]="gss" [value]="dataSlot" [rows]="5" [paginator]="true"
+                                    [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" selectionMode="single"
+                                    [(selection)]="selected" [loading]="loadSlot" loadingIcon="fa fa-spinner"
+                                    scrollable="true" expandableRows="true">
+
+                                    <p-column field="tgl" header="Tanggal" [sortable]="true"></p-column>
+                                    <p-column field="namaruangan" header="Poliklinik" [sortable]="true"></p-column>
+                                    <p-column field="tersedia" header="Tersedia" [sortable]="true"></p-column>
+
+                                    <!-- <p-column [style]="{'min-width':'100px','width':'100px'}">
+                  <ng-template let-h="rowData" pTemplate="body">
+                    <button pButton type="button" (click)="cetakHistory(h)" icon="fa-print" label="Cetak" pTooltip="Lihat Bukti Reservasi"
+                      tooltipPosition="top"></button>
+                  </ng-template>
+                </p-column> -->
+                                </p-dataTable>
+                            </div>
+                        </p-fieldset>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <div *ngIf="activeItem.label == 'E-Billing' && !isBuktiReservasi">
+        <form [formGroup]="formPelayanan">
+            <div class="card card-w-title" style="margin-top:10px" *ngIf="!isShowRiwayatRegis">
+                <!-- <div class="card card-form-header"> -->
+                <h4>E-Billing</h4>
+                <!-- </div> -->
+                <div class="p-grid p-fluid">
+                    <div class="p-col-12 p-md-12 p-lg-12">
+                        <p-fieldset legend="Pencarian" [toggleable]="true">
+                            <div class="p-grid">
+                                <div class="p-col-6 p-md-6 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>No Registrasi</mat-label>
+                                        <input matInput placeholder="No Registrasi" formControlName="noRegistrasi">
+                                        <mat-icon matSuffix>search</mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="p-col-3 p-md-3 p-lg-1" style="margin-top: 7px;">
+                                    <button type="button" pButton icon="fa fa-search" (click)="findPelayanan()"
+                                        label="Cari"></button>
+                                </div>
+                                <div class="p-col-3 p-md-3 p-lg-1" style="margin-top: 7px;">
+                                    <button type="button" pButton icon="fa fa fa-user-md"
+                                        (click)="isShowRiwayatRegis = true" label="RM"></button>
+                                </div>
+                            </div>
+                        </p-fieldset>
+                    </div>
+
+                    <div class="p-col-12 p-md-12 p-lg-12">
+                        <p-panel header="Rincian Biaya Pelayanan" [toggleable]="true" [collapsed]="isShowRincian"
+                            [style]="{'margin-bottom':'20px'}">
+                            <div class="p-grid">
+                                <div class="p-col-6 p-md-6 p-lg-6">
+                                    <div class="p-grid">
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input" class="label-bold">No Registrasi</label>
+                                        </div>
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input">: &nbsp;{{item.noRegistrasi}}</label>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-grid" style="margin-top:-15px">
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input" class="label-bold">No RM</label>
+                                        </div>
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input">: &nbsp;{{item.noCm}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid" style="margin-top:-15px">
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input" class="label-bold">Nama Pasien</label>
+                                        </div>
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input">: &nbsp;{{item.namaPasien}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid" style="margin-top:-15px">
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input" class="label-bold">Tipe </label>
+                                        </div>
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input">: &nbsp;{{item.jenisPasien}}</label>
+                                        </div>
+                                    </div>
+                                    <!--   <div class="p-col-12 p-md-12 p-lg-12">
+                  <div class="p-col-6 p-md-6 p-lg-6">
+                    <label for="input" class="label-bold">Penjamin </label>
+                  </div>
+                  <div class="p-col-6 p-md-6 p-lg-6">
+                    <label for="input">{{item.namarekanan}}</label>
+                  </div>
+                </div>
+                 <div class="p-col-12 p-md-12 p-lg-12">
+                  <div class="p-col-6 p-md-6 p-lg-6">
+                    <label for="input" class="label-bold">No SEP </label>
+                  </div>
+                  <div class="p-col-6 p-md-6 p-lg-6">
+                    <label for="input">{{item.nosep}}</label>
+                  </div>
+                </div> -->
+                                </div>
+                                <div class="p-col-6 p-md-6 p-lg-6">
+                                    <div class="p-grid">
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input" class="label-bold">Ruangan</label>
+                                        </div>
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input">: &nbsp;{{item.ruangan}}</label>
+                                        </div>
+                                    </div>
+
+                                    <!-- <div class="p-col-12 p-md-12 p-lg-12">
+                  <div class="p-col-6 p-md-6 p-lg-6">
+                    <label for="input" class="label-bold">Kamar</label>
+                  </div>
+                  <div class="p-col-6 p-md-6 p-lg-6">
+                    <label for="input">{{item.kamar}}</label>
+                  </div>
+                </div> -->
+                                    <div class="p-grid" style="margin-top:-15px">
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input" class="label-bold">Kelas</label>
+                                        </div>
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input">: &nbsp;{{item.kelasRawat}}</label>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="p-col-12 p-md-12 p-lg-12">
+                  <div class="p-col-6 p-md-6 p-lg-6">
+                    <label for="input" class="label-bold">Dokter P.Jawab </label>
+                  </div>
+                  <div class="p-col-6 p-md-6 p-lg-6">
+                    <label for="input">{{item.dokter}}</label>
+                  </div>
+                </div> -->
+                                    <div class="p-grid" style="margin-top:-15px">
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input" class="label-bold">Tgl Masuk </label>
+                                        </div>
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input">: &nbsp;{{item.tglRegistrasi}}</label>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid" style="margin-top:-15px">
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input" class="label-bold">Tgl Keluar </label>
+                                        </div>
+                                        <div class="p-col-6 p-md-6 p-lg-6">
+                                            <label for="input">: &nbsp;{{item.tglPulang}}</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-col-12 p-md-12 p-lg-12">
+
+                                    <!-- <div class="p-col-12 p-md-12 p-lg-4">
+                  <mat-form-field>
+                    <input matInput placeholder="Pencarian" #gs2>
+                  </mat-form-field>
+
+                </div> -->
+                                    <div class="p-col-12 p-md-12 p-lg-12">
+
+                                        <p-table [globalFilter]="gs2" [value]="dataSourceRincian" [rows]="10"
+                                            [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]"
+                                            selectionMode="single" [(selection)]="selected" loadingIcon="fa fa-spinner"
+                                            scrollable="true">
+                                            <ng-template pTemplate="header">
+                                                <tr>
+                                                    <th style="width: 30px">No</th>
+                                                    <th style="width: 250px">Keterangan</th>
+                                                    <th style="width: 200px">Subtotal</th>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                                                <tr>
+                                                    <td style="width: 30px">{{index}}</td>
+                                                    <td style="width: 250px">{{item.ruanganTindakan}}</td>
+                                                    <td style="width: 200px">{{item.total}}</td>
+                                                </tr>
+                                            </ng-template>
+                                            <ng-template pTemplate="summary">
+                                                <tr>
+                                                    <td colspan="1">Total Tagihan</td>
+                                                    <td>{{totalTagihan}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="1">Deposit</td>
+                                                    <td>{{deposit}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="1">Total Dibayar</td>
+                                                    <td>{{totalBayar}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="1">{{titleKlaim}}</td>
+                                                    <td>{{totalKlaim}}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td colspan="1">Sisa Tagihan</td>
+                                                    <td>{{sisaTagihan}}</td>
+                                                </tr>
+                                            </ng-template>
+
+                                        </p-table>
+
+                                    </div>
+                                    <div class="p-col-12 p-md-12 p-lg-12">
+                                        <label for="input" class="label-bold">TERBILANG : </label>
+                                    </div>
+                                    <div class="p-col-12 p-md-12 p-lg-12">
+                                        <label for="input" class="label-bold-miring"> # {{totalTerbilang}} #</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </p-panel>
+
+                    </div>
+                    <!-- <div class="p-col-12 p-md-12 p-lg-12">
+          <p-panel header="Daftar Rekening" [toggleable]="true" [collapsed]="isShowRincian"
+            [style]="{'margin-bottom':'20px'}">
+            <div class="p-col">
+              <div class="p-col-12 p-md-12 p-lg-4">
+                <mat-form-field appearance="fill">
+                  <mat-label>Pencarian</mat-label>
+                  <input matInput placeholder="Pencarian" #gs2ss>
+                </mat-form-field>
+
+              </div>
+              <div class="p-col-12 p-md-12 p-lg-12">
+
+                <p-dataTable [globalFilter]="gs2ss" [value]="dataSourceBank" [rows]="10" [paginator]="true"
+                  [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" loadingIcon="fa fa-spinner" scrollable="true"
+                  selectionMode="single" [(selection)]="selected" (onRowSelect)="onRowSelectNoRek($event)">
+                  <p-column header="No" [style]="{'width':'40px'}">
+                    <ng-template let-index="rowIndex+1" pTemplate="body">
+                      {{index}}
+                    </ng-template>
+                  </p-column>
+                  <p-column header="Nama Bank" field="bankaccountnama"></p-column>
+                  <p-column header="No Rekening" field="bankaccountnomor"></p-column>
+
+                </p-dataTable>
+              </div>
+             
+            </div>
+          </p-panel>
+        </div> -->
+
+                </div>
+
+            </div>
+            <div class="card card-w-title" *ngIf="isShowRiwayatRegis" style="margin-top:10px">
+                <!-- <div class="card card-form-header"> -->
+                <h4>Riwayat Registrasi</h4>
+                <!-- </div> -->
+                <div class="p-grid p-fluid">
+                    <div class="p-col-12">
+                        <p-fieldset legend="Cari No Rekam Medis" [toggleable]="true">
+                            <div class="p-grid">
+                                <div class="p-col-6 p-md-6 p-lg-3">
+                                    <mat-form-field appearance="fill">
+                                        <mat-label>No Rekam Medis</mat-label>
+                                        <input matInput placeholder="No Rekam Medis" formControlName="noRm">
+                                        <mat-icon matSuffix>search</mat-icon>
+                                    </mat-form-field>
+                                </div>
+                                <div class="p-col-6 p-md-6 p-lg-1" style="margin-top: 7px;">
+                                    <button type="button" pButton icon="fa fa-search" (click)="findRiwayatRegis()"
+                                        label="Cari"></button>
+                                </div>
+                            </div>
+                        </p-fieldset>
+                    </div>
+
+                    <!-- <div class="p-grid"> -->
+                    <div class="p-col-12 p-md-12 p-lg-4">
+                        <mat-form-field appearance="fill">
+                            <mat-label>Pencarian</mat-label>
+                            <input matInput placeholder="Pencarian" #gs2s>
+                            <mat-icon matSuffix>search</mat-icon>
+                        </mat-form-field>
+
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-12">
+                        <p-panel header="Riwayat Registrasi" [toggleable]="true" [style]="{'margin-bottom':'20px'}">
+                            <div class="p-col">
+                                <div class="p-col-12 p-md-12 p-lg-12">
+
+                                    <p-table [globalFilter]="gs2s" [value]="dataSourceRm" [rows]="5" [paginator]="true"
+                                        [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]" selectionMode="single"
+                                        [(selection)]="selected" loadingIcon="fa fa-spinner" scrollable="true">
+                                        <!-- <p-column header="Tanggal" field="tglregistrasi"></p-column>
+                    <p-column header="No Reg" field="noregistrasi"></p-column>
+                    <p-column header="Ruangan" field="namaruangan"></p-column>
+                    <p-column [style]="{'min-width':'30px','width':'30px'}">
+                      <ng-template let-h="rowData" pTemplate="body">
+                        <button pButton type="button" (click)="pilihNoregis(h)" icon="fa-check" pTooltip="Pilih Data"
+                          tooltipPosition="top"></button>
+                      </ng-template>
+                    </p-column> -->
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th>No Reg</th>
+                                                <th>Tgl Masuk</th>
+                                                <th>Ruangan</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+                                            <tr>
+                                                <td>{{item.noregistrasi}}</td>
+                                                <td>{{item.tglregistrasi}}</td>
+                                                <td>{{item.namaruangan}}</td>
+                                                <td style="width: 30px">
+                                                    <button pButton type="button" (click)="pilihNoregis(item)"
+                                                        icon="pi pi-check" pTooltip="Pilih Data"
+                                                        tooltipPosition="top"></button>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </p-panel>
+                    </div>
+                    <!-- </div> -->
+                    <!-- <div class="p-grid"> -->
+                    <div class="p-col-12 p-md-12 p-lg-1 p-lg-offset-11">
+                        <button pButton type="button" (click)="tutupPopUpRm()" label="Tutup"
+                            icon="fa fa-angle-left"></button>
+                    </div>
+                    <!-- </div> -->
+                </div>
+            </div>
+
+        </form>
+    </div>
+    <div *ngIf="activeItem.label == 'Bank Account' && !isBuktiReservasi">
+
+        <div class="card card-w-title" style="margin-top:10px" *ngIf="!isShowRiwayatRegis">
+            <div class="card card-form-header">
+                <h1>Bank Account</h1>
+            </div>
+
+            <div class="p-grid p-fluid">
+
+                <div class="p-col-12 p-md-12 p-lg-12">
+                    <div class="p-col-12 p-md-12 p-lg-4">
+
+                        <mat-form-field appearance="fill">
+                            <mat-label>Pencarian</mat-label>
+                            <input matInput placeholder="Pencarian" #gs2ss>
+                        </mat-form-field>
+
+                    </div>
+                    <div class="p-col-12 p-md-12 p-lg-12">
+                        <p-panel header="Daftar Rekening" [toggleable]="true" [style]="{'margin-bottom':'20px'}">
+                            <div class="p-col">
+                                <div class="p-col-12 p-md-12 p-lg-12">
+
+                                    <p-dataTable [globalFilter]="gs2ss" [value]="dataSourceBank" [rows]="10"
+                                        [paginator]="true" [pageLinks]="3" [rowsPerPageOptions]="[5,10,20]"
+                                        loadingIcon="fa fa-spinner" scrollable="true" selectionMode="single"
+                                        [(selection)]="selected" (onRowSelect)="onRowSelectNoRek($event)">
+                                        <p-column header="No" [style]="{'width':'40px'}">
+                                            <ng-template let-index="rowIndex+1" pTemplate="body">
+                                                {{index}}
+                                            </ng-template>
+                                        </p-column>
+                                        <p-column header="Nama Bank" field="bankaccountnama"></p-column>
+                                        <p-column header="No Rekening" field="bankaccountnomor"></p-column>
+
+                                    </p-dataTable>
+                                </div>
+                                <!-- <div class="p-col-12 p-md-12 p-lg-12">
+                <div class="p-col-9 p-md-9 p-lg-11">
+                </div>
+                <div class="p-col-3 p-md-3 p-lg-1">
+                  <button pButton type="button" (click)="copyNorek()" label="Copy NoRek" icon="fa fa-copy"></button>
+                </div>
+              </div> -->
+                            </div>
+                        </p-panel>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+    <div *ngIf="activeItem.label == 'Panduan' && !isBuktiReservasi">
+        <div class="card card-w-title" style="margin-top:10px" *ngIf="!isShowRiwayatRegis">
+            <!-- <div class="card card-form-header"> -->
+            <h4>Panduan Reservasi</h4>
+            <!-- </div> -->
+            <div class="p-grid p-fluid">
+                <div class="p-col-12 p-md-12 p-lg-12">
+
+                    <p-accordion [multiple]="true">
+                        <p-accordionTab header="Pasien Baru" [selected]="true">
+                            <ul>
+                                <li>Isi NIK kemudian tekan Enter atau tombol Cari untuk mencari informasi Nama, Tgl
+                                    lahir atau data
+                                    pribadi anda secara otomatis</li>
+                                <li>Jika pencarian nik Ke Dukcapil tidak ditemukan, isi identitas diri seperti nama
+                                    pasien, tgl lahir,
+                                    jenis kelamin dan no telpon, secara manual</li>
+                                <li>Pilih tgl reservasi, poliklinik tujuan, jam Reservasi yang tersedia dan pilih tipe
+                                    pembayaran.
+                                    Untuk Pasien BPJS, wajib mengisi No Kartu Peserta dan No Rujukan. Kemudian No
+                                    Rujukan tersebut harus
+                                    berlaku. </li>
+                                <li>Cek kembali kebenaran data anda dan Jadwal Reservasi pada Menu Resume Reservasi.
+                                </li>
+                                <li>Ketika data sudah di simpan akan muncul Bukti Reservasi. Bukti Reservasi / Barcode
+                                    tersebut bisa di
+                                    scan pada mesin antrian. Diharapkan pasien bisa check-in <strong>30 menit</strong>
+                                    sebelum jadwal
+                                    reservasi</li>
+                                <li>Riwayat Reservasi dan bukti reservasi juga bisa dilihat pada menu
+                                    <strong>History</strong></li>
+                            </ul>
+                        </p-accordionTab>
+                        <p-accordionTab header="Pasien Lama" [selected]="true">
+                            <ul>
+                                <li>Untuk pasien lama hanya perlu mengisi <strong>No Rekam Medis / NIK</strong> untuk
+                                    verifikasi data
+                                    diri.</li>
+                                <li>Kemudian panduan selanjutnya sama dengan pasien baru diatas.</li>
+                            </ul>
+                        </p-accordionTab>
+
+                    </p-accordion>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="activeItem.label == 'Denah' && !isBuktiReservasi">
+        <div class="card card-w-title" style="margin-top:10px" *ngIf="!isShowRiwayatRegis">
+            <div class="card card-form-header">
+                <h1>Denah</h1>
+            </div>
+            <div class="p-grid p-fluid">
+                <div class="p-col-12 p-md-12 p-lg-12">
+                    <ngx-image-viewer [src]="images" [(config)]="config" [(index)]="imageIndexOne"
+                        (customEvent)="handleEvent($event)">
+                    </ngx-image-viewer>
+                    <!-- <ngx-image-viewer  [src]="images" class="img-responsive img-thumbnail-humas"  [(index)]="imageIndex"></ngx-image-viewer> -->
+                    <!-- <img class="img-responsive img-thumbnail-humas"  src="assets/img/denah_rs.jpg"> -->
+                </div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="activeItem.label == 'Jadwal Dokter' && !isBuktiReservasi">
+
+        <div class="card card-w-title" style="margin-top:10px">
+            <!-- <div class="card card-form-header"> -->
+            <h4>Jadwal Dokter</h4>
+            <!-- </div> -->
+            <div class="p-grid p-fluid">
+                <div class="p-col-12 p-md-12 p-lg-12">
+                    <p-fieldset legend="Pencarian" [toggleable]="true">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12 p-lg-3">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Nama Dokter </mat-label>
+                                    <input matInput placeholder="Cari Dokter" [(ngModel)]="items.namaDokter">
+                                </mat-form-field>
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-3">
+                                <mat-form-field appearance="fill">
+                                    <mat-label>Poli </mat-label>
+                                    <input matInput placeholder="Cari Poli" [(ngModel)]="items.namaPoli">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12 p-lg-1" style="margin-top: 7px;">
+                                <button type="button" pButton icon="fa fa-search" (click)="cariDokter()"
+                                    label="Cari"></button>
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-1" style="margin-top: 7px;">
+                                <button type="button" pButton icon="fa fa fa-refresh" (click)="clearDokter()"
+                                    label="Clear"></button>
+                            </div>
+                        </div>
+                    </p-fieldset>
+                </div>
+
+                <div class="p-col-12 p-md-12 p-lg-12">
+                    <p-panel header="Detail Jadwal" [toggleable]="true" [collapsed]="false"
+                        [style]="{'margin-bottom':'20px'}">
+                        <div class="p-grid">
+                            <div class="p-col-12">
+                                <!-- <p-virtualScroller [value]="listJadwal" scrollHeight="500px" [itemSize]="100">
+                <ng-template pTemplate="header">
+                  <div class="p-d-flex p-ai-center p-jc-between">
+                    List Jadwal
+                    </div>
+                </ng-template>
+                <ng-template let-product pTemplate="item" let-i="index">
+                  <div class="product-item">
+                    <div class="image-container">
+                      <img src="{{product.image}}" [alt]="product.namalengkap" class="product-image" />
+                    </div>
+                    <div class="product-list-detail">
+                      <h5 class="p-mb-2">{{product.namalengkap}}</h5>
+                      <i class="pi pi-tag product-category-icon"></i>
+                      <span class="product-category">{{product.namaruangan}}</span>
+                    </div>
+                    <div class="product-list-action">
+                      <h6 class="p-mb-2">{{product.hari}}</h6>
+                      <span [class]="'product-badge status-confirm' ">{{product.jammulai}} - {{product.jamakhir}}</span>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-virtualScroller> -->
+                                <p-dataView [value]="listJadwal" [paginator]="true" [rows]="9" layout="grid">
+                                    <ng-template pTemplate="header">
+                                        <div class="p-d-flex p-flex-column p-flex-md-row p-jc-md-between">
+
+                                            <p-dataViewLayoutOptions></p-dataViewLayoutOptions>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-product pTemplate="listItem">
+                                        <div class="p-col-12">
+                                            <div class="product-list-item">
+                                                <img src="{{product.image}}" [alt]="product.namalengkap" />
+                                                <div class="product-list-detail">
+                                                    <div class="product-name">{{product.namalengkap}}</div>
+                                                    <div class="product-description">{{product.namaruangan}}</div>
+                                                    <i class="pi pi-tag product-category-icon"></i><span
+                                                        class="product-category">{{product.hari}}
+                                                    </span>
+                                                </div>
+                                                <div class="product-list-action">
+                                                    <span [class]="' product-badge status-confirm' "
+                                                        style="margin-top: 5px;">{{product.jammulai}} -
+                                                        {{product.jamakhir}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template let-product pTemplate="gridItem">
+                                        <div class="p-col-12 p-md-4">
+                                            <div class="product-grid-item card">
+                                                <div class="product-grid-item-top">
+                                                    <div>
+                                                        <i class="pi pi-tag product-category-icon"></i>
+                                                        <span class="product-category">{{product.hari}}</span>
+                                                    </div>
+                                                    <span [class]="'product-badge status-confirm'">{{product.jammulai}}
+                                                        -
+                                                        {{product.jamakhir}}</span>
+                                                </div>
+                                                <div class="product-grid-item-content">
+                                                    <img src="{{product.image}}" [alt]="product.hari" />
+                                                    <div class="product-name">{{product.namalengkap}}</div>
+                                                    <div class="product-description">{{product.namaruangan}}</div>
+                                                </div>
+                                                <!-- <div class="product-grid-item-bottom">
+                        <span class="product-price">{{product.hari}} {{product.jammulai}} -
+                          {{product.jamakhir}}</span>
+                      
+                      </div> -->
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </p-dataView>
+                                <!-- <p-dataView [value]="listJadwal" [paginator]="true" [rows]="10">
+                <ng-template let-car pTemplate="item">
+                  <div class="p-grid employee-contact">
+                    <div class="p-col-4 p-md-4" style="text-align: center;"><img
+                        style="width:80px; height: 80px; border-radius: 50%" src="{{car.image}}"></div>
+                    <div class="p-col-8 p-md-8">
+                      <h4>{{car.namalengkap}}</h4>
+                      <hr>
+                      <p>Poli: <span style="font-weight: bold;">{{car.namaruangan}}</span>
+                      </p>
+                      <p> Hari : <span style="font-weight: bold;">{{car.hari}}</span>
+                      </p>
+                      <p> Jam : <span style="font-weight: bold;"> {{car.jammulai}} - {{car.jamakhir}}
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </ng-template>
+              </p-dataView> -->
+                            </div>
+                        </div>
+                    </p-panel>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- <mat-toolbar class="toolbarNav">
+  <button mat-flat-button (click)="activateMenu()" *ngFor="let itemss of items2">
+
+      <i class="material-icons {{itemss.icon}} color_blue" ></i>
+    <span>{{itemss.label}}</span>
+  </button>
+
+</mat-toolbar> -->
+<div class="bottom-nav">
+    <div class="bottom-link-nav">
+        <a (click)="activateMenu2(items2[1])" pTooltip="History" tooltipPosition="top">
+            <i class=" fa fa-calendar color_blue" style="font-size:23px"
+                [class.active-label]="activeItem.label == 'History'"></i>
+
+            <!-- <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg> -->
+        </a>
+        <a (click)="activateMenu2(items2[2])" pTooltip="E-Billing" tooltipPosition="top">
+            <i class="fa fa-heartbeat color_blue" style="font-size:23px"
+                [class.active-label]="activeItem.label == 'E-Billing'"></i>
+            <!-- <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg> -->
+        </a>
+        <a (click)="activateMenu2(items2[0])" pTooltip="Reservasi" tooltipPosition="top">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"
+                xmlns="http://www.w3.org/2000/svg">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6">
+                </path>
+            </svg>
+        </a>
+        <a (click)="activateMenu2(items2[3])" pTooltip="Panduan" tooltipPosition="top">
+            <i class=" fa fa-question-circle color_blue" style="font-size:23px"
+                [class.active-label]="activeItem.label == 'Panduan'"></i>
+            <!-- <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg> -->
+        </a>
+        <a (click)="activateMenu2(items2[4])" pTooltip="Jadwal Dokter" tooltipPosition="top">
+            <i class="fa fa-user-md color_blue" style="font-size:23px"
+                [class.active-label]="activeItem.label == 'Jadwal Dokter'"></i>
+            <!-- <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg> -->
+        </a>
+    </div>
+
+</div>

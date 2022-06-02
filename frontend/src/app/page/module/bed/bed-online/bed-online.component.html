@@ -1,0 +1,100 @@
+<div class="layout-dashboard">
+    <div class="p-grid">
+        <div class="p-col-12">
+            <div class="notification">
+                <h6>👋 Bed Online RSUD Pagelaran</h6>
+            </div>
+        </div>
+        <div class="p-col-12 p-md-4">
+            <div class="cards timeline" style="margin-bottom: 1rem;">
+                <div class="card-header" style="padding:0">
+                    <div class="card-title">
+                        <h6> Bed Berdasarkan Kelas</h6>
+                    </div>
+                    <p class="subtitle"> <i class="pi pi-clock"></i> {{timerPanels}}</p>
+                </div>
+            </div>
+            <div class="p-grid" style="margin: -1rem;" *ngIf="listKelas.length == 0">
+                <div class="p-col-12 p-md-6" style="padding: 10px" *ngFor="let itemzz of numberss">
+                    <p-skeleton  height="10rem" borderRadius="24px" ></p-skeleton>
+                </div>
+            </div>
+            <div class="p-grid" style="margin: -1rem;">
+                <div class="p-col" *ngFor="let items of listKelas">
+                    <div class="cards overview-box {{items.color}}">
+                        <div class="overview-info">
+                            <h6>{{items.namakelas}}</h6>
+                            <h1>{{items.tersedia}}</h1>
+                            <div class="progressbar">
+                                <div class="progress" style="width: {{items.persen}}%;"></div>
+                            </div>
+                            <p>Tersedia</p>
+                        </div><i class="fa fa-bed"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12 p-md-8">
+            <div class="cards timeline">
+                <div class="card-header">
+                    <div class="card-title">
+                        <h6> Bed Berdasarkan Ruangan</h6>
+
+                    </div>
+                    <p class="subtitle"> <i class="pi pi-clock"></i> {{timerTables}} {{infoPage}}</p>
+                </div>
+                <div class="card-body">
+                    <div class="p-grid">
+                        <div class="p-col-12">
+
+                            <p-table [value]="dataSource" styleClass="p-datatable-customers" [rowHover]="true"
+                                scrollable="true">
+                                <ng-template pTemplate="header">
+                                    <tr>
+                                        <th width="30px">No</th>
+                                        <th width="150px">Kelas</th>
+                                        <th width="200px">Ruangan</th>
+                                        <th width="100px">Kapasitas</th>
+                                        <th width="100px">Terisi</th>
+                                        <th width="100px">Tersedia</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-items>
+
+                                    <tr [ngClass]="{'row-kosong': items.tersedia == 0}">
+                                        <td width="30px">
+                                            <span class="p-column-title">No </span>
+                                            {{items.no}}
+                                        </td>
+                                        <td width="150px">
+                                            <span class="p-column-title">Kelas </span>
+                                            {{items.namakelas}}
+                                        </td>
+                                        <td width="200px">
+                                            <span class="p-column-title">Ruangan </span>
+                                            {{items.namaruangan}}
+                                        </td>
+                                        <td width="100px">
+                                            <span class="p-column-title"> Kapasitas </span>
+                                            {{items.kapasitas}}
+                                        </td>
+                                        <td width="100px">
+                                            <span class="p-column-title"> Terisi </span>
+                                            {{items.terisi}}
+                                        </td>
+                                        <td width="100px">
+                                            <span class="p-column-title"> Tersedia</span>
+                                            {{items.tersedia}}
+                                        </td>
+
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                     
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,75 @@
+<div class="layout-wrapper"
+    [ngClass]="{'layout-wrapper-menu-active':sidebarActive,
+                                        'layout-overlay-menu':overlay, 'p-input-filled': app.inputStyle === 'filled', 'p-ripple-disabled': !app.ripple}">
+    <p-dialog [(visible)]="display" [modal]="true">
+        <p-header>
+            Sesi Berakhir
+        </p-header>
+        Logout?
+        <p-footer>
+            <button type="button" pButton (click)="keluar()" label="Logout"></button>
+        </p-footer>
+    </p-dialog>
+    <p-toast position="center" key="t-logout" (onClose)="onReject()" [baseZIndex]="5000">
+        <ng-template let-message pTemplate="message">
+            <div class="p-flex p-flex-column" style="flex: 1">
+                <div class="p-text-center">
+                    <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                    <h4>{{message.summary}}</h4>
+                </div>
+                <div class="p-grid p-fluid">
+                    <div class="p-col-6">
+                        <button type="button" pButton (click)="onConfirm()" label="Ya"
+                            class="p-button-success"></button>
+                    </div>
+                    <div class="p-col-6">
+                        <button type="button" pButton (click)="onReject()" label="Tidak"
+                            class="p-button-secondary"></button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-toast>
+
+
+    <!-- [style]="{marginTop: '55px'}" -->
+    <p-toast key="t-notif"></p-toast>
+    <!-- <app-alert></app-alert> -->
+    <app-topbar *ngIf="!isLogin"></app-topbar>
+
+    <app-sidebar *ngIf="isLogin"></app-sidebar>
+
+    <div *ngIf="!isLogin" class="layout-content">
+        <div class="layout-main">
+            <div class="custom-skeleton p-p-5" *ngIf="skeleton">
+                <div class="p-d-flex p-mb-2">
+                    <!-- <p-skeleton shape="circle" size="4rem" styleClass="p-mr-2"></p-skeleton> -->
+                    <div>
+                        <p-skeleton width="10rem" height="2rem " styleClass="p-mb-2"></p-skeleton>
+                        <!-- <p-skeleton width="15rem" styleClass="p-mb-2"></p-skeleton> -->
+                    </div>
+                </div>
+                <div class="p-d-flex p-ai-end">
+                    <p-skeleton width="15rem" styleClass="p-mr-2 p-mb-2" borderRadius="16px"></p-skeleton>
+                    <p-skeleton width="15rem" styleClass="p-mr-2 p-mb-2" borderRadius="16px"></p-skeleton>
+                    <p-skeleton width="15rem" styleClass="p-mr-2 p-mb-2" borderRadius="16px"></p-skeleton>
+                    <p-skeleton width="15rem" styleClass="p-mr-2 p-mb-2" borderRadius="16px"></p-skeleton>
+                    <p-skeleton width="2rem" styleClass="p-mr-2 p-mb-2" borderRadius="16px"></p-skeleton>
+                </div>
+                <p-skeleton width="100%" height="150px"></p-skeleton>
+                <div class="p-d-flex  p-mt-3" [style]="{'float':'right'}">
+                    <p-skeleton width="4rem" styleClass="p-mr-2" height="2rem"></p-skeleton>
+                    <p-skeleton width="4rem" styleClass="p-mr-2" height="2rem"></p-skeleton>
+                    <p-skeleton width="4rem" styleClass="p-mr-2" height="2rem"></p-skeleton>
+                    <p-skeleton width="4rem" styleClass="p-mr-2" height="2rem"></p-skeleton>
+                </div>
+            </div>
+            <router-outlet></router-outlet>
+        </div>
+
+        <app-footer *ngIf="isLogin"></app-footer>
+    </div>
+
+    <app-config *ngIf="isLogin"></app-config>
+
+</div>

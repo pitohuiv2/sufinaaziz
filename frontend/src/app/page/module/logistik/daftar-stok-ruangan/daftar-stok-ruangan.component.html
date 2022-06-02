@@ -1,0 +1,166 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog>
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Stok Barang Per Ruangan</h4>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Ruangan</label>
+                    <p-dropdown [options]="listRuangan" [(ngModel)]="item.dataRuangan" [filter]="true"
+                        [showClear]="true" placeholder="Ruangan" optionLabel="namaruangan"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Detail Jenis Produk</label>
+                    <p-dropdown [options]="listDetailJenisProduk" [(ngModel)]="item.dataDjenisProduk" [filter]="true"
+                        [showClear]="true" placeholder="Detail Jenis Produk" optionLabel="detailjenisproduk"
+                        (onChange)="isiJenisProduk()">
+                    </p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Jenis Produk</label>
+                    <p-dropdown [options]="listJenisBarang" [(ngModel)]="item.dataJenisBarang" [filter]="true"
+                        [showClear]="true" placeholder="Jenis Produk" optionLabel="jenisproduk"
+                        (onChange)="isiKelompokProduk()"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Kelompok Produk</label>
+                    <p-dropdown [options]="listKelompokBarang" [(ngModel)]="item.dataKelompokBarang" [filter]="true"
+                        [showClear]="true" placeholder="Kelompok Produk" optionLabel="kelompokproduk"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-3">
+                    <label class="label" for="input">Nama Produk</label>
+                    <input type="text" [(ngModel)]="item.namaProduk" pInputText (keyup.enter)="cari()"
+                        placeholder="Nama Barang" />
+                </div>
+                <div class="p-col-12 p-md-1">
+                    <div class="p-col-12 p-md-12" style="margin-top: 10px;">
+                        <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <p-table #dt [columns]="column" [value]="dataTable" [(selection)]="selected"
+                styleClass="p-datatable-customers" [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                sortMode="multiple" selectionMode="single" (onRowSelect)="onRowSelect($event)">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" style="width: {{col.width}}">
+                            {{col.header}}
+                            <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                        <td style="width: 100px">
+                            <button pButton type="button" icon="fa fa-calendar"
+                                class="p-button-rounded p-button-primary p-mr-2" pTooltip="Ubah Tgl Kadaluarsa" label=""
+                                (click)="popUpTglKadaluarsa2(rowData)"></button>
+
+                            <button pButton type="button" icon="pi pi-user-edit " class="p-button-rounded p-mr-2"
+                                (click)="popUpAdjusmentStok2(rowData)" pTooltip="Adjustment Stok" label=""></button>
+
+                        </td>
+                        <td *ngFor="let col of columns" style="width: {{col.width}}">
+                            <span *ngIf="col.isCurrency != undefined">
+                                {{formatRupiah(rowData[col.field],'')}}
+                            </span>
+                            <span *ngIf="col.isCurrency == undefined"> {{rowData[col.field]}}</span>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-2 p-md-offset-7">
+                    <label class="label" for="input">Jumlah Stok</label>
+                    <input type="text" [(ngModel)]="item.jumlahStok" pInputText placeholder="Jumlah Stok" disabled />
+                </div>
+                <div class="p-col p-md-2">
+                    <label class="label" for="input">Total Harga</label>
+                    <input type="text" [(ngModel)]="item.totalHarga" pInputText placeholder="Total Harga" disabled />
+                </div>
+                <div class="p-col p-md-1">
+                    <label class="label" for="input">jml Rows</label>
+                    <input type="text" [(ngModel)]="item.jmlRows" pInputText (keyup.enter)="cari()"
+                        placeholder="Jml Rows" />
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <!-- <div class="p-grid">
+                <div class="p-col-12 p-md-2 p-md-offset-8" style="margin-top:10px">
+                    <button pButton type="submit" icon="pi pi-user-edit" pTooltip="Tgl Kadaluarsa"
+                        (click)="popUpTglKadaluarsa()" label="Tgl Kadaluarsa"></button>
+                </div>
+                <div class="p-col-12 p-md-2" style="margin-top:10px">
+                    <button pButton type="submit" icon="pi pi-user-edit" pTooltip="Adjusment Stok"
+                        (click)="popUpAdjusmentStok()" label="Adjusment Stok"></button>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+<p-dialog header="Tanggal Kadaluarsa" [(visible)]="pop_UbahTanggal" [modal]="true" [maximizable]="true"
+    [draggable]="true" [resizable]="true" [style]="{width: '650px', minWidth: '650px'}">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-4">
+                <p-calendar [(ngModel)]="item.tglKadaluarsa" [showIcon]="true" [monthNavigator]="true"
+                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd" hourFormat="24"
+                    placeholder="Tgl Kadaluarsa" appendTo="body">
+                </p-calendar>
+            </div>
+            <div class="p-col-12 p-md-4">
+                <button pButton type="submit" icon="fa fa-floppy-o" pTooltip="Simpan Tgl Kadaluarsa"
+                    (click)="simpanUbahTgl()" label="Simpan"></button>
+            </div>
+            <div class="p-col-12 p-md-4">
+                <button pButton type="submit" icon="fa fa-ban" pTooltip="Batal" (click)="batalUbahTgl()" label="Batal"
+                    style="background-color: red;"></button>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+<p-dialog header="Tanggal Kadaluarsa" [(visible)]="pop_AdjusmentStok" [modal]="true" [maximizable]="true"
+    [draggable]="true" [resizable]="true" [style]="{width: '800px', minWidth: '800px'}">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-3">
+                    <label class="label" for="input">kode Produk</label>
+                    <input type="text" [(ngModel)]="item.kodeProduk" pInputText placeholder="Kode Produk" disabled/>
+                </div>
+                <div class="p-col-12 p-md-3">
+                    <label class="label" for="input">Nama Produk</label>
+                    <input type="text" [(ngModel)]="item.namaProduk" pInputText placeholder="Nama Barang" disabled/>
+                </div>
+                <div class="p-col-12 p-md-3">
+                    <label class="label" for="input">Qty Real</label>
+                    <input type="text" [(ngModel)]="item.qtyReal" pInputText placeholder="Qty Real" disabled/>
+                </div>
+                <div class="p-col-12 p-md-3">
+                    <label class="label" for="input">Qty Adjustment </label>
+                    <p-inputNumber [(ngModel)]="item.QtyAjustment" [showButtons]="true" placeholder="Qty Adjustment"
+                        inputId="stacked">
+                    </p-inputNumber>
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-3 p-md-offset-6">
+                    <button pButton type="submit" icon="fa fa-floppy-o" pTooltip="Simpan Adjusment Stok"
+                        (click)="simpanAdjusmentStok()" label="Simpan"></button>
+                </div>
+                <div class="p-col-12 p-md-3">
+                    <button pButton type="submit" icon="fa fa-ban" pTooltip="Batal" (click)="batalAdjusmentStok()" label="Batal"
+                        style="background-color: red;"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-dialog>

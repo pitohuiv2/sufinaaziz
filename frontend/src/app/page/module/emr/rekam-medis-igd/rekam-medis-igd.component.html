@@ -1,0 +1,95 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Rekam Medis</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-3">
+                <p-panel header="Info Pasien" [toggleable]="true">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid" *ngIf="header.nocm==undefined">
+                                <div class="p-col-12 p-md-12" *ngFor="let itemzz of numberss">
+                                    <p-skeleton height="2.4rem"></p-skeleton>
+                                </div>
+
+                            </div>
+                            <div class="p-grid" *ngIf="header.nocm!=undefined">
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">No Rekam Medis </label>
+                                    <input type="text" [(ngModel)]="header.nocm" pInputText placeholder="No Rekam Medis"
+                                        disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Nama Pasien </label>
+                                    <input type="text" [(ngModel)]="header.namapasien" pInputText
+                                        placeholder="Nama Pasien" disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Jenis Kelamin </label>
+                                    <input type="text" [(ngModel)]="header.jeniskelamin" pInputText
+                                        placeholder="Nama Pasien" disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Tgl Lahir </label>
+                                    <input type="text" [(ngModel)]="header.tgllahir" pInputText placeholder="Tgl Lahir"
+                                        disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Umur </label>
+                                    <input type="text" [(ngModel)]="header.umur" pInputText placeholder="Umur"
+                                        disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Alamat </label>
+                                    <input type="text" [(ngModel)]="header.alamatlengkap" pInputText
+                                        placeholder="Alamat" disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">No Telepon </label>
+                                    <input type="text" [(ngModel)]="header.notelepon" pInputText
+                                        placeholder="No Telepon" disabled />
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </p-panel>
+            </div>
+            <div class="p-col-12 p-md-9">
+                <!-- <p-panel header="Navigasi" [toggleable]="true"> -->
+                <div class="p-grid">
+                    <div class="p-col-12  p-md-2">
+                        <input type="text" pInputText placeholder="Search Menu" [(ngModel)]="searchText">
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <p-skeleton height="3rem" *ngIf="treeSourceMenu.length ==0"></p-skeleton>
+                        <p-menubar [model]="treeSourceMenu | filter : searchText" [style]="{'overflow': 'auto'}"
+                            *ngIf="treeSourceMenu.length > 0">
+                        </p-menubar>
+                    </div>
+
+                    <!-- <p-tree [value]="treeSourceMenu" [loading]="isLoadingNav" selectionMode="single"
+                            [(selection)]="selectedFile" (onNodeSelect)="nodeSelect($event)" [filter]="true"></p-tree> -->
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-12">
+                        <router-outlet></router-outlet>
+                    </div>
+                </div>
+                <!-- </p-panel> -->
+            </div>
+        </div>
+        <!-- <div class="p-grid">
+            <div class="p-col-12 p-md-2">
+                <p-panel header="Navigasi" [toggleable]="true">
+                    <div class="p-grid">
+                        <p-tree [value]="treeSourceMenu" [loading]="isLoadingNav" selectionMode="single"
+                            [(selection)]="selectedFile" (onNodeSelect)="nodeSelect($event)" [filter]="true"></p-tree>
+                    </div>
+                </p-panel>
+            </div>
+            <div class="p-col-12 p-md-10">
+                <router-outlet></router-outlet>
+            </div>
+        </div> -->
+    </div>
+</div>

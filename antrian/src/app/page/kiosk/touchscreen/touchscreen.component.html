@@ -1,0 +1,153 @@
+<div class="layout-dashboard">
+  <div class="p-grid">
+    <div class="p-col-12 p-md-5">
+      <div class="p-grid">
+        <div class="p-col-12 p-md-12">
+          <div class="cards timeline">
+            <div class="card-header" style="padding:0">
+              <div class="card-title">
+                <!-- <h6> Bed Berdasarkan Kelas</h6> -->
+              </div>
+              <p class="subtitle"> <i class="pi pi-cloud"></i> </p>
+            </div>
+            <div class="card-body">
+              <div class="p-grid" style="margin: -1rem;">
+                <div class="p-col">
+                  <div class="cards overview-box blue" (click)="print('A')" pTooltip="Cetak Antrian Pasien Umum">
+                    <div class="overview-info">
+                      <h5>Umum</h5>
+                    </div><i class="pi pi-users"></i>
+                  </div>
+                </div>
+                <div class="p-col">
+                  <div class="cards overview-box gray" (click)="print('B')" pTooltip="Cetak Antrian Pasien BPJS">
+                    <div class="overview-info">
+                      <h5>BPJS</h5>
+                    </div><i class="pi pi-th-large"></i>
+                  </div>
+                </div>
+                <div class="p-col">
+                  <div class="cards overview-box darkgray" (click)="goTo('self-regis')" pTooltip="Registrasi Mandiri">
+                    <div class="overview-info">
+                      <h5>Self Registration</h5>
+                    </div><i class="fa fa-user-md"></i>
+                  </div>
+                </div>
+                <div class="p-col">
+                  <div class="cards overview-box orange" (click)="goTo('checkin')"
+                    pTooltip="Konfirmasi Reservasi Online">
+                    <div class="overview-info">
+                      <h5>Check-In</h5>
+                    </div><i class="fa fa-check-circle"></i>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="p-col-12 p-md-12">
+          <div class="cards timeline">
+            <div class="card-header" style="padding:0">
+              <div class="card-title">
+              </div>
+              <p class="subtitle"> <i class="pi pi-th-list"></i> </p>
+            </div>
+            <div class="card-body">
+              <div class="p-grid">
+                <button (click)="isiSurvey()" pButton pRipple type="button" label="Survey Kepuasan"
+                  icon="pi pi-tags"
+                  class="p-button-outlined p-button-success p-mr-2 p-mb-2"></button>
+                <!-- <button (click)="print('A')" pButton pRipple type="button" label="Umum"
+                  pTooltip="Cetak Antrian Pasien Umum" icon="fa fa-wheelchair"
+                  class="p-button-outlined p-button-success p-mr-2 p-mb-2"></button>
+                <button (click)="print('B')" pButton pRipple type="button" label="BPJS"
+                  pTooltip="Cetak Antrian Pasien BPJS" icon="fa fa-briefcase"
+                  class="p-button-outlined p-button-info p-mr-2 p-mb-2"></button>
+                <button (click)="goTo('self-regis')" pButton pRipple type="button" label="Self Registration"
+                  pTooltip="Registrasi Mandiri" icon="fa fa-user-md"
+                  class="p-button-outlined p-button-help p-mr-2 p-mb-2"></button>
+                <button (click)="goTo('checkin')" pButton pRipple type="button" label="Check-In"
+                  pTooltip="Konfirmasi Reservasi Online" icon="fa fa-check-circle"
+                  class="p-button-outlined p-button-danger p-mr-2 p-mb-2"></button> -->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="p-col-12 p-md-7">
+      <div class="cards timeline">
+        <div class="card-header">
+          <div class="card-title">
+            <h6> {{jamSekarang}}</h6>
+          </div>
+          <p class="subtitle"> <i class="pi pi-cog" (click)="popUp = true"></i> </p>
+        </div>
+        <div class="card-body">
+          <div class="p-grid">
+            <div class="video-player-wrapper">
+
+              <vg-player (onPlayerReady)="videoPlayerInit($event)" vgLoop="true">
+                <vg-overlay-play></vg-overlay-play>
+                <vg-buffering></vg-buffering>
+
+                <vg-scrub-bar>
+                  <vg-scrub-bar-current-time></vg-scrub-bar-current-time>
+                  <vg-scrub-bar-buffering-time></vg-scrub-bar-buffering-time>
+                </vg-scrub-bar>
+
+                <vg-controls>
+                  <vg-play-pause></vg-play-pause>
+                  <vg-playback-button></vg-playback-button>
+
+                  <vg-time-display vgProperty="current" vgFormat="mm:ss"></vg-time-display>
+
+                  <vg-time-display vgProperty="total" vgFormat="mm:ss"></vg-time-display>
+
+                  <vg-mute></vg-mute>
+                  <vg-volume></vg-volume>
+
+                  <vg-fullscreen></vg-fullscreen>
+                </vg-controls>
+
+                <video #media [vgMedia]="media" [src]="currentVideo.src" id="singleVideo" preload="auto" crossorigin>
+                </video>
+              </vg-player>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div style="margin-top: -2000px;">
+  <mat-form-field class="example-full-width">
+    <input #scanBarcode type="text" matInput placeholder="Reservasi " (input)="onChangeNoreservasi($event.target.value)"
+      [(ngModel)]="model">
+  </mat-form-field>
+</div>
+
+<p-dialog header="Video Source" [(visible)]="popUp" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+  [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <div class="p-fluid p-formgrid ">
+    <div class="p-grid">
+
+      <div class="p-col-12">
+        <mat-form-field class="example-full-width" style="width:100%">
+          <input type="text" matInput placeholder="URL" [(ngModel)]="item.url">
+        </mat-form-field>
+      </div>
+      <div class="p-col-12 p-md-3" *ngFor="let itemss of linkTipe">
+        <p-radioButton [inputId]="itemss.name" [value]="itemss" [(ngModel)]="item.tipe">
+        </p-radioButton>
+        <label [for]="itemss.name"> {{itemss.name}}</label>
+      </div>
+
+    </div>
+  </div>
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-save" (click)="save()" label="Simpan" class="ui-button-success">
+    </p-button>
+  </ng-template>
+</p-dialog>

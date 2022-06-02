@@ -1,0 +1,22 @@
+.notification {
+    padding: 30px 24px;
+    background-color: #ffffff;
+    -moz-border-radius: 20px;
+    -webkit-border-radius: 20px;
+    border-radius: 20px;
+}
+
+.notification > h6 {
+    margin: 0;
+    color: rgba(41, 50, 65, 0.8);
+}
+.notification > h6 > a {
+    margin-left: 10px;
+}
+.notification > h6 > a i {
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    transform: rotate(45deg);
+}

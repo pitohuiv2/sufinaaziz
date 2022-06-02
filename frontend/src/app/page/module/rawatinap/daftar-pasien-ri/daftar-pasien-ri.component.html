@@ -1,0 +1,363 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Order Gizi</h4>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+
+                <div class="p-col-12 p-md-1">
+                    <label class="label" for="input">No RM </label>
+                    <input type="text" [(ngModel)]="item.noCm" pInputText (keyup.enter)="cari()" placeholder="No RM" />
+                </div>
+
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Nama Pasien </label>
+                    <input type="text" [(ngModel)]="item.namaPasien" pInputText (keyup.enter)="cari()"
+                        placeholder="Nama Pasien" />
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">No Registrasi</label>
+                    <input type="text" [(ngModel)]="item.noRegistrasi" pInputText (keyup.enter)="cari()"
+                        placeholder="No Registrasi" />
+                </div>
+                <div class="p-col-12 p-md-3">
+                    <label class="label" for="input">Ruangan</label>
+                    <p-multiSelect [options]="listRuangan" [(ngModel)]="item.ruanganMulti" defaultLabel="Ruangan"
+                        optionLabel="namaruangan" display="chip">
+                    </p-multiSelect>
+
+                </div>
+                <div class="p-col-12 p-md-3" style="margin-top: 16px;">
+                    <button pButton icon="pi pi-search" pTooltip="Cari" (click)="cari()" class="p-mr-2"></button>
+
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12">
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="left">
+                    <button pButton type="button" icon="pi pi-clock" class="p-button-success  p-mr-2"
+                        pTooltip="Order Gizi" label="" (click)="order()"></button>
+                    <button pButton type="button" icon="fa fa-th-list" class="p-mr-2" (click)="riwayat()"
+                        pTooltip="Riwayat Order " label=""></button>
+                </ng-template>
+
+            </p-toolbar>
+            <p-table [columns]="column" [value]="dataSource" [(selection)]="selectedData"
+                styleClass="p-datatable-customers" [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                sortMode="multiple" dataKey="norec_pd">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+
+                        <th style="width: 40px">
+                            <p-tableHeaderCheckbox></p-tableHeaderCheckbox>
+                        </th>
+
+                        <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" style="width: {{col.width}}">
+                            {{col.header}}
+                            <p-sortIcon field="{{col.field}}">
+                            </p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                        <td style="width: 40px">
+                            <p-tableCheckbox [value]="rowData"></p-tableCheckbox>
+                        </td>
+
+                        <td *ngFor="let col of columns" style="width: {{col.width}}">
+                            <span *ngIf="col.isCurrency != undefined">
+                                {{formatRupiah(rowData[col.field],'')}}</span>
+                            <span *ngIf="col.isCurrency == undefined"> {{rowData[col.field]}}</span>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+            <!-- <p-table [value]="dataSource" sortField="namaruangan" sortMode="single" (onSort)="onSort()" [rows]="20"
+                [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true"
+                [pageLinks]="5" selectionMode="single" [(selection)]="selected"   [rowHover]="true" >
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th pTooltip="Sudah Input Tindakan" class="p-text-center" style="width: 30px">#</th>
+                        <th style="width: 30px">No</th>
+                        <th style="width: 100px">Tgl Registrasi</th>
+                        <th style="width: 100px">No Registrasi</th>
+                        <th style="width: 90px">No RM</th>
+                        <th style="width: 200px">Nama Pasien</th>
+                        <th style="width: 100px">Umur</th>
+                        <th style="width: 100px">JK</th>
+                        <th style="width: 200px">Dokter</th>
+                        <th style="width: 100px">Tipe Pembayaran</th>
+                        <th style="width: 100px">Kelas</th>
+                        <th style="width: 300px">Alamat</th>
+                        <th style="width: 100px">Kode Diagnosa</th>
+                        <th style="width: 100px">Panggil</th>
+                        <th style="width: 100px">Status</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item let-rowIndex="rowIndex">
+                    <tr *ngIf="rowGroupMetadata[item.namaruangan].index === rowIndex" [ngClass]="'row-header'">
+                        <td colspan="15">
+                            <span class="p-text-bold p-ml-2">{{item.namaruangan}}
+                                (Jumlah:{{rowGroupMetadata[item.namaruangan].size}})</span>
+                        </td>
+                    </tr>
+                    <tr [pSelectableRow]="item">
+                        <td class="p-text-center" style="width: 30px">
+                            <i class="pi"
+                                [ngClass]="{'true-icon pi-check-circle': item.statlayanan, 'false-icon pi-times-circle': !item.statlayanan}"></i>
+                        </td>
+                        <td style="width: 30px">{{item.noantrian}}</td>
+                        <td style="width: 100px">{{item.tglregistrasi}}</td>
+                        <td style="width: 100px">{{item.noregistrasi}}</td>
+                        <td style="width: 90px">{{item.norm}}</td>
+                        <td style="width: 200px">{{item.namapasien}}</td>
+                        <td style="width: 100px">{{item.umurzz}}</td>
+                        <td style="width: 200px">{{item.namadokter}}</td>
+                        <td style="width: 100px"> {{item.jeniskelamin}}</td>
+                        <td style="width: 100px">{{item.namakelas}}</td>
+                        <td style="width: 100px">{{item.kelompokpasien}}</td>
+                        <td style="width: 300px">{{item.alamatlengkap}}</td>
+
+                        <td style="width: 100px">
+                            <span *ngFor="let diag of item.kddiagnosa" [class]="'order-badge order-instock'">
+                                {{diag}}
+                            </span>
+                        </td>
+                        <td style="width: 100px">{{item.stts}}</td>
+                        <td style="width: 100px">
+                            <span
+                                [ngClass]="{'label-badge-success':!item.isonline,'label-badge-danger':item.isonline}">
+                                {{item.online}}
+                            </span>
+                        </td>
+
+                    </tr>
+                </ng-template>
+            </p-table> -->
+
+        </div>
+
+        <!-- <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-2 p-md-offset-8">
+                    <button pButton icon="fa fa-stethoscope" (click)="order()" label="Order Gizi"></button>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <button pButton icon="fa fa-th-list" (click)="riwayat()" label="Riwayat"></button>
+                </div>
+            </div>
+        </div> -->
+    </div>
+
+
+    <p-dialog header="Detail Order" [(visible)]="pop_daftarOrder" [modal]="true" [maximizable]="true" [draggable]="true"
+        [resizable]="true" [style]="{width: '1368px', minWidth: '1368px'}">
+        <div class="p-fluid p-formgrid ">
+            <div class="p-grid">
+                <div class="p-col-12">
+                    <p-tabView (onChange)="handleChangeTab($event)" [(activeIndex)]="indexTab">
+                        <p-tabPanel header="Order Baru" leftIcon="fa fa-arrow-right">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-4">
+                                    <label class="label" for="input">Tgl Menu</label>
+                                    <p-calendar [(ngModel)]="item.tglMenu" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="true"
+                                        dateFormat="yy-mm-dd" appendTo="body">
+                                    </p-calendar>
+                                </div>
+
+                                <div class="p-col-12 p-md-4">
+                                    <label class="label" for="input">Jenis Waktu</label>
+                                    <p-dropdown [options]="listJenisWaktu" [(ngModel)]="item.jenisWaktu" [filter]="true"
+                                        [showClear]="true" placeholder="Jenis Waktu" optionLabel="jeniswaktu"
+                                        appendTo="body">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-4">
+                                    <label class="label" for="input">Jenis Diet</label>
+                                    <p-multiSelect [options]="listJenisDiet" [(ngModel)]="item.jenisDiet"
+                                        defaultLabel="Jenis Diet" optionLabel="jenisdiet" display="chip"
+                                        appendTo="body">
+                                    </p-multiSelect>
+                                </div>
+                                <div class="p-col-12 p-md-4">
+                                    <label class="label" for="input">Kategori Diet</label>
+                                    <p-dropdown [options]="listKategoriDiet" [(ngModel)]="item.kategoriDiet"
+                                        [filter]="true" [showClear]="true" placeholder="Kategori Diet"
+                                        optionLabel="kategorydiet" appendTo="body">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-4">
+                                    <label class="label" for="input">Keterangan</label>
+                                    <input type="text" [(ngModel)]="item.keterangan" pInputText
+                                        placeholder="Keterangan" />
+                                </div>
+
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2 p-md-offset-8">
+                                    <button pButton type="submit" icon="fa fa-save" pTooltip="Simpan" class="p-mr-2"
+                                        (click)="saveOrder()" label="Simpan" [disabled]="isSimpan"></button>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <button pButton icon="fa fa-times" (click)="pop_daftarOrder =false" label="Tutup"
+                                        class="p-button-danger">
+                                    </button>
+                                </div>
+                            </div>
+
+                        </p-tabPanel>
+                        <p-tabPanel header="Riwayat Order" leftIcon="fa fa-th-list">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Awal</label>
+                                    <p-calendar [(ngModel)]="itemR.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="true"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Akhir</label>
+                                    <p-calendar [(ngModel)]="itemR.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="true"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">No Rekam Medis </label>
+                                    <input type="text" [(ngModel)]="itemR.noRm" pInputText
+                                        placeholder="No Rekam Medis" />
+                                </div>
+                                <div class="p-col p-md-2">
+                                    <label class="label" for="input">Nama Pasien </label>
+                                    <input type="text" [(ngModel)]="itemR.nama" pInputText placeholder="Nama Pasien" />
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Jenis Diet</label>
+                                    <p-multiSelect [options]="listJenisDiet" [(ngModel)]="itemR.jenisDiet"
+                                        defaultLabel="Jenis Diet" optionLabel="jenisdiet" display="chip"
+                                        appendTo="body">
+                                    </p-multiSelect>
+                                </div>
+
+                                <div class="p-col-12 p-md-1" style="margin-top:15px">
+                                    <button pButton type="submit" icon="pi pi-search" pTooltip="Cari"
+                                        (click)="loadRiwayat()"></button>
+                                </div>
+                            </div>
+                            <div class="p-grid">
+
+                                <div class="p-col-12 p-md-12">
+                                    <p-table [columns]="columnRiwayat" [value]="dataSourceRiwayat"
+                                        [(selection)]="selectedData" styleClass="p-datatable-customers"
+                                        [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                                        [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true"
+                                        [pageLinks]="5" sortMode="multiple" dataKey="norec" selectionMode="single">
+
+                                        <ng-template pTemplate="header" let-columns>
+                                            <tr>
+                                                <th style="width: 80px"></th>
+                                                <th *ngFor="let col of columns" pSortableColumn="{{col.field}}"
+                                                    style="width: {{col.width}}">
+                                                    {{col.header}}
+                                                    <p-sortIcon field="{{col.field}}">
+                                                    </p-sortIcon>
+                                                </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                            let-rowIndex="rowIndex" let-expanded="expanded">
+                                            <tr>
+                                                <td style="width: 80px">
+                                                    <button type="button" pButton pRipple [pRowToggler]="rowData"
+                                                        class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                                    <button pButton type="button" icon="pi pi-trash"
+                                                        class="p-button-rounded p-button-danger p-mr-2"
+                                                        pTooltip="Hapus Order" label=""
+                                                        (click)="hapusOrder(rowData)"></button>
+                                                </td>
+                                                <td *ngFor="let col of columns" style="width: {{col.width}}">
+                                                    <span *ngIf="col.isCurrency != undefined">
+                                                        {{formatRupiah(rowData[col.field],'')}}</span>
+                                                    <span *ngIf="col.isCurrency == undefined">
+                                                        {{rowData[col.field]}}</span>
+                                                </td>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="rowexpansion" let-details>
+                                            <tr>
+                                                <td colspan="5">
+                                                    <div class="p-p-3">
+                                                        <p-table [value]="details.details" dataKey="id">
+                                                            <ng-template pTemplate="header">
+                                            <tr>
+                                                <th style="width: 80px"></th>
+                                                <th>Ruang Asal</th>
+                                                <th>Waktu</th>
+                                                <th>Kategori </th>
+                                                <th>Diet</th>
+                                                <th>No Registrasi</th>
+                                                <th>No RM</th>
+                                                <th>Nama</th>
+                                                <th>Kelas</th>
+                                                <th>Ket</th>
+                                                <th>No Kirim</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-itemd>
+                                            <tr>
+                                                <td style="width: 80px">
+                                                    <button pButton type="button" icon="pi pi-trash"
+                                                        class="p-button-rounded p-button-danger p-mr-2"
+                                                        pTooltip="Hapus Order" label=""
+                                                        (click)="hapusItem(itemd)"></button>
+                                                </td>
+                                                <td>{{itemd.ruangorder}}</td>
+                                                <td>{{itemd.jeniswaktu}}</td>
+                                                <td>{{itemd.kategorydiet}}</td>
+                                                <td> <span *ngFor="let jenis of itemd.jenisdiet"
+                                                        [class]="'order-badge order-instock'">
+                                                        <!-- <p-tag severity="info" value="{{jenis.jenisdiet}}"></p-tag> -->
+                                                        {{jenis.jenisdiet}}
+                                                    </span>
+                                                </td>
+                                                <td>{{itemd.noregistrasi}}</td>
+                                                <td>{{itemd.norm}}</td>
+                                                <td>{{itemd.namapasien}}</td>
+                                                <td>{{itemd.namakelas}}</td>
+                                                <td>{{itemd.keteranganlainnya}}</td>
+                                                <td>{{itemd.nokirim}}</td>
+                                            </tr>
+                                        </ng-template>
+
+                                    </p-table>
+                                </div>
+                                </td>
+                                </tr>
+                                </ng-template>
+                                </p-table>
+                            </div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">No Order </label>
+                        <input type="text" [(ngModel)]="itemR.noOrder" pInputText placeholder="No Order " />
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">No Registrasi </label>
+                        <input type="text" [(ngModel)]="itemR.noReg" pInputText placeholder="No Registrasi" />
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">Ruangan </label>
+                        <input type="text" [(ngModel)]="itemR.namaRuangan" pInputText placeholder="Ruangan " />
+                    </div>
+                </div>
+                </p-tabPanel>
+                </p-tabView>
+            </div>
+        </div>
+</div>
+</p-dialog>

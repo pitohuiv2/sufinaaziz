@@ -1,0 +1,735 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>{{item.title}}</h4>
+        <div class="p-grid">
+            <div class="{{item.classgrid}}">
+                <div class="p-grid">
+                    <div class="p-col-12" *ngFor="let data of listData.kolom1">
+                        <div [ngSwitch]="data.type">
+                            <div *ngSwitchCase="'label'">
+                                <label style="{{data.style}}">{{data.caption}}</label>
+                            </div>
+                            <div *ngSwitchCase="'checkbox'">
+                                <p-checkbox [(ngModel)]="item.obj[data.id]" binary="true" inputId="item.obj[data.id]">
+                                </p-checkbox>
+                                <label for="item.obj[data.id]"> {{data.caption}}</label>
+                            </div>
+                            <div *ngSwitchCase="'radio'">
+                                <div class="p-grid" style="margin-bottom: -2rem;">
+                                    <div class="p-col-12 p-md-12 " *ngFor="let itemss of data.captionradio">
+                                        <p-radioButton [inputId]="item.obj[data.id]" [value]="itemss"
+                                            [(ngModel)]="item.obj[data.id]">
+                                        </p-radioButton>
+                                        <label [for]="itemss"> {{itemss}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'textbox'">
+                                <label>{{data.caption}}</label>
+                                <input type="text" [(ngModel)]="item.obj[data.id]" pInputText
+                                    placeholder="{{data.satuan}}" />
+                            </div>
+                            <div *ngSwitchCase="'checkboxtextbox'">
+                                <p-checkbox [(ngModel)]="item.obj2[data.id]" binary="true" inputId="item.obj2[data.id]">
+                                </p-checkbox>
+                                <label for="item.obj2{{data.id}}"> {{data.caption}}</label>
+                                <input type="text" [(ngModel)]="item.obj[data.id]" pInputText
+                                    placeholder="{{data.satuan}}" style="margin-top: 5px;" />
+                            </div>
+                            <div *ngSwitchCase="'datetime'">
+                                <label>{{data.caption}}</label>
+                                <p-calendar [(ngModel)]="item.obj[data.id]" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd"
+                                    placeholder="yyyy-MM-dd HH:mm" hourFormat="24">
+                                </p-calendar>
+                            </div>
+                            <div *ngSwitchCase="'time'">
+                                <label>{{data.caption}}</label>
+                                <p-calendar (onSelect)="onSelectTime($event,data.id)" [(ngModel)]="item.obj[data.id]"
+                                    timeOnly="true">
+                                </p-calendar>
+                            </div>
+                            <div *ngSwitchCase="'date'">
+                                <label>{{data.caption}}</label>
+                                <p-calendar [(ngModel)]="item.obj[data.id]" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                    dateFormat="yy-mm-dd" placeholder="yyyy-MM-dd">
+                                </p-calendar>
+                            </div>
+                            <div *ngSwitchCase="'textarea'">
+                                <label>{{data.caption}}</label>
+                                <textarea [(ngModel)]="item.obj[data.id]" rows="3" cols="10" pInputTextarea
+                                    style="{{data.style}}"></textarea>
+                            </div>
+                            <div *ngSwitchCase="'combobox'">
+                                <label>{{data.caption}}</label>
+                                <p-autoComplete [(ngModel)]="item.obj[data.id]" [suggestions]="item.objcbo[data.id]"
+                                    (completeMethod)="filterAutoComplete($event,data)" field="text" [dropdown]="true"
+                                    placeholder="{{data.caption}}">
+                                </p-autoComplete>
+                            </div>
+                            <div *ngSwitchCase="'img'">
+                                <div class="p-col-12 p-md-12">
+                                    <div class="p-col-12 p-md-12">
+                                        <label>{{data.caption}}</label>
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'image'">
+                                <div class="p-col-12 p-md-12">
+                                    <img src="{{data.caption}}" style="{{data.style}}" alt="Image">
+                                </div>
+                            </div>
+                            <div *ngSwitchDefault>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12" style="margin-left: 20px;" *ngIf="data.child.length > 0">
+                                <div class="p-grid" *ngFor="let data2 of data.child">
+                                    <div class="p-col-12 p-md-12" [ngSwitch]="data2.type">
+                                        <div *ngSwitchCase="'label'">
+                                            <label style="{{data2.style}}">{{data2.caption}}</label>
+                                        </div>
+                                        <div *ngSwitchCase="'checkbox'" style="width:  calc(100% - 20px);">
+                                            <p-checkbox [(ngModel)]="item.obj[data2.id]" binary="true"
+                                                inputId="item.obj[data2.id]">
+                                            </p-checkbox>
+                                            <label for="item.obj{{data2.id}}"> {{data2.caption}}</label>
+                                        </div>
+                                        <div *ngSwitchCase="'radio'" style="width:  calc(100% - 20px);">
+                                            <div class="p-grid" style="margin-top: 5px ;
+                                            margin-bottom: -2rem;">
+                                                <div class="p-col-12 p-md-12 "
+                                                    *ngFor="let itemss2 of data2.captionradio">
+                                                    <p-radioButton [inputId]="item.obj[data2.id]" [value]="itemss2"
+                                                        [(ngModel)]="item.obj[data2.id]">
+                                                    </p-radioButton>
+                                                    <label [for]="itemss2"> {{itemss2}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchCase="'textbox'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <input type="text" [(ngModel)]="item.obj[data2.id]" pInputText
+                                                placeholder="{{data2.satuan}}" />
+                                        </div>
+                                        <div *ngSwitchCase="'checkboxtextbox'" style="width:  calc(100% - 20px);">
+                                            <p-checkbox [(ngModel)]="item.obj2[data2.id]" binary="true"
+                                                inputId="item.obj2[data2.id]">
+                                            </p-checkbox>
+                                            <label for="item.obj2{{data2.id}}"> {{data2.caption}}</label>
+                                            <input type="text" [(ngModel)]="item.obj[data.id]" pInputText
+                                                placeholder="{{data2.satuan}}" style="margin-top: 5px;" />
+                                        </div>
+                                        <div *ngSwitchCase="'datetime'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-calendar [(ngModel)]="item.obj[data2.id]" [showIcon]="true"
+                                                [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                                [showTime]="true" dateFormat="yy-mm-dd" placeholder="yyyy-MM-dd HH:mm"
+                                                hourFormat="24">
+                                            </p-calendar>
+                                        </div>
+                                        <div *ngSwitchCase="'time'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-calendar (onSelect)="onSelectTime($event,data2.id)"
+                                                [(ngModel)]="item.obj[data2.id]" timeOnly="true">
+                                            </p-calendar>
+                                        </div>
+                                        <div *ngSwitchCase="'date'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-calendar [(ngModel)]="item.obj[data2.id]" [showIcon]="true"
+                                                [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                                [showTime]="false" dateFormat="yy-mm-dd" placeholder="yyyy-MM-dd">
+                                            </p-calendar>
+                                        </div>
+                                        <div *ngSwitchCase="'textarea'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <textarea [(ngModel)]="item.obj[data2.id]" rows="3" cols="10" pInputTextarea
+                                                style="{{data2.style}}"></textarea>
+                                        </div>
+                                        <div *ngSwitchCase="'combobox'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-autoComplete [(ngModel)]="item.obj[data2.id]"
+                                                [suggestions]="item.objcbo[data2.id]"
+                                                (completeMethod)="filterAutoComplete($event,data2)" field="text"
+                                                [dropdown]="true" placeholder="{{data2.caption}}">
+                                            </p-autoComplete>
+                                        </div>
+                                        <div *ngSwitchCase="'img'" style="width:  calc(100% - 20px);">
+                                            <div class="p-col-12 p-md-12">
+                                                <div class="p-col-12 p-md-12">
+                                                    <label>{{data2.caption}}</label>
+                                                </div>
+                                                <div class="p-col-12 p-md-12">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchCase="'image'" style="width:  calc(100% - 20px);">
+                                            <div class="p-col-12 p-md-12">
+                                                <img src="{{data2.caption}}" style="{{data2.style}}" alt="Image">
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchDefault>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="{{item.classgrid}}">
+                <div class="p-grid">
+                    <div class="p-col-12" *ngFor="let data of listData.kolom2">
+                        <div [ngSwitch]="data.type">
+                            <div *ngSwitchCase="'label'">
+                                <label style="{{data.style}}">{{data.caption}}</label>
+                            </div>
+                            <div *ngSwitchCase="'checkbox'">
+                                <p-checkbox [(ngModel)]="item.obj[data.id]" binary="true" inputId="item.obj[data.id]">
+                                </p-checkbox>
+                                <label for="item.obj[data.id]"> {{data.caption}}</label>
+                            </div>
+                            <div *ngSwitchCase="'radio'">
+                                <div class="p-grid" style="margin-bottom: -2rem;">
+                                    <div class="p-col-12 p-md-12 " *ngFor="let itemss of data.captionradio">
+                                        <p-radioButton [inputId]="item.obj[data.id]" [value]="itemss"
+                                            [(ngModel)]="item.obj[data.id]">
+                                        </p-radioButton>
+                                        <label [for]="itemss"> {{itemss}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'textbox'">
+                                <label>{{data.caption}}</label>
+                                <input type="text" [(ngModel)]="item.obj[data.id]" pInputText
+                                    placeholder="{{data.satuan}}" />
+                            </div>
+                            <div *ngSwitchCase="'checkboxtextbox'">
+                                <p-checkbox [(ngModel)]="item.obj2[data.id]" binary="true" inputId="item.obj2[data.id]">
+                                </p-checkbox>
+                                <label for="item.obj2{{data.id}}"> {{data.caption}}</label>
+                                <input type="text" [(ngModel)]="item.obj[data.id]" pInputText
+                                    placeholder="{{data.satuan}}" style="margin-top: 5px;" />
+                            </div>
+                            <div *ngSwitchCase="'datetime'">
+                                <label>{{data.caption}}</label>
+                                <p-calendar [(ngModel)]="item.obj[data.id]" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd"
+                                    placeholder="yyyy-MM-dd HH:mm" hourFormat="24">
+                                </p-calendar>
+                            </div>
+                            <div *ngSwitchCase="'time'">
+                                <label>{{data.caption}}</label>
+                                <p-calendar (onSelect)="onSelectTime($event,data.id)" [(ngModel)]="item.obj[data.id]"
+                                    timeOnly="true">
+                                </p-calendar>
+                            </div>
+                            <div *ngSwitchCase="'date'">
+                                <label>{{data.caption}}</label>
+                                <p-calendar [(ngModel)]="item.obj[data.id]" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                    dateFormat="yy-mm-dd" placeholder="yyyy-MM-dd">
+                                </p-calendar>
+                            </div>
+                            <div *ngSwitchCase="'textarea'">
+                                <label>{{data.caption}}</label>
+                                <textarea [(ngModel)]="item.obj[data.id]" rows="3" cols="10" pInputTextarea
+                                    style="{{data.style}}"></textarea>
+                            </div>
+                            <div *ngSwitchCase="'combobox'">
+                                <label>{{data.caption}}</label>
+                                <p-autoComplete [(ngModel)]="item.obj[data.id]" [suggestions]="item.objcbo[data.id]"
+                                    (completeMethod)="filterAutoComplete($event,data)" field="text" [dropdown]="true"
+                                    placeholder="{{data.caption}}">
+                                </p-autoComplete>
+                            </div>
+                            <div *ngSwitchCase="'img'">
+                                <div class="p-col-12 p-md-12">
+                                    <div class="p-col-12 p-md-12">
+                                        <label>{{data.caption}}</label>
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'image'">
+                                <div class="p-col-12 p-md-12">
+                                    <img src="{{data.caption}}" style="{{data.style}}" alt="Image">
+                                </div>
+                            </div>
+                            <div *ngSwitchDefault>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12" style="margin-left: 20px;" *ngIf="data.child.length > 0">
+                                <div class="p-grid" *ngFor="let data2 of data.child">
+                                    <div class="p-col-12 p-md-12" [ngSwitch]="data2.type">
+                                        <div *ngSwitchCase="'label'">
+                                            <label style="{{data2.style}}">{{data2.caption}}</label>
+                                        </div>
+                                        <div *ngSwitchCase="'checkbox'" style="width:  calc(100% - 20px);">
+                                            <p-checkbox [(ngModel)]="item.obj[data2.id]" binary="true"
+                                                inputId="item.obj[data2.id]">
+                                            </p-checkbox>
+                                            <label for="item.obj{{data2.id}}"> {{data2.caption}}</label>
+                                        </div>
+                                        <div *ngSwitchCase="'radio'" style="width:  calc(100% - 20px);">
+                                            <div class="p-grid" style="margin-top: 5px ;
+                                            margin-bottom: -2rem;">
+                                                <div class="p-col-12 p-md-12 "
+                                                    *ngFor="let itemss2 of data2.captionradio">
+                                                    <p-radioButton [inputId]="item.obj[data2.id]" [value]="itemss2"
+                                                        [(ngModel)]="item.obj[data2.id]">
+                                                    </p-radioButton>
+                                                    <label [for]="itemss2"> {{itemss2}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchCase="'textbox'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <input type="text" [(ngModel)]="item.obj[data2.id]" pInputText
+                                                placeholder="{{data2.satuan}}" />
+                                        </div>
+                                        <div *ngSwitchCase="'checkboxtextbox'" style="width:  calc(100% - 20px);">
+                                            <p-checkbox [(ngModel)]="item.obj2[data2.id]" binary="true"
+                                                inputId="item.obj2[data2.id]">
+                                            </p-checkbox>
+                                            <label for="item.obj2{{data2.id}}"> {{data2.caption}}</label>
+                                            <input type="text" [(ngModel)]="item.obj[data.id]" pInputText
+                                                placeholder="{{data2.satuan}}" style="margin-top: 5px;" />
+                                        </div>
+                                        <div *ngSwitchCase="'datetime'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-calendar [(ngModel)]="item.obj[data2.id]" [showIcon]="true"
+                                                [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                                [showTime]="true" dateFormat="yy-mm-dd" placeholder="yyyy-MM-dd HH:mm"
+                                                hourFormat="24">
+                                            </p-calendar>
+                                        </div>
+                                        <div *ngSwitchCase="'time'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-calendar (onSelect)="onSelectTime($event,data2.id)"
+                                                [(ngModel)]="item.obj[data2.id]" timeOnly="true">
+                                            </p-calendar>
+                                        </div>
+                                        <div *ngSwitchCase="'date'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-calendar [(ngModel)]="item.obj[data2.id]" [showIcon]="true"
+                                                [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                                [showTime]="false" dateFormat="yy-mm-dd" placeholder="yyyy-MM-dd">
+                                            </p-calendar>
+                                        </div>
+                                        <div *ngSwitchCase="'textarea'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <textarea [(ngModel)]="item.obj[data2.id]" rows="3" cols="10" pInputTextarea
+                                                style="{{data2.style}}"></textarea>
+                                        </div>
+                                        <div *ngSwitchCase="'combobox'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-autoComplete [(ngModel)]="item.obj[data2.id]"
+                                                [suggestions]="item.objcbo[data2.id]"
+                                                (completeMethod)="filterAutoComplete($event,data2)" field="text"
+                                                [dropdown]="true" placeholder="{{data2.caption}}">
+                                            </p-autoComplete>
+                                        </div>
+                                        <div *ngSwitchCase="'img'" style="width:  calc(100% - 20px);">
+                                            <div class="p-col-12 p-md-12">
+                                                <div class="p-col-12 p-md-12">
+                                                    <label>{{data2.caption}}</label>
+                                                </div>
+                                                <div class="p-col-12 p-md-12">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchCase="'image'" style="width:  calc(100% - 20px);">
+                                            <div class="p-col-12 p-md-12">
+                                                <img src="{{data2.caption}}" style="{{data2.style}}" alt="Image">
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchDefault>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="{{item.classgrid}}">
+                <div class="p-grid">
+                    <div class="p-col-12" *ngFor="let data of listData.kolom3">
+                        <div [ngSwitch]="data.type">
+                            <div *ngSwitchCase="'label'">
+                                <label style="{{data.style}}">{{data.caption}}</label>
+                            </div>
+                            <div *ngSwitchCase="'checkbox'">
+                                <p-checkbox [(ngModel)]="item.obj[data.id]" binary="true" inputId="item.obj[data.id]">
+                                </p-checkbox>
+                                <label for="item.obj[data.id]"> {{data.caption}}</label>
+                            </div>
+                            <div *ngSwitchCase="'radio'">
+                                <div class="p-grid" style="margin-bottom: -2rem;">
+                                    <div class="p-col-12 p-md-12 " *ngFor="let itemss of data.captionradio">
+                                        <p-radioButton [inputId]="item.obj[data.id]" [value]="itemss"
+                                            [(ngModel)]="item.obj[data.id]">
+                                        </p-radioButton>
+                                        <label [for]="itemss"> {{itemss}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'textbox'">
+                                <label>{{data.caption}}</label>
+                                <input type="text" [(ngModel)]="item.obj[data.id]" pInputText
+                                    placeholder="{{data.satuan}}" />
+                            </div>
+                            <div *ngSwitchCase="'checkboxtextbox'">
+                                <p-checkbox [(ngModel)]="item.obj2[data.id]" binary="true" inputId="item.obj2[data.id]">
+                                </p-checkbox>
+                                <label for="item.obj2{{data.id}}"> {{data.caption}}</label>
+                                <input type="text" [(ngModel)]="item.obj[data.id]" pInputText
+                                    placeholder="{{data.satuan}}" style="margin-top: 5px;" />
+                            </div>
+                            <div *ngSwitchCase="'datetime'">
+                                <label>{{data.caption}}</label>
+                                <p-calendar [(ngModel)]="item.obj[data.id]" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd"
+                                    placeholder="yyyy-MM-dd HH:mm" hourFormat="24">
+                                </p-calendar>
+                            </div>
+                            <div *ngSwitchCase="'time'">
+                                <label>{{data.caption}}</label>
+                                <p-calendar (onSelect)="onSelectTime($event,data.id)" [(ngModel)]="item.obj[data.id]"
+                                    timeOnly="true">
+                                </p-calendar>
+                            </div>
+                            <div *ngSwitchCase="'date'">
+                                <label>{{data.caption}}</label>
+                                <p-calendar [(ngModel)]="item.obj[data.id]" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                    dateFormat="yy-mm-dd" placeholder="yyyy-MM-dd">
+                                </p-calendar>
+                            </div>
+                            <div *ngSwitchCase="'textarea'">
+                                <label>{{data.caption}}</label>
+                                <textarea [(ngModel)]="item.obj[data.id]" rows="3" cols="10" pInputTextarea
+                                    style="{{data.style}}"></textarea>
+                            </div>
+                            <div *ngSwitchCase="'combobox'">
+                                <label>{{data.caption}}</label>
+                                <p-autoComplete [(ngModel)]="item.obj[data.id]" [suggestions]="item.objcbo[data.id]"
+                                    (completeMethod)="filterAutoComplete($event,data)" field="text" [dropdown]="true"
+                                    placeholder="{{data.caption}}">
+                                </p-autoComplete>
+                            </div>
+                            <div *ngSwitchCase="'img'">
+                                <div class="p-col-12 p-md-12">
+                                    <div class="p-col-12 p-md-12">
+                                        <label>{{data.caption}}</label>
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'image'">
+                                <div class="p-col-12 p-md-12">
+                                    <img src="{{data.caption}}" style="{{data.style}}" alt="Image">
+                                </div>
+                            </div>
+                            <div *ngSwitchDefault>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12" style="margin-left: 20px;" *ngIf="data.child.length > 0">
+                                <div class="p-grid" *ngFor="let data2 of data.child">
+                                    <div class="p-col-12 p-md-12" [ngSwitch]="data2.type">
+                                        <div *ngSwitchCase="'label'">
+                                            <label style="{{data2.style}}">{{data2.caption}}</label>
+                                        </div>
+                                        <div *ngSwitchCase="'checkbox'" style="width:  calc(100% - 20px);">
+                                            <p-checkbox [(ngModel)]="item.obj[data2.id]" binary="true"
+                                                inputId="item.obj[data2.id]">
+                                            </p-checkbox>
+                                            <label for="item.obj{{data2.id}}"> {{data2.caption}}</label>
+                                        </div>
+                                        <div *ngSwitchCase="'radio'" style="width:  calc(100% - 20px);">
+                                            <div class="p-grid" style="margin-top: 5px ;
+                                            margin-bottom: -2rem;">
+                                                <div class="p-col-12 p-md-12 "
+                                                    *ngFor="let itemss2 of data2.captionradio">
+                                                    <p-radioButton [inputId]="item.obj[data2.id]" [value]="itemss2"
+                                                        [(ngModel)]="item.obj[data2.id]">
+                                                    </p-radioButton>
+                                                    <label [for]="itemss2"> {{itemss2}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchCase="'textbox'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <input type="text" [(ngModel)]="item.obj[data2.id]" pInputText
+                                                placeholder="{{data2.satuan}}" />
+                                        </div>
+                                        <div *ngSwitchCase="'checkboxtextbox'" style="width:  calc(100% - 20px);">
+                                            <p-checkbox [(ngModel)]="item.obj2[data2.id]" binary="true"
+                                                inputId="item.obj2[data2.id]">
+                                            </p-checkbox>
+                                            <label for="item.obj2{{data2.id}}"> {{data2.caption}}</label>
+                                            <input type="text" [(ngModel)]="item.obj[data.id]" pInputText
+                                                placeholder="{{data2.satuan}}" style="margin-top: 5px;" />
+                                        </div>
+                                        <div *ngSwitchCase="'datetime'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-calendar [(ngModel)]="item.obj[data2.id]" [showIcon]="true"
+                                                [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                                [showTime]="true" dateFormat="yy-mm-dd" placeholder="yyyy-MM-dd HH:mm"
+                                                hourFormat="24">
+                                            </p-calendar>
+                                        </div>
+                                        <div *ngSwitchCase="'time'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-calendar (onSelect)="onSelectTime($event,data2.id)"
+                                                [(ngModel)]="item.obj[data2.id]" timeOnly="true">
+                                            </p-calendar>
+                                        </div>
+                                        <div *ngSwitchCase="'date'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-calendar [(ngModel)]="item.obj[data2.id]" [showIcon]="true"
+                                                [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                                [showTime]="false" dateFormat="yy-mm-dd" placeholder="yyyy-MM-dd">
+                                            </p-calendar>
+                                        </div>
+                                        <div *ngSwitchCase="'textarea'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <textarea [(ngModel)]="item.obj[data2.id]" rows="3" cols="10" pInputTextarea
+                                                style="{{data2.style}}"></textarea>
+                                        </div>
+                                        <div *ngSwitchCase="'combobox'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-autoComplete [(ngModel)]="item.obj[data2.id]"
+                                                [suggestions]="item.objcbo[data2.id]"
+                                                (completeMethod)="filterAutoComplete($event,data2)" field="text"
+                                                [dropdown]="true" placeholder="{{data2.caption}}">
+                                            </p-autoComplete>
+                                        </div>
+                                        <div *ngSwitchCase="'img'" style="width:  calc(100% - 20px);">
+                                            <div class="p-col-12 p-md-12">
+                                                <div class="p-col-12 p-md-12">
+                                                    <label>{{data2.caption}}</label>
+                                                </div>
+                                                <div class="p-col-12 p-md-12">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchCase="'image'" style="width:  calc(100% - 20px);">
+                                            <div class="p-col-12 p-md-12">
+                                                <img src="{{data2.caption}}" style="{{data2.style}}" alt="Image">
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchDefault>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="{{item.classgrid}}">
+                <div class="p-grid">
+                    <div class="p-col-12" *ngFor="let data of listData.kolom4">
+                        <div [ngSwitch]="data.type">
+                            <div *ngSwitchCase="'label'">
+                                <label style="{{data.style}}">{{data.caption}}</label>
+                            </div>
+                            <div *ngSwitchCase="'checkbox'">
+                                <p-checkbox [(ngModel)]="item.obj[data.id]" binary="true" inputId="item.obj[data.id]">
+                                </p-checkbox>
+                                <label for="item.obj[data.id]"> {{data.caption}}</label>
+                            </div>
+                            <div *ngSwitchCase="'radio'">
+                                <div class="p-grid" style="margin-bottom: -2rem;">
+                                    <div class="p-col-12 p-md-12 " *ngFor="let itemss of data.captionradio">
+                                        <p-radioButton [inputId]="item.obj[data.id]" [value]="itemss"
+                                            [(ngModel)]="item.obj[data.id]">
+                                        </p-radioButton>
+                                        <label [for]="itemss"> {{itemss}}</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'textbox'">
+                                <label>{{data.caption}}</label>
+                                <input type="text" [(ngModel)]="item.obj[data.id]" pInputText
+                                    placeholder="{{data.satuan}}" />
+                            </div>
+                            <div *ngSwitchCase="'checkboxtextbox'">
+                                <p-checkbox [(ngModel)]="item.obj2[data.id]" binary="true" inputId="item.obj2[data.id]">
+                                </p-checkbox>
+                                <label for="item.obj2{{data.id}}"> {{data.caption}}</label>
+                                <input type="text" [(ngModel)]="item.obj[data.id]" pInputText
+                                    placeholder="{{data.satuan}}" style="margin-top: 5px;" />
+                            </div>
+                            <div *ngSwitchCase="'datetime'">
+                                <label>{{data.caption}}</label>
+                                <p-calendar [(ngModel)]="item.obj[data.id]" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd"
+                                    placeholder="yyyy-MM-dd HH:mm" hourFormat="24">
+                                </p-calendar>
+                            </div>
+                            <div *ngSwitchCase="'time'">
+                                <label>{{data.caption}}</label>
+                                <p-calendar (onSelect)="onSelectTime($event,data.id)" [(ngModel)]="item.obj[data.id]"
+                                    timeOnly="true">
+                                </p-calendar>
+                            </div>
+                            <div *ngSwitchCase="'date'">
+                                <label>{{data.caption}}</label>
+                                <p-calendar [(ngModel)]="item.obj[data.id]" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                    dateFormat="yy-mm-dd" placeholder="yyyy-MM-dd">
+                                </p-calendar>
+                            </div>
+                            <div *ngSwitchCase="'textarea'">
+                                <label>{{data.caption}}</label>
+                                <textarea [(ngModel)]="item.obj[data.id]" rows="3" cols="10" pInputTextarea
+                                    style="{{data.style}}"></textarea>
+                            </div>
+                            <div *ngSwitchCase="'combobox'">
+                                <label>{{data.caption}}</label>
+                                <p-autoComplete [(ngModel)]="item.obj[data.id]" [suggestions]="item.objcbo[data.id]"
+                                    (completeMethod)="filterAutoComplete($event,data)" field="text" [dropdown]="true"
+                                    placeholder="{{data.caption}}">
+                                </p-autoComplete>
+                            </div>
+                            <div *ngSwitchCase="'img'">
+                                <div class="p-col-12 p-md-12">
+                                    <div class="p-col-12 p-md-12">
+                                        <label>{{data.caption}}</label>
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngSwitchCase="'image'">
+                                <div class="p-col-12 p-md-12">
+                                    <img src="{{data.caption}}" style="{{data.style}}" alt="Image">
+                                </div>
+                            </div>
+                            <div *ngSwitchDefault>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12" style="margin-left: 20px;" *ngIf="data.child.length > 0">
+                                <div class="p-grid" *ngFor="let data2 of data.child">
+                                    <div class="p-col-12 p-md-12" [ngSwitch]="data2.type">
+                                        <div *ngSwitchCase="'label'">
+                                            <label style="{{data2.style}}">{{data2.caption}}</label>
+                                        </div>
+                                        <div *ngSwitchCase="'checkbox'" style="width:  calc(100% - 20px);">
+                                            <p-checkbox [(ngModel)]="item.obj[data2.id]" binary="true"
+                                                inputId="item.obj[data2.id]">
+                                            </p-checkbox>
+                                            <label for="item.obj{{data2.id}}"> {{data2.caption}}</label>
+                                        </div>
+                                        <div *ngSwitchCase="'radio'" style="width:  calc(100% - 20px);">
+                                            <div class="p-grid" style="margin-top: 5px ;
+                                            margin-bottom: -2rem;">
+                                                <div class="p-col-12 p-md-12 "
+                                                    *ngFor="let itemss2 of data2.captionradio">
+                                                    <p-radioButton [inputId]="item.obj[data2.id]" [value]="itemss2"
+                                                        [(ngModel)]="item.obj[data2.id]">
+                                                    </p-radioButton>
+                                                    <label [for]="itemss2"> {{itemss2}}</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchCase="'textbox'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <input type="text" [(ngModel)]="item.obj[data2.id]" pInputText
+                                                placeholder="{{data2.satuan}}" />
+                                        </div>
+                                        <div *ngSwitchCase="'checkboxtextbox'" style="width:  calc(100% - 20px);">
+                                            <p-checkbox [(ngModel)]="item.obj2[data2.id]" binary="true"
+                                                inputId="item.obj2[data2.id]">
+                                            </p-checkbox>
+                                            <label for="item.obj2{{data2.id}}"> {{data2.caption}}</label>
+                                            <input type="text" [(ngModel)]="item.obj[data.id]" pInputText
+                                                placeholder="{{data2.satuan}}" style="margin-top: 5px;" />
+                                        </div>
+                                        <div *ngSwitchCase="'datetime'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-calendar [(ngModel)]="item.obj[data2.id]" [showIcon]="true"
+                                                [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                                [showTime]="true" dateFormat="yy-mm-dd" placeholder="yyyy-MM-dd HH:mm"
+                                                hourFormat="24">
+                                            </p-calendar>
+                                        </div>
+                                        <div *ngSwitchCase="'time'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-calendar (onSelect)="onSelectTime($event,data2.id)"
+                                                [(ngModel)]="item.obj[data2.id]" timeOnly="true">
+                                            </p-calendar>
+                                        </div>
+                                        <div *ngSwitchCase="'date'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-calendar [(ngModel)]="item.obj[data2.id]" [showIcon]="true"
+                                                [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                                [showTime]="false" dateFormat="yy-mm-dd" placeholder="yyyy-MM-dd">
+                                            </p-calendar>
+                                        </div>
+                                        <div *ngSwitchCase="'textarea'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <textarea [(ngModel)]="item.obj[data2.id]" rows="3" cols="10" pInputTextarea
+                                                style="{{data2.style}}"></textarea>
+                                        </div>
+                                        <div *ngSwitchCase="'combobox'" style="width:  calc(100% - 20px);">
+                                            <label>{{data2.caption}}</label>
+                                            <p-autoComplete [(ngModel)]="item.obj[data2.id]"
+                                                [suggestions]="item.objcbo[data2.id]"
+                                                (completeMethod)="filterAutoComplete($event,data2)" field="text"
+                                                [dropdown]="true" placeholder="{{data2.caption}}">
+                                            </p-autoComplete>
+                                        </div>
+                                        <div *ngSwitchCase="'img'" style="width:  calc(100% - 20px);">
+                                            <div class="p-col-12 p-md-12">
+                                                <div class="p-col-12 p-md-12">
+                                                    <label>{{data2.caption}}</label>
+                                                </div>
+                                                <div class="p-col-12 p-md-12">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchCase="'image'" style="width:  calc(100% - 20px);">
+                                            <div class="p-col-12 p-md-12">
+                                                <img src="{{data2.caption}}" style="{{data2.style}}" alt="Image">
+                                            </div>
+                                        </div>
+                                        <div *ngSwitchDefault>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <p-divider></p-divider>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-2 p-md-offset-6" >
+                <button pButton type="button" icon="pi pi-save" class="p-button p-mr-2" (click)="save()"
+                    pTooltip="Simpan Data" label="Simpan" [disabled]="isSimpan"></button>
+            </div>
+            <div class="p-col-12 p-md-2" >
+                <button pButton type="button" icon="fa fa-refresh" class="p-button p-button-danger p-mr-2"
+                    (click)="batal()" pTooltip="Reset semua inputan" label="Batal"></button>
+            </div>
+            <div class="p-col-12 p-md-2" >
+                <button pButton type="button" icon="pi pi-arrow-left" class="p-button  p-mr-2"
+                    (click)="back()" pTooltip="Kembali Ke Menu Sebelumnya" label="Kembali"></button>
+            </div>
+           
+        </div>
+    </div>
+</div>

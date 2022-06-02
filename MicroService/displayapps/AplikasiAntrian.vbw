@@ -1,0 +1,12 @@
+Koneksi = 52, 52, 854, 468, C
+JSON = 26, 26, 828, 442, C
+SavetoFile = 78, 78, 880, 494, C
+Transform = 104, 104, 906, 520, C
+JNode = 0, 0, 0, 0, C
+cJSONScript = 0, 0, 0, 0, C
+cStringBuilder = 0, 0, 0, 0, C
+frmSettingKoneksi = 156, 156, 958, 572, C, 130, 130, 932, 546, C
+mdlTotray = 0, 0, 0, 0, C
+onTopTrus = 156, 156, 985, 572, C
+Shorcut = 208, 208, 1037, 624, C
+DisplayAntrian = 26, 26, 855, 442, C, 104, 104, 933, 520, C

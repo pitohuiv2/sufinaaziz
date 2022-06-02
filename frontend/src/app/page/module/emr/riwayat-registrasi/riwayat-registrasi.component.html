@@ -1,0 +1,127 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Riwayat Registrasi</h4>
+        <div class="p-grid">
+            <p-panel header="Detail Riwayat" [toggleable]="true">
+
+                <div class="p-grid">
+
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">No Rekam Medis </label>
+                        <input type="text" [(ngModel)]="itemD.noRM" pInputText placeholder="No Rekam Medis" disabled />
+                    </div>
+                    <div class="p-col p-md-3">
+                        <label class="label" for="input">Nama Pasien </label>
+                        <input type="text" [(ngModel)]="itemD.namaPasien" pInputText placeholder="Nama Pasien"
+                            disabled />
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">Tgl Lahir </label>
+                        <input type="text" [(ngModel)]="itemD.tglLahir" pInputText placeholder="tgl Lahir" disabled />
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">No Registrasi </label>
+                        <input type="text" [(ngModel)]="itemD.noRegistrasi" pInputText placeholder="No Registrasi " />
+                    </div>
+                    <div class="p-col-12 p-md-1" style="margin-top:15px">
+                        <button pButton type="submit" icon="pi pi-search" pTooltip="Cari"
+                            (click)="loadDataRiwayat()"></button>
+                    </div>
+                </div>
+                <div class="p-col-12">
+                    <p-table #dt [value]="dataitemDegistrasi" styleClass="p-datatable-customers" [rows]="20"
+                        [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                        scrollable="true" [pageLinks]="5" dataKey="noregistrasi"
+                        [globalFilterFields]="['namaruangan','dokter']">
+                        <ng-template pTemplate="caption">
+                            <div class="table-header p-grid">
+                                <div class="p-col-12 p-md-3">
+                                    <span class="p-input-icon-left">
+                                        <i class="pi pi-search"></i>
+                                        <input pInputText type="text"
+                                            (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                            placeholder="Filter" />
+                                    </span>
+                                </div>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <td style="width: 50px">
+                                <th style="width: 30px">No</th>
+                                <th style="width: 100px"> Tgl Registrasi</th>
+                                <th style="width: 100px"> No Registrasi</th>
+                                <th style="width: 200px"> Ruangan</th>
+                                <th style="width: 100px"> Jenis Pasien </th>
+                                <th style="width: 100px"> Dokter</th>
+                                <th style="width: 100px"> Tgl Pulang </th>
+                                <th style="width: 80px"> Lama Rawat</th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-item let-index="rowIndex+1" let-expanded="expanded">
+                            <tr>
+                                <td style="width: 50px">
+                                    <button type="button" pButton pRipple [pRowToggler]="item"
+                                        class="p-button-text p-button-rounded p-button-plain"
+                                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                </td>
+                                <td style="width: 30px">{{index}}</td>
+                                <td style="width: 100px">{{item.tglregistrasi}}</td>
+                                <td style="width: 100px">{{item.noregistrasi}}</td>
+                                <td style="width: 200px">{{item.namaruangan}}</td>
+                                <td style="width: 100px">{{item.kelompokpasien}}</td>
+                                <td style="width: 100px">{{item.dokter}}</td>
+                                <td style="width: 100px">{{item.tglpulang}}</td>
+                                <td style="width: 80px">{{item.lamarawat}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="rowexpansion" let-product>
+                            <tr>
+                                <td colspan="9">
+                                    <div class="p-p-3">
+                                        <p-table [value]="product.details" dataKey="id">
+                                            <ng-template pTemplate="header">
+                            <tr>
+
+
+                                <th>Ruangan</th>
+                                <th>Dokter</th>
+                                <th>kelompokpasien</th>
+                                <th>Kamar</th>
+                                <th>Bed</th>
+                                <th>Tgl Masuk </th>
+                                <th>Tgl Keluar </th>
+                                <th>Diagnosa </th>
+
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-order>
+                            <tr>
+                                <td>{{order.namaruangan}}</td>
+                                <td>{{order.namadokter}}</td>
+                                <td>{{order.namakelas}}</td>
+                                <td>{{order.namakamar}}</td>
+                                <td>{{order.nobed}}</td>
+                                <td>{{order.tglmasuk}}</td>
+                                <td>{{order.tglkeluar}}</td>
+                                <td>
+                                    <span *ngFor="let diag of order.kddiagnosa" [class]="'order-badge order-instock'">
+                                        {{diag}}
+                                    </span>
+                                </td>
+
+                            </tr>
+                        </ng-template>
+
+                    </p-table>
+                </div>
+                </td>
+                </tr>
+                </ng-template>
+                </p-table>
+        </div>
+        </p-panel>
+    </div>
+</div>
+</div>

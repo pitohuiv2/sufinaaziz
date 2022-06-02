@@ -1,0 +1,117 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog>
+
+
+<div class="p-fluid p-formgrid ">
+  <div class="card card-w-title">
+    <h4>Pasien Lama</h4>
+    <div class="p-grid">
+
+      <div class="p-col-12 p-md-1 p-md-offset-2">
+        <label class="label" for="input">No Rekam Medis </label>
+        <input type="text" [(ngModel)]="item.noRM" pInputText (keyup.enter)="cari()" placeholder="No Rekam Medis" />
+      </div>
+      <div class="p-col p-md-2">
+        <label class="label" for="input">Nama Pasien </label>
+        <input type="text" [(ngModel)]="item.namaPasien" pInputText (keyup.enter)="cari()" placeholder="Nama Pasien" />
+      </div>
+      <div class="p-col-12 p-md-1">
+        <label class="label" for="input">NIK </label>
+        <input type="text" [(ngModel)]="item.nik" pInputText (keyup.enter)="cari()" placeholder="NIK" />
+      </div>
+      <div class="p-col-12 p-md-1">
+        <label class="label" for="input">No BPJS </label>
+        <input type="text" [(ngModel)]="item.noBPJS" pInputText (keyup.enter)="cari()" placeholder="No BPJS " />
+      </div>
+      <div class="p-col-12 p-md-2">
+        <label class="label" for="input">Tgl Lahir </label>
+        <p-calendar [(ngModel)]="item.tglLahir" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
+          yearRange="1980:2030" [showTime]="false" dateFormat="dd-mm-yy">
+        </p-calendar>
+      </div>
+      <div class="p-col-12 p-md-2">
+        <label class="label" for="input">Alamat </label>
+        <input type="text" [(ngModel)]="item.alamat" pInputText (keyup.enter)="cari()" placeholder="Alamat " />
+      </div>
+      <div class="p-col-12 p-md-1" style="margin-top:15px">
+        <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+      </div>
+
+    </div>
+    <div class="p-col-12">
+      <p-table #dt [value]="dataTable" [(selection)]="selected" styleClass="p-datatable-customers" [rowHover]="true"
+        [rows]="10" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+        [totalRecords]="totalRecords" [globalFilterFields]="['nocm','namapasien','nobpjs','alamatlengkap']"
+        [lazy]="true" (onLazyLoad)="loadLazy($event)" scrollable="true" [pageLinks]="5"
+        (onRowSelect)="onRowSelect($event)">
+        <ng-template pTemplate="header">
+          <tr>
+
+            <th style="width: 30px">No</th>
+            <th style="width: 100px" pSortableColumn="nocm">
+              <div class="p-d-flex p-jc-between p-ai-center">
+                No RM
+                <p-sortIcon field="nocm"></p-sortIcon>
+                <p-columnFilter type="text" field="nocm" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+            </th>
+            <th style="width: 100px">NIK</th>
+            <th style="width: 100px">No BPJS</th>
+            <th style="width: 250px">Nama Pasien</th>
+            <th style="width: 80px">Jenis Kelamin</th>
+            <th style="width: 100px">Nama Ayah Kandung </th>
+            <th style="width: 80px">Tgl Lahir</th>
+            <th style="width: 300px">Alamat</th>
+            <th style="width: 80px">No Hp</th>
+            <th style="width: 80px">Status</th>
+            <th style="width: 180px"></th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+          <tr>
+            <td style="width: 30px">{{index}}</td>
+            <td style="width: 100px">{{item.nocm}}</td>
+            <td style="width: 100px">{{item.noidentitas}}</td>
+            <td style="width: 100px">{{item.nobpjs}}</td>
+            <td style="width: 250px">{{item.namapasien}}</td>
+            <td style="width: 80px">{{item.jeniskelamin}}</td>
+            <td style="width: 100px">{{item.namaayah}}</td>
+            <td style="width: 80px">{{item.tgllahir}}</td>
+            <td style="width: 300px">{{item.alamatlengkap}}</td>
+            <td style="width: 80px">{{item.nohp}}</td>
+            <td style="width: 80px">
+              <p-tag severity="{{item.color}}" value="{{item.statuspasien}}"></p-tag>
+            </td>
+            <td style="width: 180px">
+              <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-mr-2"
+                (click)="tambah(item)" pTooltip="Hapus Data" label=""></button>
+              <button pButton type="button" icon="pi pi-user-edit" class="p-button-rounded  p-mr-2"
+                (click)="tambah(item)" pTooltip="Edit Pasien" label=""></button>
+              <button pButton type="button" icon="pi pi-list" class="p-button-rounded p-mr-2"
+                (click)="tambah(item)" pTooltip="Riwayat Registrasi" label=""></button>
+              <button pButton type="button" icon="pi pi-arrow-right" class="p-button-rounded  p-mr-2"
+                pTooltip="Registrasi" (click)="kand(item)" label=""></button>
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <!-- <div class="p-grid">
+      <div class="p-col-12 p-md-2 p-md-offset-4">
+        <button pButton type="button" icon="pi pi-trash" class="ui-button-rounded" (click)="tambah()"
+          pTooltip="Hapus Data" label=""></button>
+      </div>
+      <div class="p-col-12 p-md-2">
+        <button pButton type="button" icon="pi pi-user-edit" class="ui-button-rounded" (click)="tambah()"
+          pTooltip="Edit Pasien" label=""></button>
+      </div>
+      <div class="p-col-12 p-md-2">
+        <button pButton type="button" icon="pi pi-list" class="ui-button-rounded" (click)="tambah()"
+          pTooltip="Riwayat Registrasi" label=""></button>
+      </div>
+      <div class="p-col-12 p-md-2">
+        <button pButton type="button" icon="pi pi-arrow-right" class="ui-button-success" pTooltip="Registrasi"
+          (click)="kand()" label=""></button>
+      </div>
+    </div> -->
+  </div>
+</div>

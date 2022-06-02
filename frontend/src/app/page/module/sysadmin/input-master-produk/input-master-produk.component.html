@@ -1,0 +1,249 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Input Master Pelayanan</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-panel header="Data Pelayanan" [toggleable]="false">
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <label class="label" for="input">Id Pelayanan</label>
+                                <input type="text" [(ngModel)]="item.id" pInputText placeholder="Id Pelayanan"
+                                    disabled />
+                            </div>
+                            <div class="p-col-12 p-md-2">
+                                <label class="label" for="input">Status Aktif</label>
+                                <p-dropdown [options]="listStatus" [(ngModel)]="item.status" [filter]="true"
+                                    [showClear]="true" placeholder="Status " optionLabel="status" dataKey="id">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <label class="label" for="input">Nama Pelayanan/ Produk</label>
+                                <input type="text" [(ngModel)]="item.namaproduk" pInputText
+                                    placeholder="Nama Pelayanan/Produk" />
+                            </div>
+                            <div class="p-col-12 p-md-2">
+                                <label class="label" for="input">Kelompok User</label>
+                                <p-dropdown [options]="listKelompokUser" [(ngModel)]="item.kelompokuser" [filter]="true"
+                                    [showClear]="true" placeholder="Kelompok User" optionLabel="kelompokuser"
+                                    dataKey="id">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-2">
+                                <label class="label" for="input">Kode Internal</label>
+                                <input type="text" [(ngModel)]="item.kdproduk_intern" pInputText
+                                    placeholder="Kode Internal" />
+                            </div>
+                            <div class="p-col-12 p-md-2">
+                                <label class="label" for="input">Kode BMN</label>
+                                <input type="text" [(ngModel)]="item.kodebmn" pInputText placeholder="Kode BMN" />
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <label class="label" for="input">Keterangan</label>
+                                <input type="text" [(ngModel)]="item.keterangan" pInputText
+                                    placeholder="Keterangan Pelayanan/Produk" />
+                            </div>
+                        </div>
+                    </div>
+                </p-panel>
+            </div>
+            <div class="p-col-12 p-md-12">
+                <p-tabView (onChange)="handleChangeTab($event)">
+                    <p-tabPanel header="Detail Pelayanan" leftIcon="fa fa-list">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-4">
+                                    <label class="label" for="input">Detail Jenis Pelayanan</label>
+                                    <p-dropdown [options]="listDetailJenisProduk" [(ngModel)]="item.detailjenisproduk"
+                                        [filter]="true" [showClear]="true" placeholder="Detail Jenis Pelayanan"
+                                        optionLabel="detailjenisproduk" dataKey="id" (onChange)="isiJenisProduk()">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-4">
+                                    <label class="label" for="input">Jenis Pelayanan</label>
+                                    <p-dropdown [options]="listJenisBarang" [(ngModel)]="item.jenisproduk"
+                                        [filter]="true" [showClear]="true" placeholder="Jenis Pelayanan"
+                                        optionLabel="jenisproduk" dataKey="id">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-4">
+                                    <label class="label" for="input">Kelompok Pelayanan</label>
+                                    <p-dropdown [options]="listKelompokBarang" [(ngModel)]="item.kelompokroduk"
+                                        [filter]="true" [showClear]="true" placeholder="Kelompok Pelayanan"
+                                        optionLabel="status" dataKey="id">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Spesifikasi Pelayanan" leftIcon="fa fa-list">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-4">
+                                    <label class="label" for="input">Satuan Pelayanan</label>
+                                    <p-dropdown [options]="listSatuan" [(ngModel)]="item.satuan" [filter]="true"
+                                        [showClear]="true" placeholder="Satuan Pelayanan" optionLabel="satuanstandar"
+                                        dataKey="id">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-4">
+                                    <label class="label" for="input">Sediaan Pelayanan</label>
+                                    <p-dropdown [options]="listSediaan" [(ngModel)]="item.sediaan" [filter]="true"
+                                        [showClear]="true" placeholder="Sediaan Pelayanan" optionLabel="sediaan"
+                                        dataKey="id">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-4">
+                                    <label class="label" for="input">Kekuatan</label>
+                                    <p-inputNumber [(ngModel)]="item.kekuatan" [showButtons]="true"
+                                        placeholder="Kekuatan" inputId="stacked">
+                                    </p-inputNumber>
+                                </div>
+                                <div class="p-col-12 p-md-6">
+                                    <label class="label" for="input">Deskripsi</label>
+                                    <input type="text" [(ngModel)]="item.deskripsi" pInputText
+                                        placeholder="Deskripsi" />
+                                </div>
+                                <div class="p-col-12 p-md-6">
+                                    <label class="label" for="input">Spesifikasi</label>
+                                    <input type="text" [(ngModel)]="item.spesifikasi" pInputText
+                                        placeholder="Deskripsi" />
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Farmasi" leftIcon="fa fa-list">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Fornas</label>
+                                    <p-dropdown [options]="listStatus" [(ngModel)]="item.fornas" [filter]="true"
+                                        [showClear]="true" placeholder="Status " optionLabel="status" dataKey="id">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Generik</label>
+                                    <p-dropdown [options]="listStatus" [(ngModel)]="item.generik" [filter]="true"
+                                        [showClear]="true" placeholder="Status " optionLabel="status" dataKey="id">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Antibiotik</label>
+                                    <p-dropdown [options]="listStatus" [(ngModel)]="item.antibiotik" [filter]="true"
+                                        [showClear]="true" placeholder="Status " optionLabel="status" dataKey="id">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Psikotropika</label>
+                                    <p-dropdown [options]="listStatus" [(ngModel)]="item.psikotropika" [filter]="true"
+                                        [showClear]="true" placeholder="Status " optionLabel="status" dataKey="id">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Gizi" leftIcon="fa fa-list">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Qty Kalori</label>
+                                    <p-inputNumber [(ngModel)]="item.qtykalori" [showButtons]="true"
+                                        placeholder="Qty Kalori" inputId="stacked">
+                                    </p-inputNumber>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Qty Karbohidrat</label>
+                                    <p-inputNumber [(ngModel)]="item.qtykarbohidrat" [showButtons]="true"
+                                        placeholder="Qty Karbohidrat" inputId="stacked">
+                                    </p-inputNumber>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Qty Lemak</label>
+                                    <p-inputNumber [(ngModel)]="item.qtylemak" [showButtons]="true"
+                                        placeholder="Qty Lemak" inputId="stacked">
+                                    </p-inputNumber>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Qty Protein</label>
+                                    <p-inputNumber [(ngModel)]="item.qtyprotein" [showButtons]="true"
+                                        placeholder="Qty Protein" inputId="stacked">
+                                    </p-inputNumber>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Qty Porsi</label>
+                                    <p-inputNumber [(ngModel)]="item.qtyporsi" [showButtons]="true"
+                                        placeholder="Qty Porsi" inputId="stacked">
+                                    </p-inputNumber>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Penunjang" leftIcon="fa fa-list">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+                                <!-- <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Jenis Periksa</label>
+                                    <p-dropdown [options]="listJenisPeriksa" [(ngModel)]="item.jenisperiksa"
+                                        [filter]="true" [showClear]="true" placeholder="Jenis Periksa"
+                                        optionLabel="jenisperiksa" dataKey="id">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Jenis Periksa Penunjang</label>
+                                    <p-dropdown [options]="listJenisPeriksaPenunjang"
+                                        [(ngModel)]="item.jenisperiksapenunjang" [filter]="true" [showClear]="true"
+                                        placeholder="Jenis Periksa Penunjang" optionLabel="jenisperiksapenunjang"
+                                        dataKey="id">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Nilai Normal</label>
+                                    <p-inputNumber [(ngModel)]="item.nilainormal" [showButtons]="true"
+                                        placeholder="Nilai Normal" inputId="stacked">
+                                    </p-inputNumber>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Bahan Sample</label>
+                                    <p-dropdown [options]="listBahanSample" [(ngModel)]="item.bahansample" [filter]="true"
+                                        [showClear]="true" placeholder="Bahan Sample" optionLabel="bahansample"
+                                        dataKey="id">
+                                    </p-dropdown>
+                                </div> -->
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Golongan Darah</label>
+                                    <p-dropdown [options]="listGolonganDarah" [(ngModel)]="item.golongandarah"
+                                        [filter]="true" [showClear]="true" placeholder="Golongan Darah"
+                                        optionLabel="golongandarah" dataKey="id">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Rhesus</label>
+                                    <p-dropdown [options]="listRhesus" [(ngModel)]="item.rhesus" [filter]="true"
+                                        [showClear]="true" placeholder="Rhesus" optionLabel="rhesus" dataKey="id">
+                                    </p-dropdown>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+            <div class="p-col-12 p-md-12">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-2 p-md-offset-6">
+                        <button pButton type="button" icon="pi pi-save" class="p-button p-mr-2" (click)="simpan()"
+                            pTooltip="Simpan Data" label="Simpan" [disabled]="isSimpan"></button>
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <button pButton type="button" icon="pi pi-refresh" class="p-button  p-button-danger p-mr-2"
+                            (click)="batal()" pTooltip="Batal" label="Batal"></button>
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <button pButton type="button" icon="fa fa-arrow-left"
+                            class="p-button  p-button-danger p-mr-2" (click)="Kembali()" pTooltip="Kembali"
+                            label="Kembali"></button>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

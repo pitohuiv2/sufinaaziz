@@ -1,0 +1,200 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Monitoring</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-accordion>
+                    <p-accordionTab header="Data Kunjungan">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                 
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Tgl SEP </label>
+                                        <p-calendar [(ngModel)]="item.tglSep" [showIcon]="true" [monthNavigator]="true"
+                                            [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                            dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Jenis Pelayanan</label>
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="ri" name="pelayanan" [value]="1"
+                                                    [(ngModel)]="item.tipe">
+                                                </p-radioButton>
+                                                <label for="ri"> Rawat Inap</label>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="rj" name="pelayanan" [value]="2"
+                                                    [(ngModel)]="item.tipe">
+                                                </p-radioButton>
+                                                <label for="rj"> Rawat Jalan</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                            
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                        icon="pi pi-search"
+                                        (click)="cari1('jsonResult1')"></button>
+                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                <code [innerHtml]="jsonResult1"  class="language-json" pCode></code>
+                            </pre>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Data Klaim ">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Tgl Pulang </label>
+                                        <p-calendar [(ngModel)]="item.tglPulang" [showIcon]="true" [monthNavigator]="true"
+                                            [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                            dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Jenis Pelayanan</label>
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="ri" name="pelayanan" [value]="1"
+                                                    [(ngModel)]="item.tipe">
+                                                </p-radioButton>
+                                                <label for="ri"> Rawat Inap</label>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="rj" name="pelayanan" [value]="2"
+                                                    [(ngModel)]="item.tipe">
+                                                </p-radioButton>
+                                                <label for="rj"> Rawat Jalan</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-md-6">
+                                        <label class="label" for="input">Status Klaim</label>
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-4">
+                                                <p-radioButton inputId="proses" name="pelayanan2" [value]="1"
+                                                    [(ngModel)]="item.status">
+                                                </p-radioButton>
+                                                <label for="proses"> Proses Verifikasi</label>
+                                            </div>
+                                            <div class="p-col-12 p-md-4">
+                                                <p-radioButton inputId="pending" name="pelayanan2" [value]="2"
+                                                    [(ngModel)]="item.status">
+                                                </p-radioButton>
+                                                <label for="pending"> Pending Verifikasi </label>
+                                            </div>
+                                            <div class="p-col-12 p-md-4">
+                                                <p-radioButton inputId="klaim" name="pelayanan2" [value]="3"
+                                                    [(ngModel)]="item.status">
+                                                </p-radioButton>
+                                                <label for="klaim"> Klaim </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
+                            
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                        icon="pi pi-search"
+                                        (click)="cari('Monitoring/Klaim/Tanggal/date~'+item.tglPulang+'date~'+'/JnsPelayanan/'+item.tipe+'/Status/'+item.status,'jsonResult2')"></button>
+                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                <code [innerHtml]="jsonResult2"  class="language-json" pCode></code>
+                            </pre>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Data Histori Pelayanan Peserta ">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Dari </label>
+                                        <p-calendar [(ngModel)]="item.dari" [showIcon]="true" [monthNavigator]="true"
+                                            [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                            dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Dari </label>
+                                        <p-calendar [(ngModel)]="item.sampai" [showIcon]="true" [monthNavigator]="true"
+                                            [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                            dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">No Kartu </label>
+                                        <input type="text" [(ngModel)]="item.noka" pInputText placeholder="No Kartu" />
+                                    </div>
+                            
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                        icon="pi pi-search"
+                                        (click)="cari('monitoring/HistoriPelayanan/NoKartu/'+item.noka+'/tglMulai/date~'+item.dari+'date~'+'/tglAkhir/date~'+item.sampai+'date~','jsonResult3')"></button>
+                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                <code [innerHtml]="jsonResult3"  class="language-json" pCode></code>
+                            </pre>
+                            </div>
+                        </div>
+      
+                    </p-accordionTab>
+                    <p-accordionTab header="Data Klaim Jaminan Jasa Raharja">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Dari </label>
+                                        <p-calendar [(ngModel)]="item.dari" [showIcon]="true" [monthNavigator]="true"
+                                            [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                            dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Dari </label>
+                                        <p-calendar [(ngModel)]="item.sampai" [showIcon]="true" [monthNavigator]="true"
+                                            [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                            dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd">
+                                        </p-calendar>
+                                    </div>
+                                  
+                            
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                        icon="pi pi-search"
+                                        (click)="cari('monitoring/JasaRaharja/tglMulai/date~'+item.dari+'date~'+'/tglAkhir/date~'+item.sampai+'date~','jsonResult4')"></button>
+                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                <code [innerHtml]="jsonResult4"  class="language-json" pCode></code>
+                            </pre>
+                            </div>
+                        </div>
+      
+                    </p-accordionTab>
+                </p-accordion>
+            </div>
+        </div>
+    </div>
+</div>

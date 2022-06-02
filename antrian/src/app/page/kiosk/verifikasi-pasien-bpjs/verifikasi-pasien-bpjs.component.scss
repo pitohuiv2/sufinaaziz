@@ -1,0 +1,73 @@
+
+    .btnTemplate{
+      width: 450px;
+      height: 80px;
+      /* color: #ffffff; */
+      margin: 10px 0;
+      font-size: 30px;
+      font-family: 'neotericregular';
+    }
+    .centers{
+      text-align: center;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      width: 100%;
+      margin-top: 5%;
+    }
+    p.text-regular {
+      
+      padding: 0;
+      margin: 0;
+      font-size: 18px;
+    }
+     p.text-bold {
+      
+      font-weight: bold;
+      padding: 0;
+      margin: 0;
+      font-size: 20px;
+    }
+    h1.no-cm{
+      
+      font-weight: bold;
+      text-align: center;
+      color: #777777;
+      font-size: 45px;
+      padding: 35px 0;
+      margin-bottom: 50px;
+      background: rgba(255,255,255, 0.5);
+    }
+    .p-button {
+      color: #ffffff;
+      // background: #EEE500;
+      // border: 1px solid #EEE500;
+      padding: 0.5rem 0.8rem;
+      font-size: 1.8rem;
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s;
+      border-radius: 24px;
+    }
+ .detail-pasien {
+      margin: 10px 0;
+      border-bottom: 2px solid #ffffff;
+    }
+
+    .p-button-label {
+      flex: 1 1 auto;
+   
+      -webkit-line-clamp: 1;
+      margin-top: -2px;
+      white-space: nowrap;
+      overflow: hidden !important;
+      text-overflow: ellipsis;
+  }
+  .p-button.p-button-help.p-buttonwrap {
+    color: #ffffff;
+    background: #9C27B0;
+    border: 1px solid #9C27B0;
+    -webkit-line-clamp: 1;
+    margin-top: -2px;
+    white-space: nowrap;
+    overflow: hidden !important;
+    text-overflow: ellipsis;
+}

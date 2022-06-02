@@ -1,0 +1,223 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog>
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Order List</h4>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-10">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Periode Awal</label>
+                            <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                            </p-calendar>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Periode Akhir</label>
+                            <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                                [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                            </p-calendar>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Ruangan Asal</label>
+                            <p-dropdown [options]="listRuangan" [(ngModel)]="item.dataRuangan" [filter]="true"
+                                [showClear]="true" placeholder="Ruangan" optionLabel="namaruangan"></p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Ruangan Tujuan</label>
+                            <p-autoComplete [(ngModel)]="item.dataRuanganAll" [suggestions]="listRuanganAll"
+                                (completeMethod)="filterRuangan($event)" field="namaruangan" [dropdown]="true"
+                                placeholder="Pilih Ruangan">
+                            </p-autoComplete>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Jenis Pengiriman</label>
+                            <p-dropdown [options]="listJenisPengiriman" [(ngModel)]="item.dataJenisPengiriman"
+                                [filter]="true" [showClear]="true" placeholder="Jenis Kirim" optionLabel="jeniskirim">
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">No Order</label>
+                            <input type="text" [(ngModel)]="item.noOrder" pInputText (keyup.enter)="cari()"
+                                placeholder="Nomor Order" />
+                        </div>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-6">
+                            <label class="label" for="input">jml Rows</label>
+                            <input type="text" [(ngModel)]="item.jmlRows" pInputText (keyup.enter)="cari()"
+                                placeholder="Jml Rows" />
+                        </div>
+                        <div class="p-col-12 p-md-6" style="margin-top: 16px;">
+                            <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div p-col-12 p-md-12>
+            <p-toolbar styleClass="p-mb-4">
+                <ng-template pTemplate="left">
+                    <button type="button" pButton pRipplee label="Order Baru" icon="pi pi-plus" (click)="orderBaru()"
+                        class="p-button-success p-mr-2" pTooltip="Order Baru" tooltipPosition="bottom"></button>
+                </ng-template>
+
+            </p-toolbar>
+            <p-table #dt [columns]="column" [value]="dataTable" [(selection)]="selected"
+                styleClass="p-datatable-customers" [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                sortMode="multiple" selectionMode="single" dataKey="norec" (onRowSelect)="onRowSelect($event)">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th width="100px"> Aksi </th>
+                        <th style="width: 80px"></th>
+                        <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" style="width: {{col.width}}">
+                            {{col.header}}
+                            <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex"
+                    let-expanded="expanded">
+                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                        <td width="100px">
+                            <p-splitButton label="" styleClass="p-button-help p-ml-auto"
+                                [style]="{'display':'inline-flex'}" icon="pi pi-ellipsis-v" [model]="listBtn"
+                                (onDropdownClick)="selectData(rowData)" appendTo="body"></p-splitButton>
+                        </td>
+                        <td style="width: 80px">
+                            <button type="button" pButton pRipple [pRowToggler]="rowData"
+                                class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        </td>
+                        <td *ngFor="let col of columns" style="width: {{col.width}}">
+                            <span *ngIf="col.isCurrency != undefined">
+                                {{formatRupiah(rowData[col.field],'')}}
+                            </span>
+                            <span *ngIf="col.isCurrency == undefined"> {{rowData[col.field]}}</span>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-data>
+                    <tr>
+                        <td colspan="10">
+                            <div class="p-p-3">
+                                <p-table [value]="data.details" dataKey="norec">
+                                    <ng-template pTemplate="header">
+                    <tr>
+                        <th>Kode Produk</th>
+                        <th>Nama Produk</th>
+                        <th>Satuan Standar</th>
+                        <th>Qty Order</th>
+                        <th>Harga</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-detail>
+                    <tr>
+                        <td>{{detail.kdproduk}}</td>
+                        <td>{{detail.namaproduk}}</td>
+                        <td>{{detail.satuanstandar}}</td>
+                        <td>{{detail.qtyproduk}}</td>
+                        <td>{{detail.hargasatuan}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        </td>
+        </tr>
+        </ng-template>
+        </p-table>
+    </div>
+    <div class="p-col-12 p-md-12">
+        <div class="p-grid">
+            <!-- <div class="p-col-12 p-md-2 p-md-offset-2" style="margin-top:10px">
+                <button pButton type="submit" icon="fa fa-paper-plane" pTooltip="Kirim Barang" (click)="kirimBarang()"
+                    label="Kirim Barang"></button>
+            </div>
+            <div class="p-col-12 p-md-2" style="margin-top:10px">
+                <button pButton type="submit" icon="fa fa-plus-circle" pTooltip="Input Order Baru" (click)="orderBaru()"
+                    label="Input Order Baru"></button>
+            </div>
+            <div class="p-col-12 p-md-2" style="margin-top:10px">
+                <button pButton type="submit" icon="fa fa-pencil-square-o" pTooltip="Ubah Order" (click)="ubahOrder()"
+                    label="Ubah Order"></button>
+            </div>
+            <div class="p-col-12 p-md-2" style="margin-top:10px">
+                <button pButton type="submit" icon="fa fa-trash" pTooltip="Hapus Order" (click)="hapusOrder()"
+                    label="Hapus Order" style="background-color: red;"></button>
+            </div>
+            <div class="p-col-12 p-md-2" style="margin-top:10px">
+                <button pButton type="submit" icon="fa fa-print" pTooltip="Cetak Bukti Order" (click)="cetakBukti()"
+                    label="Cetak" style="background-color: green;"></button>
+            </div> -->
+        </div>
+    </div>
+</div>
+</div>
+<p-dialog header="Penanda Tangan" [(visible)]="pop_tandaTangan" [modal]="true" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [style]="{width: '1200px', minWidth: '1200px'}" [contentStyle]="{minHeight: '100px'}">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-col-12 p-md-12">
+            <p-panel header="Mengetahui" [toggleable]="false">
+                <div class="p-fluid p-formgrid ">
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-6">
+                                <label class="label" for="input">Jabatan</label>
+                                <p-autoComplete [(ngModel)]="item.JabatanSatu" [suggestions]="listjabatan"
+                                    (completeMethod)="filterJabatan($event)" field="namajabatan" [dropdown]="true"
+                                    placeholder="Jabatan" appendTo="body" dataKey="id">
+                                </p-autoComplete>
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <label class="label" for="input">Petugas</label>
+                                <p-autoComplete [(ngModel)]="item.PetugasSatu" [suggestions]="listPetugas"
+                                    (completeMethod)="filterPetugas($event)" field="namalengkap" [dropdown]="true"
+                                    placeholder="Petugas" appendTo="body" dataKey="id">
+                                </p-autoComplete>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+        <div class="p-col-12 p-md-12" style="margin-top: 15px;">
+            <p-panel header="Yang Meminta" [toggleable]="false">
+                <div class="p-fluid p-formgrid ">
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-6">
+                                <label class="label" for="input">Jabatan</label>
+                                <p-autoComplete [(ngModel)]="item.JabatanDua" [suggestions]="listjabatan"
+                                    (completeMethod)="filterJabatan($event)" field="namajabatan" [dropdown]="true"
+                                    placeholder="Jabatan" appendTo="body" dataKey="id">
+                                </p-autoComplete>
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <label class="label" for="input">Petugas</label>
+                                <p-autoComplete [(ngModel)]="item.PetugasDua" [suggestions]="listPetugas"
+                                    (completeMethod)="filterPetugas($event)" field="namalengkap" [dropdown]="true"
+                                    placeholder="Petugas" appendTo="body" dataKey="id">
+                                </p-autoComplete>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-2 p-md-offset-8" style="margin-top:10px">
+                    <button pButton type="submit" icon="fa fa-print" pTooltip="Cetak" (click)="lanjutCetak()"
+                        label="Cetak"></button>
+                </div>
+                <div class="p-col-12 p-md-2" style="margin-top:10px">
+                    <button pButton type="submit" icon="fa fa-ban" pTooltip="Batal Cetak  Bukti" (click)="batalCetak()"
+                        label="Batal" style="background-color: red;"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-dialog>

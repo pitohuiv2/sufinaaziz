@@ -1,0 +1,22 @@
+[
+    {
+        "name": "Pelayanan",
+        "url": "dashboard-pelayanan",
+        "icon": "ti-flickr"
+    },
+    {
+        "name": "Pendapatan",
+        "url": "dashboard-pendapatan",
+        "icon": "ti-wallet"
+    },
+    {
+        "name": "SDM",
+        "url": "dashboard-sdm",
+        "icon": "ti-user"
+    },
+    {
+        "name": "Persediaan",
+        "url": "dashboard-persediaan",
+        "icon": "ti-package"
+    }
+]

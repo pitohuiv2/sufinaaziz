@@ -1,0 +1,103 @@
+<div class="layout-dashboard">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <div class="cards">
+                    <div class="card-header" style="padding:0">
+                        <div class="card-title">
+                            <h5>Formulir Survey Kepuasan Pelanggan</h5>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <p>Guna meningkatkan mutu dan kualitas pelayanan, kami mengharapkan Pelanggan dapat memberikan
+                            kesan, kritik
+                            dan saran terhadap pelayanan kami. Terima kasih.</p>
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <label class="label" for="input">Tanggal</label>
+                                <p-calendar [(ngModel)]="item.tgl" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                    dateFormat="yy-mm-dd">
+                                </p-calendar>
+
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <label class="label" for="input">Nama Pengisi</label>
+                                <input type="text" [(ngModel)]="item.namaPengisi" pInputText
+                                    placeholder="Nama Pengisi" />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <label class="label" for="input">No HP</label>
+                                <input type="text" [(ngModel)]="item.noHp" pInputText placeholder="No HP" />
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <label class="label" for="input">Nama Pasien</label>
+                                <input type="text" [(ngModel)]="item.namapasien" pInputText placeholder="Nama Pasien" />
+
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <label class="label" for="input">Tgl Lahir Pasien</label>
+                                <p-calendar [(ngModel)]="item.tgllahir" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="false" placeholder="yy-mm-dd"
+                                    dateFormat="yy-mm-dd">
+                                </p-calendar>
+                            </div>
+
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <div class="p-grid" style="margin-top:10px">
+                             
+                                    <div class="p-col-12 p-md-6">
+                                        <p-radioButton name="groupname2" value="ri" (onClick)="changePel()"
+                                            [(ngModel)]="item.pelayanan">
+                                        </p-radioButton>
+                                        <label for="groupname2"> Rawat Inap</label>
+                                    </div>
+                                    <div class="p-col-12 p-md-6">
+                                        <p-radioButton name="groupname" value="rj" (onClick)="changePel()"
+                                            [(ngModel)]="item.pelayanan">
+                                        </p-radioButton>
+                                        <label for="groupname"> Rawat Jalan</label>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-3">
+                                <label class="label" for="input">Ruangan</label>
+                                <p-dropdown [options]="listRuangan" [(ngModel)]="item.ruangan" [filter]="true"
+                                    [showClear]="true" placeholder="Ruangan" optionLabel="namaruangan" appendTo="body">
+                                </p-dropdown>
+
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-12">
+                                <label class="label" for="input">Kritik & Saran</label>
+                                <textarea [(ngModel)]="item.kritik" rows="4" cols="30" placeholder="Kritik & Saran"
+                                    pInputTextarea></textarea>
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-12">
+                                <label class="label" for="input">Keluhan & Komplain</label>
+                                <textarea [(ngModel)]="item.komplain" rows="4" cols="30" placeholder="Keluhan & Komplain"
+                                    pInputTextarea></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-footer">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-6 p-lg-1">
+                                <button pButton pRipple type="button" (click)="saveKritik()" icon="pi pi-save"
+                                    class="p-button p-button-success p-mr-2"  pTooltip="Simpan"
+                                    label="Simpan"></button>
+
+                            </div>
+                            <div class="p-col-12 p-md-6 p-lg-1">
+                                <button pButton pRipple type="button" icon="pi pi-save"
+                                    class="p-button p-button-secondary p-mr-2" (click)="closeAll()" pTooltip="Tutup"
+                                    label="Tutup"></button>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

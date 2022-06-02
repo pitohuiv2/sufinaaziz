@@ -1,0 +1,152 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Laporan Sensus Bulanan IGD</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-11">
+                <div class="p-grid">
+                    <!-- <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">Periode Awal</label>
+                        <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                            [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                        </p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">Periode Akhir</label>
+                        <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                            [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                        </p-calendar>
+                    </div> -->
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">Bulan</label>
+                        <p-calendar [(ngModel)]="item.bulan" view="month" dateFormat="mm/yy" [readonlyInput]="true"
+                            inputId="monthpicker"></p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-3">
+                        <label class="label" for="input">Instalasi</label>
+                        <p-dropdown [options]="listDepartemen" [(ngModel)]="item.dataDepartemen" [filter]="true"
+                            [showClear]="true" placeholder="Instalasi" optionLabel="departemen"
+                            (onChange)="isiRuangan()">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-3">
+                        <label class="label" for="input">Ruangan</label>
+                        <p-multiSelect [options]="listRuangan" [(ngModel)]="item.selectedRuangan" optionLabel="ruangan">
+                        </p-multiSelect>
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">Tipe Pasien</label>
+                        <p-dropdown [options]="listTipePasien" [(ngModel)]="item.dataTipePasien" [filter]="true"
+                            [showClear]="true" placeholder="Tipe Pasien" optionLabel="kelompokpasien"></p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                        <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="p-col-12 p-md-1">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-12" style="margin-top: 16px;">
+                        <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+                    </div>
+                </div>
+            </div> -->
+            <div class="p-col-12 p-md-12">
+                <div class="p-fluid p-formgrid ">
+                    <p-table [value]="dataTable" responsiveLayout="scroll" scrollable="true">
+                        <ng-template pTemplate="caption">
+                            <div class="p-d-flex">
+                                <button type="button" pButton pRipple icon="pi pi-file-pdf" (click)="exportExcel()"
+                                    class="p-button-success p-mr-2" pTooltip="PDF" tooltipPosition="bottom"></button>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th rowspan="2" style="text-align: center;">No</th>
+                                <th rowspan="2" style="text-align: center;">Tgl Masuk</th>
+                                <th colspan="3" style="text-align: center;">Pasien Masuk</th>
+                                <th colspan="2" style="text-align: center;">Status</th>
+                                <th rowspan="2" style="text-align: left;">Nama</th>
+                                <th rowspan="2" style="text-align: center;">Umur</th>
+                                <th colspan="2" style="text-align: center;">L/P</th>
+                                <th rowspan="2" style="text-align: left;width: 100px;">Alamat (Kp/Desa)</th>
+                                <th rowspan="2" style="text-align: center;">No Rm</th>
+                                <th rowspan="2" style="text-align: left;">Diagnosa</th>
+                                <th colspan="7" style="text-align: center;">Ruang Inap</th>
+                                <th rowspan="2" style="text-align: center;">Diizinkan Pulang </th>
+                                <th rowspan="2" style="text-align: center;">Rujuk</th>
+                                <th rowspan="2" style="text-align: center;">Lari</th>
+                                <th rowspan="2" style="text-align: center;">Pulpak</th>
+                                <th colspan="4" style="text-align: center;">Mati</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: center;">Poli</th>
+                                <th style="text-align: center;">Rujukan</th>
+                                <th style="text-align: center;">Dtng Sndr </th>
+                                <th style="text-align: center;">Umum</th>
+                                <th style="text-align: center;">BPJS</th>
+                                <th style="text-align: center;">L</th>
+                                <th style="text-align: center;">P</th>
+                                <th style="text-align: center;">DL</th>
+                                <th style="text-align: center;">DP</th>
+                                <th style="text-align: center;">OK</th>
+                                <th style="text-align: center;">Neuro</th>
+                                <th style="text-align: center;">Bedah</th>
+                                <th style="text-align: center;">ISO</th>
+                                <th style="text-align: center;">R. Anak</th>
+
+                                <th style="text-align: center;">DOA</th>
+                                <th style="text-align: center;">
+                                    < 6 Jam </th>
+                                <th style="text-align: center;">6-48jam</th>
+                                <th style="text-align: center;"> >48 jam</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-item>
+                            <tr>
+                                <td style="text-align: center;">{{item.no}}</td>
+                                <td style="text-align: center;">{{item.tglmasuk}}</td>
+                                <td style="text-align: center;">{{item.poli}}</td>
+                                <td style="text-align: center;">{{item.rujukan}}</td>
+                                <td style="text-align: center;">{{item.sendiri}}</td>
+                                <td style="text-align: center;">{{item.umum}}</td>
+                                <td style="text-align: center;">{{item.bpjs}}</td>
+                                <td style="text-align: left;">{{item.namapasien}}</td>
+                                <td style="text-align: center;">{{item.umur}}</td>
+                                <td style="text-align: center;">{{item.jk_l}}</td>
+                                <td style="text-align: center;">{{item.jk_p}}</td>
+                                <td style="text-align: left;width: 100px;">{{item.alamatlengkap}}</td>
+                                <td style="text-align: center;">{{item.norm}}</td>
+                                <td style="text-align: left;">{{item.kddiagnosa}}</td>
+
+                                <td style="text-align: center;">{{item.dl}}</td>
+                                <td style="text-align: center;">{{item.dp}}</td>
+                                <td style="text-align: left;">{{item.ok}}</td>
+                                <td style="text-align: center;">{{item.bedah}}</td>
+                                <td style="text-align: left;">{{item.neuro}}</td>
+                                <td style="text-align: left;">{{item.iso}}</td>
+                                <td style="text-align: left;">{{item.anak}}</td>
+
+                                <td style="text-align: center;">{{item.diizinkan}}</td>
+                                <td style="text-align: left;">{{item.dirujuk}}</td>
+                                <td style="text-align: left;">{{item.lari}}</td>
+                                <td style="text-align: left;">{{item.pulpak}}</td>
+
+                                <td style="text-align: center;">{{item.doa}}</td>
+                                <td style="text-align: left;">{{item.enamjam}}</td>
+                                <td style="text-align: left;">{{item.duaempatjam}}</td>
+                                <td style="text-align: left;">{{item.empatdelapanjam}}</td>
+                            </tr>
+                        </ng-template>
+                        <!-- <ng-template pTemplate="footer">
+                            <tr>
+                                <td colspan="3" class="text-right">Totals</td>
+                                <td>{{lastYearTotal | currency: 'USD'}}</td>
+                                <td>{{thisYearTotal | currency: 'USD'}}</td>
+                            </tr>
+                        </ng-template> -->
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

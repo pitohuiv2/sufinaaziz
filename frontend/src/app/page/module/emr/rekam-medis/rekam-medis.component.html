@@ -1,0 +1,118 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog>
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Electronic Medical Record</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-2">
+                <p-panel header="Info Pasien" [toggleable]="true">
+                    <div class="p-grid">
+
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid" *ngIf="header.noregistrasi!=undefined">
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">No Registrasi </label>
+                                    <input type="text" [(ngModel)]="header.noregistrasi" pInputText
+                                        placeholder="Cari No Registrasi" disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Tgl Registrasi </label>
+                                    <input type="text" [(ngModel)]="header.tglregistrasi" pInputText
+                                        placeholder="Tgl Registrasi" disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">No Rekam Medis </label>
+                                    <input type="text" [(ngModel)]="header.nocm" pInputText placeholder="No Rekam Medis"
+                                        disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Nama Pasien </label>
+                                    <input type="text" [(ngModel)]="header.namapasien" pInputText
+                                        placeholder="Nama Pasien" disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Jenis Kelamin </label>
+                                    <input type="text" [(ngModel)]="header.jeniskelamin" pInputText
+                                        placeholder="Nama Pasien" disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Tgl Lahir </label>
+                                    <input type="text" [(ngModel)]="header.tgllahir" pInputText placeholder="Tgl Lahir"
+                                        disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Umur </label>
+                                    <input type="text" [(ngModel)]="header.umur" pInputText placeholder="Umur"
+                                        disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Kelas </label>
+                                    <input type="text" [(ngModel)]="header.namakelas" pInputText placeholder="Kelas"
+                                        disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Ruangan </label>
+                                    <input type="text" [(ngModel)]="header.namaruangan" pInputText placeholder="Ruangan"
+                                        disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Kelompok Pasien </label>
+                                    <input type="text" [(ngModel)]="header.kelompokpasien" pInputText
+                                        placeholder="Kelompok Pasien" disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Penjamin </label>
+                                    <input type="text" [(ngModel)]="header.namarekanan" pInputText
+                                        placeholder="Penjamin" disabled />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Alamat </label>
+                                    <input type="text" [(ngModel)]="header.alamatlengkap" pInputText
+                                        placeholder="Alamat" disabled />
+                                </div>
+                            </div>
+                            <div class="p-grid" *ngIf="header.noregistrasi==undefined">
+                                <div class="p-col-12 p-md-12" *ngFor="let itemzz of numberss">
+                                    <p-skeleton height="2.4rem"></p-skeleton>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </p-panel>
+
+            </div>
+            <div class="p-col-12 p-md-10">
+                <!-- <p-panel header="Navigasi" [toggleable]="true"> -->
+                <div class="p-grid">
+                    <div class="p-col-12  p-md-2">
+                        <input type="text" pInputText placeholder="Search Menu" [(ngModel)]="searchText">
+                    </div>
+                    <div class="p-col-12  p-md-1">
+                        <button pButton pRipple routerLink="/daftar-registrasi-pasien" type="button" icon="pi pi-arrow-left" class="p-button p-button-secondary p-ml-2"
+                             pTooltip="Kembali" label=""></button>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <p-skeleton height="3rem" *ngIf="treeSourceMenu.length ==0"></p-skeleton>
+                        <p-menubar [model]="treeSourceMenu | filter : searchText" [style]="{'overflow': 'auto'}"
+                            *ngIf="treeSourceMenu.length > 0">
+                        </p-menubar>
+                    </div>
+
+                    <!-- <p-tree [value]="treeSourceMenu" [loading]="isLoadingNav" selectionMode="single"
+                            [(selection)]="selectedFile" (onNodeSelect)="nodeSelect($event)" [filter]="true"></p-tree> -->
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-12">
+                        <router-outlet></router-outlet>
+                    </div>
+                </div>
+                <!-- </p-panel> -->
+            </div>
+        </div>
+        <div class="p-grid">
+
+
+        </div>
+    </div>
+</div>

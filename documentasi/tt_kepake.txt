@@ -1,0 +1,9 @@
+-- select * from ruanganmt where namaruangan ilike '%dalam%';
+select  * from tempattidurmt where id in (
+select nobedidfk
+from daftarpasienruangantr as apd
+join registrasipasientr as reg on reg.norec=apd.registrasipasienfk
+where  tglkeluar is null
+and reg.aktif=false
+and nobedidfk in (select id from tempattidurmt where statusbedidfk =1))
+

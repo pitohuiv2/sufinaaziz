@@ -1,0 +1,96 @@
+<div class="p-grid"  >
+    <div class="p-col-12 p-md-12">
+        <p-panel header="Info Pasien" [toggleable]="true">
+            <p-scrollPanel [style]="{width: '100%', height: '70vh'}">
+                <div class="p-grid" *ngIf="item.pasien.nocm!=undefined">
+                    <!-- <div class="p-col-12 p-md-1">
+                        <div class="p-grid">
+                            <div class="p-col-12">
+                                <p-card header="" [style]="{width: '90px','height':'90px'}" styleClass="p-card-shadow">
+                                    <ng-template pTemplate="header">
+                                        <i class="pi pi-user" style="font-size: 50px;padding:20px;"></i>
+                                    </ng-template>
+                                </p-card>
+                            </div>
+                        </div>
+                    </div> -->
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">No Registrasi </label>
+                                <input type="text" [(ngModel)]="item.pasien.noregistrasi" pInputText
+                                    placeholder="Cari No Registrasi" disabled />
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">No Rekam Medis </label>
+                                <input type="text" [(ngModel)]="item.pasien.nocm" pInputText placeholder="No Rekam Medis"
+                                    disabled />
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Nama Pasien </label>
+                                <input type="text" [(ngModel)]="item.pasien.namapasien" pInputText placeholder="Nama Pasien"
+                                    disabled />
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Tgl Registrasi </label>
+                                <input type="text" [(ngModel)]="item.pasien.tglregistrasi" pInputText placeholder=""
+                                    disabled />
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Tipe Pasien </label>
+                                <input type="text" [(ngModel)]="item.pasien.kelompokpasien" pInputText placeholder=""
+                                    disabled />
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Jenis Kelamin </label>
+                                <input type="text" [(ngModel)]="item.pasien.jeniskelamin" pInputText
+                                    placeholder="Nama Pasien" disabled />
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Tgl Lahir </label>
+                                <input type="text" [(ngModel)]="item.pasien.tgllahir" pInputText placeholder="Tgl Lahir"
+                                    disabled />
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Umur </label>
+                                <input type="text" [(ngModel)]="item.pasien.umur" pInputText placeholder="" disabled />
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Alamat </label>
+                                <input type="text" [(ngModel)]="item.pasien.alamatlengkap" pInputText placeholder="Alamat"
+                                    disabled />
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Kelas </label>
+                                <input type="text" [(ngModel)]="item.pasien.namakelas" pInputText placeholder="" disabled />
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Ruangan </label>
+                                <input type="text" [(ngModel)]="item.pasien.namaruangan" pInputText placeholder=""
+                                    disabled />
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Pendidikan </label>
+                                <input type="text" [(ngModel)]="item.pasien.pendidikan" pInputText placeholder="Pendidikan"
+                                    disabled />
+                            </div>
+    
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Jenis Pelayanan </label>
+                                <input type="text" [(ngModel)]="item.pasien.jenispelayanan" pInputText placeholder=""
+                                    disabled />
+                            </div>                            
+                        </div>
+                    </div>
+    
+                </div>
+                <div class="p-grid" *ngIf="item.pasien.nocm==undefined">
+                    <div class="p-col-12 p-md-12" *ngFor="let itemzz of numberss">
+                        <p-skeleton height="2.4rem"></p-skeleton>
+                    </div>
+                </div>
+            </p-scrollPanel>
+            
+        </p-panel>
+    </div>
+</div>

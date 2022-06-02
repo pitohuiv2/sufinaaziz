@@ -1,0 +1,79 @@
+<div class="layout-wrapper"
+    [ngClass]="{'layout-wrapper-menu-active':sidebarActive,
+                                        'layout-overlay-menu':overlay, 'p-input-filled': app.inputStyle === 'filled', 'p-ripple-disabled': !app.ripple}">
+    <p-dialog [(visible)]="display" [modal]="true">
+        <p-header>
+            Sesi Berakhir
+        </p-header>
+        Logout?
+        <p-footer>
+            <button type="button" pButton (click)="keluar()" label="Logout"></button>
+        </p-footer>
+    </p-dialog>
+    <p-toast position="center" key="t-logout" (onClose)="onReject()" [baseZIndex]="5000">
+        <ng-template let-message pTemplate="message">
+            <div class="p-flex p-flex-column" style="flex: 1">
+                <div class="p-text-center">
+                    <i class="pi pi-exclamation-triangle" style="font-size: 3rem"></i>
+                    <h4>{{message.summary}}</h4>
+                </div>
+                <div class="p-grid p-fluid">
+                    <div class="p-col-6">
+                        <button type="button" pButton (click)="onConfirm()" label="Ya"
+                            class="p-button-success"></button>
+                    </div>
+                    <div class="p-col-6">
+                        <button type="button" pButton (click)="onReject()" label="Tidak"
+                            class="p-button-secondary"></button>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </p-toast>
+
+
+    <!-- [style]="{marginTop: '55px'}" -->
+    <p-toast key="t-notif"></p-toast>
+    <!-- <app-alert></app-alert> -->
+    <!-- <app-topbar *ngIf="!isLogin"></app-topbar> -->
+
+    <app-sidebar *ngIf="isLogin"></app-sidebar>
+
+    <div *ngIf="!isLogin" class="layout-content">
+        <app-loader></app-loader>
+        <div class="layout-main">
+            <div class="p-col-12 dashboard">
+                <!-- <div class="p-grid p-nogutter card overview-box control-panel">
+                    <div class="p-col-12 p-md-8 left-controls">
+                        <span>Selamat datang di RSUD Pagelaran</span>
+                    </div>
+                    <div class="p-col-12 p-md-4 right-controls">
+                        <div class="p-grid p-nogutter p-d-flex p-jc-end">
+                            <div class="p-col-4 p-md-2">
+                            </div>
+                            <div class="p-col-4 p-md-2">
+                                
+                            </div>
+                            <div class="p-col-4 p-md-2">
+                                <img src="assets/img/logo_rs_trans.png" style="height: 37px;vertical-align: middle;margin-top:7px;" />
+                            </div>
+                        </div>
+                    </div>
+                </div> -->
+                <div class="cards timeline">
+                    <div class="card-header" style="padding:0;text-align: left;justify-content: left;">
+                        <!-- <img src="assets/layout/images/logo-small.png" style="width:40px" /> -->
+                        <img src="assets/img/logo_rs_trans.png" style="width:50px" />
+                        <h4 style="margin-top: 1rem;margin-left:10px">  RSUD Pagelaran</h4>
+                    </div>
+                </div>
+            </div>
+            <router-outlet></router-outlet>
+        </div>
+
+        <app-footer *ngIf="isLogin"></app-footer>
+    </div>
+
+    <app-config *ngIf="isLogin"></app-config>
+
+</div>

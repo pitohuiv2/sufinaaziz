@@ -1,0 +1,182 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog>
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Pindah Pulang </h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-4">
+                <app-head-pasien> </app-head-pasien>
+            </div>
+            <div class="p-col-12 p-md-8">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-6">
+                        <p-panel header="Kondisi Pasien" [toggleable]="true">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Status Keluar </label>
+                                    <p-dropdown [options]="listStatusKeluar" [(ngModel)]="item.statusKeluar"
+                                        [filter]="true" [showClear]="true" placeholder="Status Keluar "
+                                        optionLabel="statuskeluar" (onChange)="changeStatus($event)">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-12" *ngIf="!showPindah">
+                                    <label class="label" for="input">Kondisi Keluar </label>
+                                    <p-dropdown [options]="listKondisiPasien" [(ngModel)]="item.kondisiKeluar"
+                                        [filter]="true" [showClear]="true" placeholder="Kondisi Keluar "
+                                        optionLabel="kondisipasien">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-12" *ngIf="!showPindah">
+                                    <label class="label" for="input">Status Pulang </label>
+                                    <p-dropdown [options]="listStatusPulang" [(ngModel)]="item.statusPulang"
+                                        [filter]="true" [showClear]="true" placeholder="Status Pulang "
+                                        optionLabel="statuspulang">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-12" style="margin-top: 15px;" *ngIf="showPindah">
+                                    <p-checkbox [(ngModel)]="item.rawatGabung" binary="true" inputId="item.rawatGabung"
+                                        (onChange)="cekRawatGabung(item.rawatGabung)">
+                                    </p-checkbox>
+                                    <label for="item.rawatGabung"> Rawat Gabung</label>
+                                </div>
+                                <div class="p-col-12 p-md-12" *ngIf="showPindah">
+                                    <label class="label-required" for="input"> Tgl Rencana Pindah </label>
+                                    <p-calendar [(ngModel)]="item.tglRencanaKeluar" [showIcon]="true"
+                                        [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                        [showTime]="true" dateFormat="yy-mm-dd" placeholder="Tgl Rencana Pindah"
+                                        hourFormat="24">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-12" *ngIf="showPindah">
+                                    <label class="label" for="input">Ruangan </label>
+                                    <p-dropdown [options]="listRuangan" [(ngModel)]="item.ruangan" [filter]="true"
+                                        [showClear]="true" placeholder="Ruangan " optionLabel="namaruangan"
+                                        (onChange)="changeRuangan($event)">
+                                    </p-dropdown>
+                                </div>
+
+
+                                <div class="p-col-12 p-md-12" *ngIf="showMeninggal">
+                                    <label class="label" for="input"> Tgl Meninggal </label>
+                                    <p-calendar [(ngModel)]="item.tglMeninggal" [showIcon]="true"
+                                        [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                        [showTime]="true" dateFormat="yy-mm-dd" placeholder="Tgl Meninggal"
+                                        hourFormat="24">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-12" *ngIf="showMeninggal">
+                                    <label class="label" for="input">Penyebab Kematian </label>
+                                    <p-dropdown [options]="listPenyebabKematian" [(ngModel)]="item.penyebabKematian"
+                                        [filter]="true" [showClear]="true" placeholder="Penyebab Kematian "
+                                        optionLabel="penyebabkematian" (onChange)="IsiPenyebab($event)">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-12" *ngIf="PenyebabKematianManual">
+                                    <label class="label" for="input"> Isi Penyebab </label>
+                                    <input type="text" [(ngModel)]="item.PenyebabKematianText" pInputText
+                                        placeholder="Isi Penyebab " />
+                                </div>
+
+                            </div>
+                            <div class="p-grid" *ngIf="showPindah">
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Kelas </label>
+                                    <p-dropdown [options]="listKelas" [(ngModel)]="item.kelas" [filter]="true"
+                                        [showClear]="true" placeholder="Kelas" optionLabel="namakelas"
+                                        (onChange)="changeKelas($event)"></p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Kamar </label>
+                                    <p-dropdown [options]="listKamar" [(ngModel)]="item.kamar" [filter]="true"
+                                        [showClear]="true" placeholder="Kamar" optionLabel="namakamar"
+                                        (onChange)="changeKamar($event)"></p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Nomor Tempat Tidur </label>
+                                    <p-dropdown [options]="listNoBed" [(ngModel)]="item.nomorTempatTidur"
+                                        [filter]="true" [showClear]="true" placeholder="Nomor Tempat Tidur"
+                                        optionLabel="reportdisplay">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Keterangan </label>
+                                    <input type="text" [(ngModel)]="item.keteranganLainnya" pInputText
+                                        placeholder="Keterangan " />
+                                </div>
+                            </div>
+                            <!-- <div class="p-grid" *ngIf="item.statusPulang.id === 4">
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Tgl Dirujuk </label>
+                        <p-calendar [(ngModel)]="item.tglRujuk" [showIcon]="true" [monthNavigator]="true"
+                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd"
+                        placeholder="Tgl Dirujuk" hourFormat="24">
+                    </p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Kamar </label>
+                        <p-dropdown [options]="listKamar" [(ngModel)]="item.kamar" [filter]="true" [showClear]="true"
+                            placeholder="Kamar" optionLabel="namakamar" (onChange)="changeKamar($event)"></p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Nomor Tempat Tidur </label>
+                        <p-dropdown [options]="listNoBed" [(ngModel)]="item.nomorTempatTidur" [filter]="true"
+                            [showClear]="true" placeholder="Nomor Tempat Tidur" optionLabel="reportdisplay">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Keterangan </label>
+                        <input type="text" [(ngModel)]="item.keteranganLainnya" pInputText placeholder="Keterangan " />
+                    </div>
+                </div> -->
+                        </p-panel>
+                    </div>
+                    <div class="p-col-12 p-md-6" *ngIf="!showPindah">
+                        <p-panel header="Pasien Pulang" [toggleable]="true">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Tgl Keluar </label>
+                                    <p-calendar [(ngModel)]="item.tglKeluar" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="true"
+                                        dateFormat="yy-mm-dd" placeholder="Tgl Keluar" hourFormat="24">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Nama Pembawa Pulang </label>
+                                    <input type="text" [(ngModel)]="item.namaPembawaPulang" pInputText
+                                        placeholder="Nama Pembawa Pulang " />
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Hubungan Keluarga </label>
+                                    <p-dropdown [options]="listHubunganKel" [(ngModel)]="item.hubunganKeluarga"
+                                        [filter]="true" [showClear]="true" placeholder="Hubungan Keluarga"
+                                        optionLabel="hubungankeluarga">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-12">
+                                    <label class="label" for="input">Surat Keterangan Polisi </label>
+                                    <input type="text" [(ngModel)]="item.suratKetPol" pInputText
+                                    placeholder="Surat Keterangan Polisi" />
+                                </div>
+                            </div>
+                        </p-panel>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-2 p-md-offset-8">
+                                <button pButton type="button" icon="pi pi-save" class="p-button p-mr-2" (click)="save()"
+                                    pTooltip="Simpan" label="Simpan" [disabled]="isSimpan"></button>
+                            </div>
+                            <div class="p-col-12 p-md-2">
+                                <button pButton type="button" icon="pi pi-arrow-left" class="p-button p-button-danger p-mr-2"
+                                    (click)="cancel()" pTooltip="Kembali" label="Batal"></button>
+                            </div>
+            
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+      
+    </div>
+</div>

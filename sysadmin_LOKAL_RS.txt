@@ -1,0 +1,27 @@
+public app : http://36.92.14.107:4200/
+local app :  http://10.10.10.200:4200/
+
+-------------DB-------------------
+public DB : 36.92.14.107:1395
+local DB : 10.10.10.200:1395
+user: postgres
+pass : d4t4rockstar
+
+-------------REMOTE-------------------
+user anydesk : 255638415
+pass anydesk : PCURES123
+
+pass pc server : @pagelaran12345@
+
+Remote Desktop remote :
+36.92.14.107:7070
+user administrator
+pass @pagelaran12345@
+
+
+ Domain Hostinger : domainrsudpagelaran@gmail.com password hostinger : teamit2022
+
+2.57.90.16
+
+https://dash.cloudflare.com/sign-up
+ domainrsudpagelaran@gmail.com password hostinger : teamit2022@

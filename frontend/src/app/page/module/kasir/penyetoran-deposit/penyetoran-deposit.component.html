@@ -1,0 +1,110 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog>
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Penyetoran Deposit Pasien</h4>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-6" style="margin-top: 7px;">
+                    <div class="p-grid">
+                        <app-head-pasien> </app-head-pasien>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-6">
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <p-panel header="Detail" [toggleable]="true">
+                                        <div class="p-col-12 p-md-12">
+                                            <div class="p-grid">
+                                                <p-table #dt [columns]="column" [value]="dataTable"
+                                                    [(selection)]="selected" styleClass="p-datatable-customers"
+                                                    [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                                                    [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                                                    scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                                    selectionMode="single" (onRowSelect)="onRowSelect($event)">
+                                                    <ng-template pTemplate="header" let-columns>
+                                                        <tr>
+                                                            <th *ngFor="let col of columns"
+                                                                pSortableColumn="{{col.field}}"
+                                                                style="width: {{col.width}}">
+                                                                {{col.header}}
+                                                                <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                                                            </th>
+                                                        </tr>
+                                                    </ng-template>
+                                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                                        let-rowIndex="rowIndex">
+                                                        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                                            <td *ngFor="let col of columns"
+                                                                style="width: {{col.width}}">
+                                                                <span *ngIf="col.isCurrency != undefined">
+                                                                    {{formatRupiah(rowData[col.field],'')}}
+                                                                </span>
+                                                                <span *ngIf="col.isCurrency == undefined">
+                                                                    {{rowData[col.field]}}</span>
+                                                            </td>
+                                                        </tr>
+                                                    </ng-template>
+                                                </p-table>
+                                            </div>
+                                        </div>
+                                        <div class="p-col-12 p-md-12">
+                                            <div class="p-grid">
+                                                <div class="p-col-12 p-md-8"></div>
+                                                <div class="p-col-12 p-md-4">
+                                                    <label for="input">Total</label>
+                                                    <input type="text" [(ngModel)]="item.totalDeposit" pInputText
+                                                        placeholder="Total Deposit" />
+                                                </div>
+                                            </div>
+                                        </div>        
+                                    </p-panel>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-12">
+                                        <p-panel header="Jumlah Deposit" [toggleable]="true">
+                                            <div class="p-grid">
+                                                <div class="p-col-12 p-md-6">
+                                                    <input type="text" [(ngModel)]="item.terbilang" pInputText
+                                                        placeholder="Terbilang" />
+                                                </div>
+                                                <div class="p-col-12 p-md-6">
+                                                    <input type="text" [(ngModel)]="item.jumlahDeposit" pInputText
+                                                        placeholder="Jumlah Deposit"
+                                                        (ngModelChange)="changeNominal(item.jumlahDeposit)" />
+                                                </div>
+                                            </div>
+                                        </p-panel>
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                        <div class="p-grid">                                           
+                                            <div class="p-col-12 p-md-3" style="margin-top: 15px;">
+                                                <button pButton type="submit" icon="fa fa-ban" pTooltip="Batal" (click)="Batal()"
+                                                    label="Batal"></button>
+                                            </div>
+                                            <div class="p-col-12 p-md-3" style="margin-top: 15px;">
+                                                <button pButton type="submit" icon="fa fa-money" pTooltip="Kembalian Deposit"
+                                                    (click)="kembalianDeposit()" label="Kembalian Deposit"></button>
+                                            </div>
+                                            <div class="p-col-12 p-md-3" style="margin-top: 15px;">
+                                                <button pButton type="submit" icon="fa fa-money" pTooltip="Bayar Deposit"
+                                                    (click)="bayarDeposit()" label="Bayar Deposit"></button>
+                                            </div>
+                                            <div class="p-col-12 p-md-3" style="margin-top: 15px;">
+                                                <button pButton type="submit" icon="fa fa-undo" pTooltip="Kembali" (click)="Kembali()"
+                                                    label="Kembali" style="background-color: red;"></button>
+                                            </div>
+                                        </div>
+                                    </div>        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

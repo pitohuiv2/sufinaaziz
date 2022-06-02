@@ -1,0 +1,117 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog>
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Laporan Penerimaan Kasir</h4>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-11">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Periode Awal</label>
+                            <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                            </p-calendar>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Periode Akhir</label>
+                            <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                                [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                            </p-calendar>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Cara Bayar</label>
+                            <p-dropdown [options]="listCaraBayar" [(ngModel)]="item.dataCaraBayar" [filter]="true"
+                                [showClear]="true" placeholder="Cara Bayar" optionLabel="carabayar"></p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-3">
+                            <label class="label" for="input">Jenis Transaksi</label>
+                            <p-dropdown [options]="listKelompokTransaksi" [(ngModel)]="item.dataKelTransaksi"
+                                [filter]="true" [showClear]="true" placeholder="Jenis Transaksi (Non Layanan)"
+                                optionLabel="kelompoktransaksi">
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-3">
+                            <label class="label" for="input">Petugas Penerima</label>
+                            <p-multiSelect [options]="listPetugasPenerima" [(ngModel)]="item.selectedKasir"
+                                optionLabel="namalengkap"></p-multiSelect>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-1">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-12" style="margin-top: 16px;">
+                            <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-12">
+                    <p-table #dt [columns]="column" [value]="dataTable" styleClass="p-datatable-customers"
+                        [rowHover]="true" scrollable="true" sortMode="multiple" selectionMode="single"
+                        (onSort)="onSort()">
+                        <ng-template pTemplate="caption">
+                            <div class="p-d-flex">
+                                <button type="button" pButton pRipple icon="pi pi-print" (click)="cetakLaporan()"
+                                    class="p-button-info p-mr-2" pTooltip="Cetak Laporan " tooltipPosition="bottom">
+                                </button>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th rowspan="2" style="text-align: left;width: 60px;">No</th>
+                                <th rowspan="2" style="text-align: left;width: 157px;">Deskripsi</th>
+                                <th colspan="8" style="text-align: center;width: 800px;">Total</th>
+                            </tr>
+                            <tr>
+                                <th style="text-align: right;width: 180px;">Banyak</th>
+                                <th style="text-align: right;width: 180px;">Hutang Penjamin</th>
+                                <th style="text-align: right;width: 180px;">Tanggungan RS</th>
+                                <th style="text-align: right;width: 180px;">Harus Dibayar</th>
+                                <th style="text-align: right;width: 200px;">Pembebasan</th>
+                                <th style="text-align: right;width: 200px;">Administrasi</th>
+                                <th style="text-align: right;width: 200px;">Jml Bayar</th>
+                                <th style="text-align: right;width: 200px;">Sisa Tagihan</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-rowIndex="rowIndex">
+                            <tr class="ui-widget-header">
+                                <td colspan="10" *ngIf="rowGroupMetadata[rowData.ruangan].index === rowIndex">
+                                    <span style="text-align: left;font-weight:bold">{{rowData.ruangan}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="text-align: left;width: 55px;">{{rowData.no}}</td>
+                                <td style="text-align: left;width: 135px;">{{rowData.tipepasien}}</td>
+                                <td style="text-align: right;width: 180px;">{{formatRupiah(rowData.banyak,'')}}</td>
+                                <td style="text-align: right;width: 180px;">{{formatRupiah(rowData.totalprekanan,'')}}
+                                </td>
+                                <td style="text-align: right;width: 180px;">{{formatRupiah(rowData.tanggunganrs,'')}}
+                                </td>
+                                <td style="text-align: right;width: 180px;">
+                                    {{formatRupiah(rowData.totalharusdibayar,'')}}</td>
+                                <td style="text-align: right;width: 180px;">{{formatRupiah(rowData.pembebasan,'')}}</td>
+                                <td style="text-align: right;width: 180px;">{{formatRupiah(rowData.administrasi,'')}}
+                                </td>
+                                <td style="text-align: right;width: 180px;">{{formatRupiah(rowData.totaldibayar,'')}}
+                                </td>
+                                <td style="text-align: right;width: 180px;">{{formatRupiah(rowData.sisa,'')}}</td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="footer">
+                            <tr>
+                                <td style="text-align: left;width: 300px;">Grand Total</td>
+                                <td style="text-align: center;width: 130px;"> {{formatRupiah(item.banyak,'')}}</td>
+                                <td style="text-align: center;width: 184px;"> {{formatRupiah(item.totalprekanan,'')}}</td>
+                                <td style="text-align: center;width: 90px;"> {{formatRupiah(item.tanggunganrs,'')}}</td>
+                                <td style="text-align: center;width: 130px;"> {{formatRupiah(item.totalharusdibayar,'')}}</td>
+                                <td style="text-align: center;width: 187px;"> {{formatRupiah(item.pembebasan,'')}}</td>
+                                <td style="text-align: center;width: 80px;"> {{formatRupiah(item.administrasi,'')}}</td>
+                                <td style="text-align: center;width: 145px;"> {{formatRupiah(item.totaldibayar,'')}}</td>
+                                <td style="text-align: center;width: 170px;"> {{formatRupiah(item.sisa,'')}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

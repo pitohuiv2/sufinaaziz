@@ -1,0 +1,37 @@
+--routing.modules.ts
+import { DaftarRegistrasiPasienComponent } from './daftar-registrasi-pasien.component';
+
+const routes: Routes = [  { path: '', component: DaftarRegistrasiPasienComponent }];
+
+--component.ts
+import { ConfirmationService, LazyLoadEvent, MessageService } from 'primeng/api';
+import { Config } from '../../../../guard';
+import { ApiService, AuthService } from '../../../../service';
+import * as moment from 'moment';
+
+
+@Component({  
+  (+) providers: [ConfirmationService]
+})
+
+--module.ts
+import { DaftarPasienPulangRoutingModule } from './daftar-pasien-pulang-routing.module';
+import { primeNgModule } from 'src/app/shared/shared.module';
+import { DaftarPasienPulangComponent} from './daftar-pasien-pulang.component';
+import { HeaderPasienComponent } from 'src/app/page/template/header-pasien/header-pasien.component';
+
+
+@NgModule({
+  declarations: [DaftarPasienPulangComponent],
+  imports: [
+    CommonModule,
+    DaftarPasienPulangRoutingModule,
+    primeNgModule
+  ]
+})
+
+--app.routing.modules.ts
+{
+  canActivate: [AuthGuard], path: 'daftar-pasien-pulang',
+  loadChildren: () => import('./page/module/kasir/daftar-pasien-pulang/daftar-pasien-pulang.module').then(m => m.DaftarPasienPulangModule)
+},

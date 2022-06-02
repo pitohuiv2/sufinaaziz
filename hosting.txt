@@ -1,0 +1,59 @@
+source /home/pcuresij/nodevenv/angular-app/10/bin/activate && cd /home/pcuresij/angular-app
+
+Kami udah coba ngurus di DomaiNesia, buat login nya bisa pake akun pcure.demo@gmail.com password : d4t4rockstar
+
+Domain yg tersediannya pcuresijemari.com
+
+ ssh majora@pcuresijemari.com -p 64000
+
+------------
+eis
+sebaran alamat by pasien lama, pasien registrasi mingguan, by diagnosa, by per poli.
+kunjungan poli h -7 s/d +7
+pasien rawat inap laki2 vs perempuan, kategori umur,
+bor los toi
+top 10 diagnosa, top 10 rajal, top 10 dokter.
+top 10 obat
+------------
+
+------------
+db hosting
+---------------
+DB_CONNECTION=pgsql
+DB_HOST=127.0.0.1
+DB_PORT=5432
+DB_DATABASE=pcuresij_ver3
+DB_USERNAME=pcuresij_postgres
+DB_PASSWORD=d4t4rockstar
+
+DB_HOST=pcuresijemari.ddns.net
+DB_PORT=5432
+DB_DATABASE=ver3
+DB_USERNAME=postgres
+DB_PASSWORD=Tr4nsm3dic
+
+-------------------
+
+Detail Login cPanel
+Domain	: www.pcuresijemari.com
+cPanel Username	: pcuresij
+cPanel Password	: A5yD8cn6n@-BK6
+Control Panel URL	: http://majora.id.domainesia.com/cpanel
+Alternatif	: http://pcuresijemari.com/cpanel
+Mohon pastikan tidak ada karakter spasi di belakang username/password ketika melakukan copy-paste.
+
+---------ssh-------------
+ssh pcuresij@majora.id.domainesia.com –p 64000
+A5yD8cn6n@-BK6
+-----------------------
+pm2 start "ng serve  --port 3333 --host 0.0.0.0" --name versi-3
+
+-------------------
+link app 
+http://pcuresijemari.com
+http://antrian.pcuresijemari.com
+http://reservasi.pcuresijemari.com
+-------------------
+cara remote postgres hosting 
+https://www.domainesia.com/panduan/remote-postgresql-tutorial/
+

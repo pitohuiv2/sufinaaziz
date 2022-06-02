@@ -1,0 +1,266 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Formulir RL. 5 </h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-tabView>
+                    <p-tabPanel header="5.1 Pengunjung Rumah Sakit" leftIcon="fa fa-print">
+                        <div class="p-col-12 ">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Awal</label>
+                                    <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Awal</label>
+                                    <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        pTooltip="Cari" (click)="cari()"></button>
+                                </div>
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-12">
+                                    <p-table [value]="dataSource" styleClass="p-datatable-customers" [rowHover]="true"
+                                        [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                        [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                        responsiveLayout="scroll">
+                                        <ng-template pTemplate="caption">
+                                            <div class="p-d-flex">
+
+                                                <button type="button" pButton pRipple icon="pi pi-file-excel"
+                                                    (click)="exportExcel()" class="p-button-success p-mr-2"
+                                                    pTooltip="XLS" tooltipPosition="bottom"></button>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header" let-columns>
+
+                                            <tr>
+                                                <th> NO</th>
+                                                <th> JENIS KEGIATAN</th>
+                                                <th>JUMLAH </th>
+
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-item>
+                                            <tr>
+                                                <td>{{item.no}}</td>
+                                                <td>{{item.jeniskegiatan}}</td>
+                                                <td>{{item.jumlah}}</td>
+
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="5.2 Kunjungan Rawat Jalan" leftIcon="fa fa-print">
+                        <div class="p-col-12 ">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Awal</label>
+                                    <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Awal</label>
+                                    <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        pTooltip="Cari" (click)="cari()"></button>
+                                </div>
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-12">
+                                    <p-table [value]="dataSource" styleClass="p-datatable-customers" [rowHover]="true"
+                                        [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                        [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                        responsiveLayout="scroll">
+                                        <ng-template pTemplate="caption">
+                                            <div class="p-d-flex">
+
+                                                <button type="button" pButton pRipple icon="pi pi-file-excel"
+                                                    (click)="exportExcel()" class="p-button-success p-mr-2"
+                                                    pTooltip="XLS" tooltipPosition="bottom"></button>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header" let-columns>
+
+                                            <tr>
+                                                <th> NO</th>
+                                                <th> JENIS KEGIATAN</th>
+                                                <th>JUMLAH </th>
+
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-item>
+                                            <tr>
+                                                <td>{{item.no}}</td>
+                                                <td>{{item.jeniskegiatan}}</td>
+                                                <td>{{item.jumlah}}</td>
+
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="5.3 10 Besar Penyakit Rawat Inap" leftIcon="fa fa-print">
+                        <div class="p-col-12 ">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Awal</label>
+                                    <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Awal</label>
+                                    <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        pTooltip="Cari" (click)="cari()"></button>
+                                </div>
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-12">
+                                    <p-table [value]="dataSource" styleClass="p-datatable-customers" [rowHover]="true"
+                                        [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                        [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                        responsiveLayout="scroll">
+                                        <ng-template pTemplate="caption">
+                                            <div class="p-d-flex">
+
+                                                <button type="button" pButton pRipple icon="pi pi-file-excel"
+                                                    (click)="exportExcel()" class="p-button-success p-mr-2"
+                                                    pTooltip="XLS" tooltipPosition="bottom"></button>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header" let-columns>
+                                            <tr>
+                                                <th rowspan="2">NO</th>
+                                                <th rowspan="2">KODE ICD 10</th>
+                                                <th rowspan="2">DESKRIPSI</th>
+                                                <th colspan="2" style="text-align:center">PASIEN KELUAR HIDUP MENURUT
+                                                    JENIS KELAMIN</th>
+                                                <th colspan="2" style="text-align:center">PASIEN KELUAR MATI MENURUT
+                                                    JENIS KELAMIN</th>
+                                                <th rowspan="2">TOTAL PASIEN (HIDUP DAN MATI)</th>
+                                            </tr>
+                                            <tr>
+                                                <th>LAKI-LAKI</th>
+                                                <th>PEREMPUAN</th>
+                                                <th>LAKI-LAKI</th>
+                                                <th>PEREMPUAN</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-item>
+                                            <tr>
+                                                <td>{{item.no}}</td>
+                                                <td>{{item.jenispelayanan}}</td>
+                                                <td>{{item.jumlah}}</td>
+                                                <td>{{item.jenispelayanan}}</td>
+                                                <td>{{item.jumlah}}</td>
+                                                <td>{{item.jenispelayanan}}</td>
+                                                <td>{{item.jumlah}}</td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="5.4 10 Besar Penyakit Rawat Jalan" leftIcon="fa fa-print">
+                        <div class="p-col-12 ">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Awal</label>
+                                    <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Awal</label>
+                                    <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        pTooltip="Cari" (click)="cari()"></button>
+                                </div>
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-12">
+                                    <p-table [value]="dataSource" styleClass="p-datatable-customers" [rowHover]="true"
+                                        [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                        [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                        responsiveLayout="scroll">
+                                        <ng-template pTemplate="caption">
+                                            <div class="p-d-flex">
+
+                                                <button type="button" pButton pRipple icon="pi pi-file-excel"
+                                                    (click)="exportExcel()" class="p-button-success p-mr-2"
+                                                    pTooltip="XLS" tooltipPosition="bottom"></button>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header" let-columns>
+                                            <tr>
+                                                <th rowspan="2">NO</th>
+                                                <th rowspan="2">KODE ICD 10</th>
+                                                <th rowspan="2">DESKRIPSI</th>
+                                                <th colspan="2" style="text-align:center">KASUS BARU MENURUT JENIS
+                                                    KELAMIN</th>
+                                                <th rowspan="2">JUMLAH KASUS BARU(4+5) </th>
+                                                <th rowspan="2">JUMLAH KUNJUNGAN </th>
+
+                                            </tr>
+                                            <tr>
+                                                <th>LAKI-LAKI</th>
+                                                <th>PEREMPUAN</th>
+                                              
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-item>
+                                            <tr>
+                                                <td>{{item.no}}</td>
+                                                <td>{{item.jenispelayanan}}</td>
+                                                <td>{{item.jumlah}}</td>
+                                                <td>{{item.jenispelayanan}}</td>
+                                                <td>{{item.jumlah}}</td>
+                                                <td>{{item.jenispelayanan}}</td>
+                                                <td>{{item.jumlah}}</td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+        </div>
+    </div>
+</div>

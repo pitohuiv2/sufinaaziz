@@ -1,0 +1,133 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Sisrute </h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-tabView>
+                    <p-tabPanel header="Rujukan Masuk" leftIcon="fa fa-th-list">
+                        <div class="p-col-12 ">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Tgl Rujukan</label>
+                                    <p-calendar [(ngModel)]="item.tglRujukan" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">No Rujukan</label>
+                                    <input type="text" [(ngModel)]="item.noRujukan" pInputText placeholder="No Rujukan"
+                                         />
+                                </div>
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        pTooltip="Cari" (click)="cari()"></button>
+                                </div>
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-12">
+                                    <p-table [value]="dataSource" styleClass="p-datatable-customers" [rowHover]="true"
+                                        [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                        [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                        responsiveLayout="scroll">
+                                        <ng-template pTemplate="caption">
+                                            <div class="p-d-flex">
+
+                                                <button type="button" pButton pRipple icon="pi pi-file-excel"
+                                                    (click)="exportExcel()" class="p-button-success p-mr-2"
+                                                    pTooltip="XLS" tooltipPosition="bottom"></button>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header" let-columns>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>No Rujukan</th>
+                                                <th>Nama / No Kontak</th>
+                                                <th>Tgl Rujuk / Asal RS</th>
+                                                <th>Alasan Merujuk</th>
+                                                <th>Diagnosa</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-item>
+                                            <tr>
+                                                <td>{{item.no}}</td>
+                                                <td>{{item.norujukan}}</td>
+                                                <td>{{item.namakontak}}</td>
+                                                <td>{{item.tglasal}}</td>
+                                                <td>{{item.alasan}}</td>
+                                                <td>{{item.diagnosa}}</td>
+                                                <td>{{item.status}}</td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Rujukan Keluar" leftIcon="fa fa-list">
+                        <div class="p-col-12 ">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Tgl Rujukan</label>
+                                    <p-calendar [(ngModel)]="item.tglRujukan" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">No Rujukan</label>
+                                    <input type="text" [(ngModel)]="item.noRujukan" pInputText placeholder="No Rujukan"
+                                         />
+                                </div>
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        pTooltip="Cari" (click)="cari2()"></button>
+                                </div>
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-12">
+                                    <p-table [value]="dataSource2" styleClass="p-datatable-customers" [rowHover]="true"
+                                        [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                        [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                        responsiveLayout="scroll">
+                                        <ng-template pTemplate="caption">
+                                            <div class="p-d-flex">
+
+                                                <button type="button" pButton pRipple icon="pi pi-file-excel"
+                                                    (click)="exportExcel2()" class="p-button-success p-mr-2"
+                                                    pTooltip="XLS" tooltipPosition="bottom"></button>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header" let-columns>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>No Rujukan</th>
+                                                <th>Nama / No Kontak</th>
+                                                <th>Tgl / Tujuan RS</th>
+                                                <th>Alasan Merujuk</th>
+                                                <th>Diagnosa</th>
+                                                <th>Status</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-item>
+                                            <tr>
+                                                <td>{{item.no}}</td>
+                                                <td>{{item.norujukan}}</td>
+                                                <td>{{item.namakontak}}</td>
+                                                <td>{{item.tglasal}}</td>
+                                                <td>{{item.alasan}}</td>
+                                                <td>{{item.diagnosa}}</td>
+                                                <td>{{item.status}}</td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+        </div>
+    </div>
+</div>

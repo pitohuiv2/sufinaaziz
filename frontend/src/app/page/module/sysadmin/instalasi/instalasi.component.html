@@ -1,0 +1,70 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Input Master Instalasi</h4>
+        <div class="p-grid">
+            <div class="p-col-10 p-md-10">
+                <p-panel header="Data Pelayanan" [toggleable]="false">
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <label class="label" for="input">Id Instalasi</label>
+                                <input type="text" [(ngModel)]="item.id" pInputText placeholder="Id Instalasi"
+                                    disabled />
+                            </div>
+                            <div class="p-col-12 p-md-2">
+                                <label class="label" for="input">Status Aktif</label>
+                                <p-dropdown [options]="listStatus" [(ngModel)]="item.status" [filter]="true"
+                                    [showClear]="true" placeholder="Status " optionLabel="status" dataKey="id">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <label class="label" for="input">Nama Instalasi</label>
+                                <input type="text" [(ngModel)]="item.namaproduk" pInputText
+                                    placeholder="Instalasi" />
+                            </div>
+                            <div class="p-col-12 p-md-2">
+                                <label class="label" for="input">Kelompok User</label>
+                                <p-dropdown [options]="listKelompokUser" [(ngModel)]="item.kelompokuser" [filter]="true"
+                                    [showClear]="true" placeholder="Kelompok User" optionLabel="kelompokuser"
+                                    dataKey="id">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-2">
+                                <label class="label" for="input">Kode Internal</label>
+                                <input type="text" [(ngModel)]="item.kdproduk_intern" pInputText
+                                    placeholder="Kode Internal" />
+                            </div>
+                            <div class="p-col-12 p-md-2">
+                                <label class="label" for="input">Kode BMN</label>
+                                <input type="text" [(ngModel)]="item.kodebmn" pInputText placeholder="Kode BMN" />
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <label class="label" for="input">Keterangan</label>
+                                <input type="text" [(ngModel)]="item.keterangan" pInputText
+                                    placeholder="Keterangan Pelayanan/Produk" />
+                            </div>
+                        </div>
+                    </div>
+                </p-panel>
+            </div>
+        
+            <div class="p-col-10 p-md-10">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-2 p-md-offset-6">
+                        <button pButton type="button" icon="pi pi-save" class="p-button p-mr-2" (click)="simpan()"
+                            pTooltip="Simpan Data" label="Simpan" [disabled]="isSimpan"></button>
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <button pButton type="button" icon="pi pi-refresh" class="p-button  p-button-danger p-mr-2"
+                            (click)="batal()" pTooltip="Batal" label="Batal"></button>
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <button pButton type="button" icon="fa fa-arrow-left"
+                            class="p-button  p-button-danger p-mr-2" (click)="Kembali()" pTooltip="Kembali"
+                            label="Kembali"></button>
+                    </div>                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

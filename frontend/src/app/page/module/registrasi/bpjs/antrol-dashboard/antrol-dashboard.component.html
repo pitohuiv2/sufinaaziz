@@ -1,0 +1,181 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Dashboard Antrean</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-accordion>
+                    <p-accordionTab header="Per Tanggal" [selected]="true">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Tanggal</label>
+                                    <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Waktu</label>
+                                    <p-dropdown [options]="listWaktu" [(ngModel)]="item.waktu" [filter]="true"
+                                        [showClear]="true" placeholder="Waktu" optionLabel="nama" appendTo="body">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        pTooltip="Cari" (click)="cari()"></button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-col-12">
+                            <p-table #dt [columns]="column" [value]="dataSource" styleClass="p-datatable-customers"
+                                [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                                [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                                sortMode="multiple" selectionMode="single">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+
+                                        <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                                            style="width: {{column.width}}">
+                                            {{column.header}} <p-sortIcon field="{{column.field}}"></p-sortIcon>
+
+                                        </th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+
+                                        <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                            <span class="p-column-title"> {{column.header}} </span>
+                                            {{rowData[column.field]}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Per Bulan">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Tahun</label>
+                                    <input type="text" [(ngModel)]="item.tahun" pInputText placeholder="Tahun " />
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Bulan</label>
+                                    <p-dropdown [options]="listBulan" [(ngModel)]="item.bulan" [filter]="true"
+                                        [showClear]="true" placeholder="Bulan" optionLabel="nama" appendTo="body">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Waktu</label>
+                                    <p-dropdown [options]="listWaktu" [(ngModel)]="item.waktu" [filter]="true"
+                                        [showClear]="true" placeholder="Waktu" optionLabel="nama" appendTo="body">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        pTooltip="Cari" (click)="cari2()"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-col-12">
+                            <p-table #dt [columns]="column2" [value]="dataSource2" styleClass="p-datatable-customers"
+                                [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                                [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                                sortMode="multiple" selectionMode="single">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                                            style="width: {{column.width}}">
+                                            {{column.header}} <p-sortIcon field="{{column.field}}"></p-sortIcon>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                        <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                            <span class="p-column-title"> {{column.header}} </span>
+                                            {{rowData[column.field]}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Sisa Antrean">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Tanggal</label>
+                                    <p-calendar [(ngModel)]="item.tglperiksa" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd"></p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Poli</label>
+                                    <p-dropdown [options]="listPoli" [(ngModel)]="item.poli" [filter]="true"
+                                        [showClear]="true" placeholder="Poli" optionLabel="nama" appendTo="body">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Dokter</label>
+                                    <p-dropdown [options]="listDokterHFIS" [(ngModel)]="item.dokterHFIS" [filter]="true"
+                                        [showClear]="true" placeholder="Dokter HFIS" optionLabel="nama" appendTo="body">
+                                    </p-dropdown>
+                                </div>
+
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        pTooltip="Cari" (click)="cari3()"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-md-12  timeline">
+                            <ul>
+                                <li class="satu"><i class="pi pi-circle-on"></i>
+                                    <div class="event-content">
+                                        <span>Poli </span>
+                                        <span class="event-title">{{sisa.namapoli}}</span>
+                                    </div>
+                                </li>
+                                <li class="dua"><i class="pi pi-circle-on"></i>
+                                    <div class="event-content">
+                                        <span>Dokter</span>
+                                        <span class="event-title">{{sisa.namadokter}}</span>
+                                    </div>
+                                </li>
+                                <li class="tiga"><i class="pi pi-circle-on"></i>
+                                    <div class="event-content">
+                                        <span>Total Antrean</span>
+                                        <span class="event-title">{{sisa.totalantrean}}</span>
+                                    </div>
+                                </li>
+                                <li class="empat"><i class="pi pi-circle-on"></i>
+                                    <div class="event-content">
+                                        <span> Sisa Antrean </span>
+                                        <span class="event-title">{{sisa.sisaantrean}}</span>
+                                    </div>
+                                </li>
+                                <li class="lima"><i class="pi pi-circle-on"></i>
+                                    <div class="event-content">
+                                        <span>Antrean Dipanggil</span>
+                                        <span class="event-title">{{sisa.antreanpanggil!=''?sisa.antreanpanggil:'-'}}</span>
+                                    </div>
+                                </li>
+                                <li class="enam"><i class="pi pi-circle-on"></i>
+                                    <div class="event-content">
+                                        <span>Keterangan</span>
+                                        <span class="event-title">{{sisa.keterangan!=''?sisa.keterangan:'-'}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </div>
+        </div>
+    </div>
+</div>

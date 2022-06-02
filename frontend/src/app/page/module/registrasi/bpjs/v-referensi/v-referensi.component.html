@@ -1,0 +1,260 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Referensi</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-accordion>
+                    <p-accordionTab header="Diagnosa">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-5">
+                                        <label class="label" for="input">Parameter Pencarian </label>
+                                        <input type="text" [(ngModel)]="item.cari" pInputText
+                                            placeholder="Parameter Pencarian " />
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search" pTooltip="Caru"
+                                            (click)="cari('referensi/diagnosa/'+item.cari,'jsonResult')"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                <code [innerHtml]="jsonResult"  class="language-json" pCode></code>
+                            </pre>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Poli">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-5">
+                                        <label class="label" for="input">Parameter Pencarian </label>
+                                        <input type="text" [(ngModel)]="item.cari" pInputText
+                                            placeholder="Parameter Pencarian " />
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search" pTooltip="Cari"
+                                            (click)="cari('referensi/poli/'+item.cari,'jsonResult2')"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                    <code [innerHtml]="jsonResult2"  class="language-json" pCode></code>
+                                </pre>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Fasilitas Kesehatan">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">Jenis</label>
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="rs" name="faskes" value="2"
+                                                    [(ngModel)]="item.tipe">
+                                                </p-radioButton>
+                                                <label for="rs"> RS</label>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="pcare" name="faskes" value="1"
+                                                    [(ngModel)]="item.tipe">
+                                                </p-radioButton>
+                                                <label for="pcare"> Pcare</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-md-5">
+                                        <label class="label" for="input">Parameter Pencarian </label>
+                                        <input type="text" [(ngModel)]="item.cari" pInputText
+                                            placeholder="Parameter Pencarian " />
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search" pTooltip="Cari"
+                                            (click)="cari('referensi/faskes/'+item.cari+'/'+item.tipe,'jsonResult3')"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                    <code [innerHtml]="jsonResult3"  class="language-json" pCode></code>
+                                </pre>
+
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Dokter DPJP">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Jenis</label>
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="ri" name="pelayanan" [value]="1"
+                                                    [(ngModel)]="item.tipe">
+                                                </p-radioButton>
+                                                <label for="ri"> Rawat Inap</label>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="rj" name="pelayanan" [value]="2"
+                                                    [(ngModel)]="item.tipe">
+                                                </p-radioButton>
+                                                <label for="rj"> Rawat Jalan</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-md-5">
+                                        <label class="label" for="input">Parameter Pencarian </label>
+                                        <input type="text" [(ngModel)]="item.cari" pInputText
+                                            placeholder="Parameter Pencarian " />
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search" pTooltip="Cari"
+                                            (click)="cari('referensi/dokter/pelayanan/'+item.tipe+'/tglPelayanan/'+item.now+'/Spesialis/'+item.cari,'jsonResult4')"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                    <code [innerHtml]="jsonResult4"  class="language-json" pCode></code>
+                                </pre>
+
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Provinsi, Kota, Kecamatan">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Provinsi</label>
+                                        <p-dropdown [options]="listProv" [(ngModel)]="item.prov" [filter]="true"
+                                            [showClear]="true" placeholder="Provinsi" optionLabel="nama"
+                                            (onChange)="setData('kab',item.prov)" appendTo="body">
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Kabupaten</label>
+                                        <p-dropdown [options]="listKab" [(ngModel)]="item.kab" [filter]="true"
+                                            [showClear]="true" placeholder="Kabupaten" optionLabel="nama"
+                                            (onChange)="setData('kec',item.kab)" appendTo="body">
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Kecamatan</label>
+                                        <p-dropdown [options]="listKec" [(ngModel)]="item.kec" [filter]="true"
+                                            [showClear]="true" placeholder="Kecamatan" optionLabel="nama"
+                                            appendTo="body">
+                                        </p-dropdown>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Diagnosa Program PRB">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search" pTooltip="Cari"
+                                            (click)="cari('referensi/diagnosaprb','jsonResult5')"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                    <code [innerHtml]="jsonResult5"  class="language-json" pCode></code>
+                                </pre>
+
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Obat Generik Program PRB">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+
+                                    <div class="p-col-12 p-md-5">
+                                        <label class="label" for="input">Parameter Pencarian </label>
+                                        <input type="text" [(ngModel)]="item.cari" pInputText
+                                            placeholder="Parameter Pencarian " />
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search" pTooltip="Cari"
+                                            (click)="cari('referensi/obatprb/'+item.cari,'jsonResult6')"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                    <code [innerHtml]="jsonResult6"  class="language-json" pCode></code>
+                                </pre>
+
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Hanya Untuk Lembar Pengajuan Klaim">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Procedure / Tindakan</label>
+                                <p-autoComplete [(ngModel)]="item.procedur" [suggestions]="listProcedur" [minLength]="3"
+                                    (completeMethod)="filter($event)" field="nama" [dropdown]="true"
+                                    placeholder="Procedure / Tindakan">
+                                </p-autoComplete>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Kelas Rawat</label>
+                                <p-dropdown [options]="listKelas" [(ngModel)]="item.kelas" [filter]="true"
+                                    [showClear]="true" placeholder="Kelas Rawat" optionLabel="nama" appendTo="body">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Dokter </label>
+                                <p-autoComplete [(ngModel)]="item.dokter" [suggestions]="listDJP" [minLength]="3"
+                                    (completeMethod)="filter2($event)" field="nama" [dropdown]="true"
+                                    placeholder="Dokter">
+                                </p-autoComplete>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Spesialistik</label>
+                                <p-dropdown [options]="listSpesialis" [(ngModel)]="item.spe" [filter]="true"
+                                    [showClear]="true" placeholder="Spesialistik" optionLabel="nama" appendTo="body">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Ruang Rawat</label>
+                                <p-dropdown [options]="listRuangn" [(ngModel)]="item.ruang" [filter]="true"
+                                    [showClear]="true" placeholder="Ruang Rawat" optionLabel="nama" appendTo="body">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Cara Keluar </label>
+                                <p-dropdown [options]="listCaraKeluar" [(ngModel)]="item.cara" [filter]="true"
+                                    [showClear]="true" placeholder="Cara Keluar " optionLabel="nama" appendTo="body">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Pasca Pulang </label>
+                                <p-dropdown [options]="listPasca" [(ngModel)]="item.pasca" [filter]="true"
+                                    [showClear]="true" placeholder="Pasca Pulang  " optionLabel="nama" appendTo="body">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </div>
+        </div>
+    </div>
+</div>

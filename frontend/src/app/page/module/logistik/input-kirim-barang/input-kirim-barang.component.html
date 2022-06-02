@@ -1,0 +1,172 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Kirim Barang Ruangan</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-3">
+                <p-panel header="Data Order" [toggleable]="false">
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Nomor Kirim</label>
+                                <input type="text" [(ngModel)]="item.nomorKirim" pInputText placeholder="Nomor Kirim"
+                                    disabled />
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Tgl Kirim</label>
+                                <p-calendar [(ngModel)]="item.tglKirim" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd"
+                                    placeholder="Tgl Kirim" hourFormat="24" [maxDate]="maxDateValue">
+                                </p-calendar>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Jenis Kirim</label>
+                                <p-dropdown [options]="listJenisKirim" [(ngModel)]="item.dataJenisKirim" [filter]="true"
+                                    [showClear]="true" placeholder="Jenis Kirim" optionLabel="jeniskirim" dataKey="id">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Ruangan Pengirim</label>
+                                <p-dropdown [options]="listRuangan" [(ngModel)]="item.ruangan" [filter]="true"
+                                    [showClear]="true" placeholder="Ruangan " optionLabel="namaruangan" dataKey="id"
+                                    [disabled]="disabledRuangan">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Ruangan Order</label>
+                                <p-autoComplete [(ngModel)]="item.dataRuanganAll" [suggestions]="listRuanganAll"
+                                    (completeMethod)="filterRuangan($event)" field="namaruangan" [dropdown]="true"
+                                    placeholder="Pilih Ruangan" [disabled]="disabledRuangan">
+                                </p-autoComplete>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Keterangan Pengirim</label>
+                                <input type="text" [(ngModel)]="item.keteranganKirim" pInputText
+                                    placeholder="Keterangan Kirm" />
+                            </div>
+                        </div>
+                    </div>
+                </p-panel>
+
+            </div>
+
+            <div class="p-col-12 p-md-9">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-12">
+           
+                            <p-panel header="Detail Order" [toggleable]="false">
+                                <div class="p-col-12 p-md-12">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-6">
+                                            <label class="label" for="input">Produk </label>
+                                            <p-autoComplete [(ngModel)]="item.produk" [suggestions]="listProduk"
+                                                (completeMethod)="filterProduk($event)" field="namaproduk"
+                                                [dropdown]="true" placeholder="Pilih Produk" (onSelect)="getSatuan()">
+                                            </p-autoComplete>
+                                        </div>
+                                        <div class="p-col-12 p-md-2">
+                                            <label class="label" for="input">Satuan </label>
+                                            <p-dropdown [options]="listSatuan" [(ngModel)]="item.satuan" [filter]="true"
+                                                [showClear]="true" placeholder="Satuan " optionLabel="satuanstandar"
+                                                dataKey="id" (onChange)="getNilaiKonversi()">
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="p-col-12 p-md-2">
+                                            <label class="label" for="input">Stok</label>
+                                            <input type="text" [(ngModel)]="item.stok" pInputText placeholder="Stok" />
+                                        </div>
+                                        <div class="p-col-12 p-md-1">
+                                            <label class="label" for="input">Qty Order </label>
+                                            <p-inputNumber [(ngModel)]="item.jumlahOrder" [showButtons]="true"
+                                                placeholder="Qty" inputId="stacked" disabled>
+                                            </p-inputNumber>
+                                        </div>
+                                        <div class="p-col-12 p-md-1">
+                                            <label class="label" for="input">Qty Kirim </label>
+                                            <p-inputNumber [(ngModel)]="item.jumlah" [showButtons]="true"
+                                                placeholder="Qty" inputId="stacked" (onInput)="onChangeQty($event)">
+                                            </p-inputNumber>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-2 p-md-offset-8">
+                                            <button pButton type="button" icon="pi pi-plus"
+                                                class="p-button p-button-success p-mr-2" (click)="tambah()"
+                                                pTooltip="Tambah" label="Tambah" [disabled]="!statusTambah"></button>
+                                        </div>
+                                        <div class="p-col-12 p-md-2">
+                                            <button pButton type="button" icon="pi pi-refresh"
+                                                class="p-button  p-button-warning p-mr-2" (click)="batal()"
+                                                pTooltip="Batal" label="Batal"></button>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-12">
+                                            <p-table [value]="dataSource" [columns]="columnGrid"
+                                                styleClass="p-datatable-customers" [rows]="20"
+                                                [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                                [paginator]="true" scrollable="true" [pageLinks]="5" dataKey="no">
+                                                <ng-template pTemplate="header" let-columns>
+                                                    <tr>
+                                                        <th style="width: 80px"></th>
+                                                        <th *ngFor="let col of columns" style="width: {{col.width}}">
+                                                            {{col.header}}
+                                                        </th>
+                                                    </tr>
+                                                </ng-template>
+                                                <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                                    let-rowIndex="rowIndex">
+                                                    <tr>
+                                                        <td style="width: 80px">
+                                                            <button pButton type="button" icon="pi pi-user-edit"
+                                                                class="p-button-rounded p-mr-2" pTooltip="Edit Data"
+                                                                label="" (click)="editD(rowData)"></button>
+                                                            <button pButton type="button" icon="pi pi-trash"
+                                                                class="p-button-rounded p-button-danger p-mr-2"
+                                                                pTooltip="Hapus Data" label=""
+                                                                (click)="hapusD(rowData)"></button>
+                                                        </td>
+                                                        <td *ngFor="let col of columns" style="width: {{col.width}}">
+                                                            <span *ngIf="col.isCurrency != undefined">
+                                                                {{formatRupiah(rowData[col.field],'')}}</span>
+                                                            <span *ngIf="col.isCurrency == undefined">
+                                                                {{rowData[col.field]}}</span>
+                                                        </td>
+                                                    </tr>
+                                                </ng-template>
+                                                <ng-template pTemplate="summary">
+                                                    <tr>
+                                                        <td rowspan="6">Grand Total : </td>
+                                                        <td> &nbsp;{{item.totalSubTotal}}</td>
+                                                    </tr>
+                                                </ng-template>
+                                            </p-table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </p-panel>
+                      
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-2 p-md-offset-6">
+                                <button pButton type="button" icon="pi pi-save" class="p-button p-mr-2" (click)="save()"
+                                    pTooltip="Simpan Data" label="Simpan" [disabled]="isSimpan"></button>
+                            </div>
+                            <div class="p-col-12 p-md-2">
+                                <button pButton type="button" icon="pi pi-refresh"
+                                    class="p-button  p-button-danger p-mr-2" (click)="batalGrid()" pTooltip="Batal"
+                                    label="Reset"></button>
+                            </div>
+                            <div class="p-col-12 p-md-2">
+                                <button pButton type="button" icon="fa fa-arrow-left"
+                                    class="p-button  p-button-danger p-mr-2" (click)="Kembali()" pTooltip="Kembali"
+                                    label="Kembali"></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

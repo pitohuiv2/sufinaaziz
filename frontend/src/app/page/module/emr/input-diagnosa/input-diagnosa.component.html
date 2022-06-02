@@ -1,0 +1,136 @@
+<p-confirmDialog [baseZIndex]="10000" rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4> Diagnosis</h4>
+        <div class="p-grid" *ngIf="!hideEMR">
+        <app-head-pasien > </app-head-pasien>
+        </div>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-panel header="ICD 10" [toggleable]="true">
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-2">
+                                <label class="label" for="input">Jenis Diagnosa</label>
+                                <p-dropdown [options]="listJenisDiagnosa" [(ngModel)]="item.dataJenisDiagnosa"
+                                    [filter]="true" [showClear]="true" placeholder="Jenis Diagnosa"
+                                    optionLabel="jenisdiagnosa" appendTo="body"></p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-4">
+                                <label class="label" for="input">Diagnosis</label>
+                                <p-autoComplete [(ngModel)]="item.DiagnosaX" [suggestions]="listDiagnosaX"
+                                    (completeMethod)="filterDiagnosaX($event)" field="diagnosa" [dropdown]="true"
+                                    placeholder="Diagnosis" appendTo="body" dataKey="id">
+                                </p-autoComplete>
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <label class="label" for="input">Keterangan</label>
+                                <input type="text" [(ngModel)]="item.KeteranganDiagnosaX" pInputText
+                                    placeholder="Keterangan" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-1 p-md-offset-9">
+                                <button pButton type="submit" icon="fa fa-floppy-o" pTooltip="Simpan"
+                                    (click)="simpanDiagnosaX()" label="Simpan"></button>
+                            </div>
+                            <div class="p-col-12 p-md-1">
+                                <button pButton type="submit" icon="fa fa-ban" pTooltip="Batal"
+                                    (click)="BatalDiagnosaX()" label="Batal"></button>
+                            </div>
+                            <div class="p-col-12 p-md-1">
+                                <button pButton type="submit" icon="fa fa-trash" pTooltip="Hapus"
+                                    (click)="hapusDiagnosaX()" label="Hapus" style="background-color: red;"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <p-table #dt [columns]="columnIcdX" [value]="dataTableIcdX" [(selection)]="selectedIcdX"
+                            styleClass="p-datatable-customers" [rowHover]="true" [rows]="20"
+                            [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                            scrollable="true" [pageLinks]="5" sortMode="multiple" selectionMode="single"
+                            (onRowSelect)="onRowSelectIcdX($event)">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th *ngFor="let columnIcdX of columns" pSortableColumn="{{columnIcdX.field}}"
+                                        style="width: {{columnIcdX.width}}">
+                                        {{columnIcdX.header}} <p-sortIcon field="{{columnIcdX.field}}"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                    <td *ngFor="let columnIcdX of columns" style="width: {{columnIcdX.width}}">
+                                        {{rowData[columnIcdX.field]}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </p-panel>
+            </div>
+
+            <div class="p-col-12 p-md-12">
+                <p-panel header="ICD 9" [toggleable]="true">
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <label class="label" for="input"> Diagnosis</label>
+                                <p-autoComplete [(ngModel)]="item.DiagnosaIX" [suggestions]="listDiagnosaIX"
+                                    (completeMethod)="filterDiagnosaIX($event)" field="diagnosa" [dropdown]="true"
+                                    placeholder="Diagnosis" appendTo="body">
+                                </p-autoComplete>
+                            </div>
+                            <div class="p-col-12 p-md-8">
+                                <label class="label" for="input">Keterangan</label>
+                                <input type="text" [(ngModel)]="item.KeteranganDiagnosaIX" pInputText
+                                    placeholder="Keterangan" />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-1 p-md-offset-9">
+                                <button pButton type="submit" icon="fa fa-floppy-o" pTooltip="Simpan"
+                                    (click)="simpanDiagnosaIX()" label="Simpan"></button>
+                            </div>
+                            <div class="p-col-12 p-md-1">
+                                <button pButton type="submit" icon="fa fa-ban" pTooltip="Batal"
+                                    (click)="BatalDiagnosaIX()" label="Batal"></button>
+                            </div>
+                            <div class="p-col-12 p-md-1">
+                                <button pButton type="submit" icon="fa fa-trash" pTooltip="Hapus"
+                                    (click)="hapusDiagnosaIX()" label="Hapus" style="background-color: red;"></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <p-table #dt [columns]="columnIcdIX" [value]="dataTableIcdIX" [(selection)]="selectedIcdIX"
+                            styleClass="p-datatable-customers" [rowHover]="true" [rows]="20"
+                            [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                            scrollable="true" [pageLinks]="5" sortMode="multiple" selectionMode="single"
+                            (onRowSelect)="onRowSelectIcdIX($event)">
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th *ngFor="let columnIcdIX of columns" pSortableColumn="{{columnIcdIX.field}}"
+                                        style="width: {{columnIcdIX.width}}">
+                                        {{columnIcdIX.header}} <p-sortIcon field="{{columnIcdIX.field}}"></p-sortIcon>
+                                    </th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                    <td *ngFor="let columnIcdIX of columns" style="width: {{columnIcdIX.width}}">
+                                        {{rowData[columnIcdIX.field]}}
+                                    </td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </p-panel>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,4 @@
+------------
+create component and routing
+ng g c page/module/registrasi/pasienlama --skip-import=true --skip-tests=true ; ng g m page/module/registrasi/pasienlama --routing
+------------

@@ -1,0 +1,3 @@
+The cab file for your application has been built as 'C:\testo\standar_v3\displayapps\Package\DisplayRegistrasi.CAB'.
+
+There is also a batch file in the support directory (C:\testo\standar_v3\displayapps\Package\Support\DisplayRegistrasi.BAT) that will allow you to recreate the cab file in case you make changes to some of the files.

@@ -1,0 +1,198 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Setting Data</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-tabView (onChange)="handleChangeTab($event)">
+                    <p-tabPanel header="List Data" leftIcon="fa fa-cog">
+                        <div class="p-grid">
+                            <div class="p-col-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-4">
+                                        <p-scrollPanel [style]="{width: '100%', height: '500px'}">
+                                            <div class="p-grid">
+                                                <div class="p-col-12">
+                                                    <p-tree [value]="listitems" 
+                                                        selectionMode="single"
+                                                        (onNodeSelect)="nodeSelect($event)" [filter]="true"
+                                                        scrollWidth="50px"></p-tree>
+                                                </div>
+                                            </div>
+
+                                        </p-scrollPanel>
+                                    </div>
+                                    <div class="p-col-12 p-md-8">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-2 p-md-offset-10">
+                                                <button pButton type="button" icon="pi pi-save"
+                                                    class="p-button-success p-mr-2" (click)="saveSetting()"
+                                                    label="Simpan"></button>
+                                            </div>
+                                        </div>
+                                        <div class="p-grid" *ngIf="listData.kolom1 != undefined">
+                                            <div class="p-col-12" *ngFor="let data of listData.kolom1">
+                                                <div [ngSwitch]="data.type">
+                                                    <div *ngSwitchCase="'label'">
+                                                        <label style="{{data.style}}">{{data.caption}}</label>
+                                                    </div>
+                                                    <div *ngSwitchCase="'checkbox'">
+                                                        <p-checkbox [(ngModel)]="item.obj[data.id]" binary="true"
+                                                            inputId="item.obj[data.id]">
+                                                        </p-checkbox>
+                                                        <label for="item.obj[data.id]"> {{data.caption}}</label>
+                                                    </div>
+                                                    <div *ngSwitchCase="'radio'">
+                                                        <div class="p-grid" style="margin-bottom: -2rem;">
+                                                            <div class="p-col-12 p-md-12 "
+                                                                *ngFor="let itemss of data.captionradio">
+                                                                <p-radioButton [inputId]="item.obj[data.id]"
+                                                                    [value]="itemss" [(ngModel)]="item.obj[data.id]">
+                                                                </p-radioButton>
+                                                                <label [for]="itemss"> {{itemss}}</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngSwitchCase="'textbox'">
+                                                        <label>{{data.caption}}</label>
+                                                        <input type="text" [(ngModel)]="item.obj[data.id]" pInputText
+                                                            placeholder="{{data.satuan}}" />
+                                                    </div>
+                                                    <div *ngSwitchCase="'checkboxtextbox'">
+                                                        <p-checkbox [(ngModel)]="item.obj2[data.id]" binary="true"
+                                                            inputId="item.obj2[data.id]">
+                                                        </p-checkbox>
+                                                        <label for="item.obj2{{data.id}}"> {{data.caption}}</label>
+                                                        <input type="text" [(ngModel)]="item.obj[data.id]" pInputText
+                                                            placeholder="{{data.satuan}}" style="margin-top: 5px;" />
+                                                    </div>
+                                                    <div *ngSwitchCase="'datetime'">
+                                                        <label>{{data.caption}}</label>
+                                                        <p-calendar [(ngModel)]="item.obj[data.id]" [showIcon]="true"
+                                                            [monthNavigator]="true" [yearNavigator]="true"
+                                                            yearRange="1980:2030" [showTime]="true"
+                                                            dateFormat="yy-mm-dd" placeholder="yyyy-MM-dd HH:mm"
+                                                            hourFormat="24">
+                                                        </p-calendar>
+                                                    </div>
+                                                    <div *ngSwitchCase="'time'">
+                                                        <label>{{data.caption}}</label>
+                                                        <p-calendar (onSelect)="onSelectTime($event,data.id)"
+                                                            [(ngModel)]="item.obj[data.id]" timeOnly="true">
+                                                        </p-calendar>
+                                                    </div>
+                                                    <div *ngSwitchCase="'date'">
+                                                        <label>{{data.caption}}</label>
+                                                        <p-calendar [(ngModel)]="item.obj[data.id]" [showIcon]="true"
+                                                            [monthNavigator]="true" [yearNavigator]="true"
+                                                            yearRange="1980:2030" [showTime]="false"
+                                                            dateFormat="yy-mm-dd" placeholder="yyyy-MM-dd">
+                                                        </p-calendar>
+                                                    </div>
+                                                    <div *ngSwitchCase="'textarea'">
+                                                        <label>{{data.caption}}</label>
+                                                        <textarea [(ngModel)]="item.obj[data.id]" rows="3" cols="10"
+                                                            pInputTextarea style="{{data.style}}"></textarea>
+                                                    </div>
+                                                    <div *ngSwitchCase="'combobox'">
+                                                        <label>{{data.caption}}</label>
+                                                        <p-autoComplete [(ngModel)]="item.obj[data.id]"
+                                                            [suggestions]="item.objcbo[data.id]"
+                                                            (completeMethod)="filterAutoComplete($event,data)"
+                                                            field="text" [dropdown]="true"
+                                                            placeholder="{{data.caption}}">
+                                                        </p-autoComplete>
+                                                    </div>
+                                                    <div *ngSwitchCase="'img'">
+                                                        <div class="p-col-12 p-md-12">
+                                                            <div class="p-col-12 p-md-12">
+                                                                <label>{{data.caption}}</label>
+                                                            </div>
+                                                            <div class="p-col-12 p-md-12">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div *ngSwitchCase="'image'">
+                                                        <div class="p-col-12 p-md-12">
+                                                            <img src="{{data.caption}}" style="{{data.style}}"
+                                                                alt="Image">
+                                                        </div>
+                                                    </div>
+                                                    <div *ngSwitchDefault>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Setting Baru" leftIcon="pi pi-sitemap">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Kelompok </label>
+                                <input type="text" [(ngModel)]="add.kelompok" pInputText placeholder="Kelompok " />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Nama Field </label>
+                                <input type="text" [(ngModel)]="add.namaField" pInputText placeholder="Nama Field " />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Type Field </label>
+                                <p-dropdown [options]="listType" [(ngModel)]="add.typeField" [filter]="true"
+                                    [showClear]="true" placeholder="Type Field" optionLabel="name" appendTo="body"
+                                    (onChange)="setTextCombo(add.typeField)">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Tabel Relasi </label>
+                                <p-autoComplete [(ngModel)]="add.tabelRelasi" [suggestions]="listTable"
+                                    (completeMethod)="filterTable($event)" field="table_name" [dropdown]="true"
+                                    placeholder="Tabel" (onSelect)="getField(add.tabelRelasi)">
+                                </p-autoComplete>
+
+                            </div>
+
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Field Key Tabel Relasi </label>
+                                <p-dropdown [options]="listFieldName" [(ngModel)]="add.fieldKeyTable" [filter]="true"
+                                    [showClear]="true" placeholder="Field Key" optionLabel="column_name"
+                                    optionKey="column_name" appendTo="body" (onChange)="setSourceNilaiFiled($event)">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Nilai Field </label>
+                                <input type="text" [(ngModel)]="add.nilaiField" pInputText placeholder="Nilai Field "
+                                    *ngIf="!isList" />
+
+                                <p-dropdown [options]="listIdField" [(ngModel)]="add.nilaiField" [filter]="true"
+                                    [showClear]="true" placeholder="Nilai Field" optionLabel="name" *ngIf="isList"
+                                    appendTo="body" (onChange)="listIdField($event)">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-6">
+                                <label class="label" for="input">Keterangan Fungsi </label>
+                                <textarea [(ngModel)]="add.keteranganFungsi" rows="4" cols="30"
+                                    pInputTextarea></textarea>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-1 p-md-offset-10">
+                                <button pButton icon="pi pi-save" (click)="simpanNew()" label="Simpan"
+                                    class="p-button p-button-success p-mr-2" [disabled]="isSimpan"></button>
+                            </div>
+                            <div class="p-col-12 p-md-1">
+                                <button pButton icon="fa fa-refresh" (click)="batal()" label="Batal"
+                                    class="p-button  p-mr-2">
+                                </button>
+                            </div>
+                        </div>
+
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+        </div>
+    </div>
+</div>

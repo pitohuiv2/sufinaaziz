@@ -1,0 +1,265 @@
+<div class="p-col-12 p-fluid p-formgrid ">
+    <div class="p-grid">
+        <div class="p-col-12 p-md-1">
+            <a id="link-kios" (click)="goBack()" pTooltip="Kembali Ke Menu Sebelumnya">
+                <span style="font-size:35px;" class="fa fa-arrow-left"></span>
+            </a>
+        </div>
+        <div class="p-col-12 p-md-10">
+            <h2 style="text-align: center"> Registration - Pasien {{url}} </h2>
+        </div>
+    </div>
+    <form [formGroup]="formGroup">
+        <div class="p-grid" style="margin-left: 0;margin-right: 0;">
+
+            <div class="p-col-12 p-md-6 p-md-offset-3" *ngIf="!isInfoPasien">
+                <div class="p-grid">
+                    <div class="p-col-12">
+                        <h5 style="text-align:center">SCAN KARTU BPJS ANDA ATAU MASUKAN NO KARTU BPJS ANDA </h5>
+                        <input type="text" formControlName="noRujukan" pInputText [matKeyboard]="'LOCALE_ID'"
+                            placeholder="No RM / No Rujukan / No Kartu" />
+                    </div>
+
+                    <!-- <div class="p-col-12">
+                    <div class="p-col-4"></div>
+                    <div class="p-col-2">
+                        <p-radioButton name="group1" value="pcare" label=" PCare" formControlName="pCare"
+                            inputId="opt1">
+                        </p-radioButton>
+                    </div>
+                    <div class="p-col-2">
+                        <p-radioButton name="group1" value="rs" label=" Rumah Sakit" formControlName="pCare"
+                            inputId="opt2">
+                        </p-radioButton>
+                    </div>
+                </div> -->
+                    <div class="p-col-12">
+                        <h5 style="text-align:center;">SILAHKAN PILIH ASAL RUJUKAN ANDA DARI : </h5>
+                    </div>
+                    <div class="p-col-12 p-md-3 p-field-checkbox" *ngFor="let items of listRadio">
+                        <p-radioButton [inputId]="items.id" [value]="items.id" formControlName="pCare">
+                        </p-radioButton>
+                        <label [for]="items.id">{{items.name}}</label>
+                    </div>
+                    <!-- <input class="input-no-cm jQKeyboard" type="text" placeholder="Nomor KTP" [matKeyboard]="'Azərbaycanca'" >  -->
+                </div>
+                <div style="text-align:center">
+                    <!-- <button mat-raised-button color="accent" class="btnTemplate" style="color:white"
+                    (click)="getNoRujukan()">Selanjutnya
+                </button> -->
+                    <button (click)="getNoRujukan()" pButton pRipple type="button" label="Selanjutnya"
+                        icon="pi pi-arrow-circle-right" class="p-button p-mr-2 p-mb-2"></button>
+                </div>
+                <br>
+                <br>
+                <br>
+                <h5 style="text-align:center"> *NO KARTU AKAN MENCARI NOMOR RUJUKAN TERBARU</h5>
+            </div>
+
+            <div class="centers" style="margin-top: 15px;" *ngIf="isInfoPasien">
+                <div class="p-col-12">
+                    <h3 class="no-cm" *ngIf="!isSuksesSEP">No. Rujukan : {{item.noKunjungan}}</h3>
+                    <h3 class="no-cm" *ngIf="isSuksesSEP">No. SEP : {{dataSEP.nosep}}</h3>
+                </div>
+
+
+                <div class="row">
+                    <div class="p-grid" *ngIf="listRujukan.length > 0">
+                        <div class="p-col-12 p-md-4 p-md-offset-4">
+                            <p-dropdown formControlName="multiRujukan" (onChange)="changeNoRujukan($event)"
+                                [options]="listRujukan" [filter]="true">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="p-grid">
+
+                        <div class="p-col-12 p-md-4">
+                            <div class="detail-pasien">
+                                <p class="text-regular">No RM</p>
+                                <p class="text-bold"> {{item.peserta.mr.noMR}}</p>
+                            </div>
+                            <div class="detail-pasien">
+                                <p class="text-regular">Nama Pasien</p>
+                                <p class="text-bold"> {{item.peserta.nama}}</p>
+                            </div>
+                            <div class="detail-pasien">
+                                <p class="text-regular">Jenis Kelamin</p>
+                                <p class="text-bold"> {{item.peserta.sex}}</p>
+                            </div>
+                            <div class="detail-pasien">
+                                <p class="text-regular">No. Identitas</p>
+                                <p class="text-bold"> {{item.peserta.nik}}</p>
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-md-4">
+                            <div class="detail-pasien">
+                                <p class="text-regular">Tanggal Lahir</p>
+                                <p class="text-bold"> {{item.peserta.tglLahir}}</p>
+                            </div>
+                            <div class="detail-pasien">
+                                <p class="text-regular">Umur</p>
+                                <p class="text-bold"> {{item.peserta.umur.umurSekarang}}</p>
+                            </div>
+                            <div class="detail-pasien">
+                                <p class="text-regular">Jenis Peserta</p>
+                                <p class="text-bold">{{item.peserta.jenisPeserta.keterangan}}</p>
+                            </div>
+                            <div class="detail-pasien">
+                                <p class="text-regular">No. Telpon</p>
+                                <p class="text-bold"> {{item.peserta.mr.noTelepon}}</p>
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-md-4">
+                            <div class="detail-pasien">
+                                <p class="text-regular">Tanggal Kunjungan</p>
+                                <p class="text-bold"> {{item.tglKunjungan}}</p>
+                            </div>
+                            <div class="detail-pasien">
+                                <p class="text-regular">No Kartu</p>
+                                <p class="text-bold">{{item.peserta.noKartu}}</p>
+                            </div>
+                            <div class="detail-pasien">
+                                <p class="text-regular">Asal Rujukan</p>
+                                <p class="text-bold"> {{item.provPerujuk.nama}}</p>
+                            </div>
+
+                            <div class="detail-pasien">
+                                <p class="text-regular">Diagnosa</p>
+                                <p class="text-bold"> {{item.diagnosa.kode}}</p>
+                            </div>
+                        </div>
+                        <div class="p-col-12 p-md-4 p-md-offset-4" style="margin-top:-30px">
+                            <div class="detail-pasien">
+                                <p class="text-regular">Anda Dirujuk Ke</p>
+                                <p class="text-bold" style="color: blue;"> {{item.poliRujukan.nama}}</p>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="p-grid">
+
+                        <div class="p-col-12 p-md-2 p-md-offset-2">
+                            <p class="text-regular">Tujuan Kunjungan</p>
+                            <p-dropdown formControlName="tujuanKunj" [options]="listTujuanKun" [filter]="true">
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-2 "
+                            *ngIf="formGroup.get('tujuanKunj').value !='' && formGroup.get('tujuanKunj').value.kode != '0' ">
+                            <p class="text-regular">No.Surat Kontrol/SKDP</p>
+                            <input type="text" formControlName="noSKDP" pInputText [matKeyboard]="'LOCALE_ID'"
+                                placeholder="No Surat Kontrol" />
+                        </div>
+
+                        <div class="p-col-12 p-md-2"
+                            *ngIf="formGroup.get('tujuanKunj').value !='' && formGroup.get('tujuanKunj').value.kode != '0' ">
+                            <p class="text-regular">DPJP Kontrol</p>
+                            <p-dropdown formControlName="dokterDPJP" [options]="listDokter" [filter]="true">
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-2"
+                            *ngIf="formGroup.get('tujuanKunj').value !='' && formGroup.get('tujuanKunj').value.kode == '1' ">
+                            <p class="text-regular">Flag Procedure</p>
+                            <p-dropdown formControlName="flagProcedure" [options]="listFlag" [filter]="true" (onChange)="changeFlag($event)">
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-2" *ngIf="formGroup.get('flagProcedure').value!='' && formGroup.get('flagProcedure').value!=null">
+                            <p class="text-regular">Penunjang</p>
+                            <p-dropdown formControlName="kdPenunjang" [options]="listPenunjang" [filter]="true">
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-2"
+                            *ngIf="formGroup.get('tujuanKunj').value !='' && formGroup.get('tujuanKunj').value.kode == '2'  ">
+                            <p class="text-regular">Assesment</p>
+                            <p-dropdown formControlName="assesmentPel" [options]="listAsses" [filter]="true">
+                            </p-dropdown>
+                        </div>
+                    </div>
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-2 p-md-offset-4">
+                            <p-dropdown *ngIf="showPasca" formControlName="poliTujuan" [options]="listPoli"
+                                [filter]="true" (onChange)="changePoli($event)">
+                            </p-dropdown>
+                            <button *ngIf="!showPasca" (click)="showGantiPoli = true" pButton pRipple type="button"
+                                label="{{ tests }}" icon="pi pi-bookmark"
+                                class="p-button p-button-danger p-mr-2 p-mb-2"></button>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <button (click)="showGantiDokter = true" pButton pRipple type="button" label="{{ test }}"
+                                icon="pi pi-user-edit" class="p-button p-button-danger p-mr-2 p-mb-2"></button>
+                        </div>
+                        <div class="ui-g-4" *ngIf="showDPJP">
+                            <p-dropdown formControlName="dokterDPJPMelayani" [options]="listDokterMelayani"
+                                [filter]="true">
+                            </p-dropdown>
+                        </div>
+                        <!-- <div class="p-col-12 p-md-4 p-md-offset-2">
+                            <p-dropdown formControlName="poliTujuan" [options]="listPoli" [filter]="true"
+                                (onChange)="changePoli($event)">
+                            </p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-4">
+                            <p-dropdown formControlName="dokterDPJP" [options]="listDokter" [filter]="true">
+                            </p-dropdown>
+                            <p-checkbox label=" Semua DPJP" binary="true" style="margin-top: 10px;"
+                                formControlName="allDPJP" (onChange)="changeClick()"></p-checkbox>
+                        </div> -->
+                    </div>
+                    <div class="p-col-12 p-md-4 p-md-offset-4">
+                        <div style="text-align:center" *ngIf="!showCetak">
+                            <button (click)="insertSep()" pButton pRipple type="button" label="Simpan"
+                                icon="pi pi-arrow-circle-right" class="p-button p-button-info p-mr-2 p-mb-2"
+                                pTooltip="Pilih Simpan untuk generate No.SEP "></button>
+
+                        </div>
+
+                        <div class="p-col-12 p-md-12 p-lg-12" *ngIf="showCetak">
+                            <div class="p-col-12 p-md-12 p-lg-12">
+                                <button (click)="cetakSep()" pButton pRipple type="button" label=" Cetak SEP"
+                                    icon="pi pi-print" class="p-button p-button-success p-mr-2 p-mb-2"></button>
+
+                            </div>
+                            <div class="p-col-12 p-md-12 p-lg-12">
+                                <button (click)="cetakAntrian()" pButton pRipple type="button" label="Cetak Nomor
+                                Antrian" icon="pi pi-print" class="p-button p-button-warning p-mr-2 p-mb-2"></button>
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
+<p-dialog header="Pilih DPJP yang Melayani" [(visible)]="showGantiDokter" [modal]="true" [maximizable]="true"
+    [draggable]="true" [resizable]="true" [style]="{width: '1000px', minWidth: '1000px'}">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+
+            <div class="p-col-12 p-md-3" *ngFor="let button of buttons">
+                <button (click)="ChangeScreen(button)" [class.selected]="CurrentPage == button.label" pButton pRipple
+                    type="button" label="{{ button.label }}" icon="pi pi-bookmark"
+                    class="p-button p-button-help p-buttonwrap p-mr-2 p-mb-2"></button>
+
+            </div>
+
+        </div>
+    </div>
+</p-dialog>
+
+
+<p-dialog header="Pilih Poli Tujuan" [(visible)]="showGantiPoli" [modal]="true" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [style]="{width: '1000px', minWidth: '1000px'}">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+
+            <div class="p-col-12 p-md-3" *ngFor="let button of buttonss">
+                <button (click)="ChangeScreens(button)" [class.selected]="CurrentPages == button.label" pButton pRipple
+                    type="button" label="{{ button.label }}" icon="pi pi-user-edit"
+                    class="p-button p-button-help p-buttonwrap p-mr-2 p-mb-2"></button>
+
+
+            </div>
+        </div>
+    </div>
+</p-dialog>

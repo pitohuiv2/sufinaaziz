@@ -1,0 +1,134 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Master Kota dan Kabupaten</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <!-- <p-tabView (onChange)="handleChangeTab($event)"> -->
+                    <!-- <p-tabPanel header="Instalasi" leftIcon="fa fa-users"> -->
+                        <div class="p-grid">
+
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                        placeholder="Pencarian " />
+                                </span>
+                            </div>
+
+                            <div class="p-col-12">
+                                <p-table #dt [columns]="column" [value]="dataSource" [(selection)]="selectedGrid"
+                                    styleClass="p-datatable-customers" [rowHover]="true" [rows]="10"
+                                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                    [globalFilterFields]="['namauser','namalengkap','kelompokuser']"
+                                    selectionMode="single">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex">
+                                            <button type="button" pButton pRipple icon="pi pi-plus" (click)="tambahKotaKab()"
+                                                class="p-button-success p-mr-2" pTooltip="Tambah "
+                                                tooltipPosition="bottom">
+                                            </button>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th style="width: 80px"></th>
+                                            <th *ngFor="let col of columns" pSortableColumn="{{col.field}}"
+                                                style="width: {{col.width}}">
+                                                {{col.header}}
+                                                <p-sortIcon field="{{col.field}}">
+                                                </p-sortIcon>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td style="width: 80px">
+                                                <button pButton type="button" icon="pi pi-user-edit"
+                                                    class="p-button-rounded p-mr-2" pTooltip="Edit " label=""
+                                                    (click)="editKabKota(rowData)"></button>
+                                                <button pButton type="button" icon="pi pi-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2" pTooltip="Hapus "
+                                                    label="" (click)="hapuskabkota(rowData)"></button>
+                                            </td>
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                {{rowData[column.field]}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    <!-- </p-tabPanel> -->
+                    <!-- ------------------------------------selesai instalsi--------------------------- -->
+               
+                <!-- </p-tabView> -->
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="Tambah Kota/Kab" [(visible)]="pop_KotaKab" [modal]="true" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [style]="{width: '900px', minWidth: '900px'}">
+    <div class="p-fluid p-grid ">
+        <div class="p-col-12 p-md-12">
+            <p-panel header="Detail Kota Kabupaten" [toggleable]="true">
+                <div class="p-grid">
+
+                    <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">Id Kota/Kab </label>
+                        <input type="text" [(ngModel)]="item.idkotakab" pInputText placeholder="Kode Kota/Kab" disabled="" />
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">Provinsi</label>
+                        <p-dropdown [options]="listProvinsi" [(ngModel)]="item.namapropinsi" [filter]="true"
+                            [showClear]="true" placeholder="Provinsi" optionLabel="namapropinsi"
+                            dataKey="id">
+                        </p-dropdown>
+                    </div>
+                    <!-- <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">Provinsi</label>
+                        <p-dropdown [options]="listProvinsi" [(ngModel)]="item.namapropinsi" [filter]="true"
+                            [showClear]="true" placeholder="Provinsi" optionLabel="namapropinsi" appendTo="body">
+                        </p-dropdown>
+                    </div> -->
+                    <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">Kota/Kabupaten </label>
+                        <input type="text" [(ngModel)]="item.kotakab" pInputText placeholder="Kota Kabupaten " />
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">Status Aktif</label>
+                        <p-dropdown [options]="listStatus" [(ngModel)]="item.status" [filter]="true"
+                            [showClear]="true" placeholder="Status " optionLabel="status" dataKey="id">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">Kode External </label>
+                        <input type="text" [(ngModel)]="item.external" pInputText
+                            placeholder="Nama External " />
+                    </div>
+                     <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">Longitude </label>
+                        <input type="text" [(ngModel)]="item.longitude" pInputText
+                            placeholder="Latitude " />
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">Latitude </label>
+                        <input type="text" [(ngModel)]="item.latitude" pInputText
+                            placeholder="Latitude" />
+                    </div>                
+
+                </div>
+            </p-panel>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton icon="pi pi-save" (click)="simpanProvinsi()" label="Simpan" class="p-button p-button-success p-mr-2"
+            ></button>
+        <button pButton icon="fa fa-refresh" (click)="pop_KotaKab=false" label="Batal" class="p-button  p-mr-2">
+        </button>
+    </ng-template>
+</p-dialog>
+

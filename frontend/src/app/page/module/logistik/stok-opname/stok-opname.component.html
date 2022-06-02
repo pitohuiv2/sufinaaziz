@@ -1,0 +1,145 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog>
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Stok Opname</h4>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Ruangan</label>
+                    <p-dropdown [options]="listRuangan" [(ngModel)]="item.dataRuangan" [filter]="true"
+                        [showClear]="true" placeholder="Ruangan" optionLabel="namaruangan"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Detail Jenis Produk</label>
+                    <p-dropdown [options]="listDetailJenisProduk" [(ngModel)]="item.dataDjenisProduk" [filter]="true"
+                        [showClear]="true" placeholder="Detail Jenis Produk" optionLabel="detailjenisproduk"
+                        (onChange)="isiJenisProduk()">
+                    </p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Jenis Produk</label>
+                    <p-dropdown [options]="listJenisBarang" [(ngModel)]="item.dataJenisBarang" [filter]="true"
+                        [showClear]="true" placeholder="Jenis Produk" optionLabel="jenisproduk"
+                        (onChange)="isiKelompokProduk()"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Kelompok Produk</label>
+                    <p-dropdown [options]="listKelompokBarang" [(ngModel)]="item.dataKelompokBarang" [filter]="true"
+                        [showClear]="true" placeholder="Kelompok Produk" optionLabel="kelompokproduk"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-3">
+                    <label class="label" for="input">Nama Produk</label>
+                    <input type="text" [(ngModel)]="item.namaProduk" pInputText (keyup.enter)="cari()"
+                        placeholder="Nama Barang" />
+                </div>
+                <div class="p-col-12 p-md-1">
+                    <div class="p-col-12 p-md-12" style="margin-top: 10px;">
+                        <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <p-table [value]="dataTable" dataKey="kodeProduk" [paginator]="true" [showCurrentPageReport]="false"
+                totalRecords="totalRecords" [rows]="totalRecords" [rowsPerPageOptions]="[totalRecords]"
+                currentPageReportTemplate="Showing 1 to {totalRecords} of {totalRecords} entries">
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex">
+                        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                            class="p-button-success p-mr-2" pTooltip="Export Excel" tooltipPosition="bottom"></button>
+                        <p-fileUpload #fileUpload mode="basic" name="demo[]" chooseLabel="Import" maxFileSize="1000000"
+                            (onUpload)="onBasicUpload($event)" (onSelect)="onSelect($event)"
+                            pTooltip="Import File sesuai data Excel yang di Export dari Table Ini" class="p-mr-2">
+                        </p-fileUpload>
+                        <button *ngIf="item.namaFile!=undefined" pButton pRipple icon="pi pi-undo" (click)="reset()"
+                            class="p-button-danger p-button-success" pTooltip="Reset File Upload" label=""></button>
+                            <button type="button" pButton pRipple icon="pi pi-sliders-h" (click)="daftarSo()"
+                            class="p-button-warning p-mr-2" pTooltip="Daftar Stok Opname" tooltipPosition="bottom"></button>
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header">
+                    <tr>
+                        <th rowspan="2">Kode Produk</th>
+                        <th rowspan="2">Nama Produk</th>
+                        <th style="text-align: center;" colspan="3">Saldo</th>
+                        <th rowspan="2">Satuan</th>
+                    </tr>
+                    <tr>
+                        <th>Sistem</th>
+                        <th>Real</th>
+                        <th>Selisih</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-item>
+                    <tr>
+                        <td>{{item.kodeProduk}}</td>
+                        <td>{{item.namaProduk}}</td>
+                        <td>{{item.qtyProduk}}</td>
+
+                        <td pEditableColumn [ngClass]="'row-header'">
+                            <p-cellEditor>
+                                <ng-template pTemplate="input">
+                                    <input pInputText type="number" [(ngModel)]="item.stokReal"
+                                        (input)="onChange(item,item.stokReal)" required>
+                                </ng-template>
+                                <ng-template pTemplate="output">
+                                    {{item.stokReal}}
+                                </ng-template>
+                            </p-cellEditor>
+                        </td>
+                        <td>{{item.selisih}}</td>
+                        <td>{{item.satuanStandar}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-1 p-md-offset-10">
+                    <button pButton type="submit" icon="pi pi-save" (click)="save()" class="p-button-success"
+                        [disabled]="!isSimpan" label="Simpan" pTooltip="Simpan Stok Opname"></button>
+                </div>
+                <div class="p-col-12 p-md-1">
+                    <button pButton type="submit" icon="fa fa-refresh" (click)="cancel()" class="p-button-danger"
+                        label="Batal" pTooltip="Reset Data"></button>
+                </div>
+            </div>
+            <div class="p-grid" *ngIf="isTeuAya">
+                <div class="p-col-12 p-md-12">
+                    <p-table [value]="dataSourceTeuAya" dataKey="isTeuAya">
+                        <ng-template pTemplate="caption">
+                            <div class="p-d-flex">
+                                <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel2()"
+                                    class="p-button-success p-mr-2" pTooltip="XLS" tooltipPosition="bottom"></button>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th rowspan="2">Kode Produk</th>
+                                <th rowspan="2">Nama Produk</th>
+                                <th style="text-align: center;" colspan="3">Saldo</th>
+                                <th rowspan="2">Satuan</th>
+                            </tr>
+                            <tr>
+                                <th>Sistem</th>
+                                <th>Real</th>
+                                <th>Selisih</th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-item>
+                            <tr>
+                                <td>{{item.kodeProduk}}</td>
+                                <td>{{item.namaProduk}}</td>
+                                <td>{{item.qtyProduk}}</td>
+                                <td>{{item.stokReal}}</td>
+                                <td>{{item.selisih}}</td>
+                                <td>{{item.satuanStandar}}</td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

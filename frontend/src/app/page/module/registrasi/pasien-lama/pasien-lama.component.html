@@ -1,0 +1,236 @@
+<!-- <p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog> -->
+<p-confirmPopup></p-confirmPopup>
+
+<div class="p-fluid p-formgrid ">
+  <div class="card card-w-title">
+    <h4>Pasien</h4>
+    <div class="p-grid">
+
+      <div class="p-col-12 p-md-1 p-md-offset-1">
+        <label class="label" for="input">No RM </label>
+        <input type="text" [(ngModel)]="item.noRM" pInputText (keyup.enter)="cari()" placeholder="No Rekam Medis" />
+      </div>
+      <div class="p-col p-md-2">
+        <label class="label" for="input">Nama Pasien </label>
+        <input type="text" [(ngModel)]="item.namaPasien" pInputText (keyup.enter)="cari()" placeholder="Nama Pasien" />
+      </div>
+      <div class="p-col-12 p-md-1">
+        <label class="label" for="input">NIK </label>
+        <input type="text" [(ngModel)]="item.nik" pInputText (keyup.enter)="cari()" placeholder="NIK" />
+      </div>
+      <div class="p-col-12 p-md-1">
+        <label class="label" for="input">No BPJS </label>
+        <input type="text" [(ngModel)]="item.noBPJS" pInputText (keyup.enter)="cari()" placeholder="No BPJS " />
+      </div>
+      <div class="p-col-12 p-md-2">
+        <label class="label" for="input">Tgl Lahir </label>
+        <p-calendar [(ngModel)]="item.tglLahir" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
+          yearRange="1980:2030" [showTime]="false" dateFormat="dd-mm-yy">
+        </p-calendar>
+      </div>
+      <div class="p-col-12 p-md-2">
+        <label class="label" for="input">Alamat </label>
+        <input type="text" [(ngModel)]="item.alamat" pInputText (keyup.enter)="cari()" placeholder="Alamat " />
+      </div>
+      <div class="p-col-12 p-md-1" style="margin-top:15px">
+        <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+      </div>
+      <div class="p-col-12 p-md-1" style="margin-top:15px">
+        <button pButton icon="pi pi-user-plus" pTooltip="Registrasi Pasien Baru" routerLink="/pasien-baru/-/-/-"
+          label="Pasien Baru"></button>
+        <!-- <p-splitButton label="" icon="pi pi-ellipsis-v"  [model]="listBtn"></p-splitButton> -->
+      </div>
+    </div>
+    <div class="p-col-12">
+      <p-table #dt [value]="dataTable" [(selection)]="selected" styleClass="p-datatable-customers" [rowHover]="true"
+        [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+        [totalRecords]="totalRecords" [globalFilterFields]="['nocm','namapasien','nobpjs','alamatlengkap']"
+        [lazy]="true" (onLazyLoad)="loadLazy($event)" scrollable="true" [pageLinks]="5"
+        (onRowSelect)="onRowSelect($event)">
+        <ng-template pTemplate="header">
+          <tr>
+
+            <th style="width: 180px">#</th>
+            <th style="width: 30px">No</th>
+            <th style="width: 100px" pSortableColumn="nocm">
+   
+              <div class="p-d-flex p-jc-between p-ai-center">
+                No RM
+                <p-sortIcon field="nocm"></p-sortIcon>
+                <p-columnFilter type="text" field="nocm" display="menu" class="p-ml-auto"></p-columnFilter>
+              </div>
+            </th>
+            <th style="width: 150px">NIK</th>
+            <th style="width: 130px">No BPJS</th>
+            <th style="width: 250px">Nama Pasien</th>
+            <th style="width: 80px">Jenis Kelamin</th>
+            <th style="width: 100px">Nama Ayah Kandung </th>
+            <th style="width: 80px">Tgl Lahir</th>
+            <th style="width: 300px">Alamat</th>
+            <th style="width: 80px">No Hp</th>
+            <th style="width: 80px">Status</th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex+1">
+          <tr>
+            <td style="width: 180px">
+              <button pButton type="button" icon="pi pi-trash" class="p-button-rounded p-button-danger p-mr-2"
+                pTooltip="Hapus Data" label="" (click)="confirm($event,item)"></button>
+              <button pButton type="button" icon="pi pi-user-edit" class="p-button-rounded  p-mr-2" (click)="edit(item)"
+                pTooltip="Edit Pasien" label=""></button>
+              <button pButton type="button" icon="pi pi-list" class="p-button-rounded p-mr-2" (click)="riwayat(item)"
+                pTooltip="Riwayat Registrasi" label=""></button>
+              <button pButton type="button" icon="pi pi-arrow-right" class="p-button-rounded  p-mr-2"
+                pTooltip="Registrasi" (click)="registrasi(item)" label=""></button>
+            </td>
+            <td style="width: 30px"><span class="p-column-title"> No</span>{{index}}</td>
+            <td style="width: 100px"><span class="p-column-title"> No RM</span>{{item.nocm}}</td>
+            <td style="width: 150px"><span class="p-column-title"> NIK</span>{{item.noidentitas}}</td>
+            <td style="width: 130px"><span class="p-column-title"> No BPJS</span>{{item.nobpjs}}</td>
+            <td style="width: 250px"><span class="p-column-title"> Nama Pasien</span>{{item.namapasien}}</td>
+            <td style="width: 80px"><span class="p-column-title"> JK</span>{{item.jeniskelamin}}</td>
+            <td style="width: 100px"><span class="p-column-title"> Nama Ayah</span>{{item.namaayah}}</td>
+            <td style="width: 80px"><span class="p-column-title"> Tgl Lahir</span>{{item.tgllahir}}</td>
+            <td style="width: 300px"><span class="p-column-title"> Alamat</span>{{item.alamatlengkap}}</td>
+            <td style="width: 80px"><span class="p-column-title"> No Hp</span>{{item.nohp}}</td>
+            <td style="width: 80px"><span class="p-column-title"> Status</span>
+              <p-tag severity="{{item.color}}" value="{{item.statuspasien}}"></p-tag>
+            </td>
+            
+          </tr>
+        </ng-template>
+      </p-table>
+    </div>
+    <!-- <div class="p-grid">
+      <div class="p-col-12 p-md-2 p-md-offset-4">
+        <button pButton type="button" icon="pi pi-trash" class="ui-button-rounded" (click)="tambah()"
+          pTooltip="Hapus Data" label=""></button>
+      </div>
+      <div class="p-col-12 p-md-2">
+        <button pButton type="button" icon="pi pi-user-edit" class="ui-button-rounded" (click)="tambah()"
+          pTooltip="Edit Pasien" label=""></button>
+      </div>
+      <div class="p-col-12 p-md-2">
+        <button pButton type="button" icon="pi pi-list" class="ui-button-rounded" (click)="tambah()"
+          pTooltip="Riwayat Registrasi" label=""></button>
+      </div>
+      <div class="p-col-12 p-md-2">
+        <button pButton type="button" icon="pi pi-arrow-right" class="ui-button-success" pTooltip="Registrasi"
+          (click)="kand()" label=""></button>
+      </div>
+    </div> -->
+  </div>
+</div>
+
+
+<p-dialog header="Riwayat Registrasi" [(visible)]="pop_riwayataReg" [modal]="true" [style]="{width: '50vw'}"
+  [maximizable]="true" [baseZIndex]="10000" [draggable]="false" [resizable]="false">
+  <div class="p-fluid p-formgrid ">
+    <div class="p-grid">
+
+      <div class="p-col-12 p-md-2">
+        <label class="label" for="input">No Rekam Medis </label>
+        <input type="text" [(ngModel)]="itemD.noRM" pInputText placeholder="No Rekam Medis" disabled />
+      </div>
+      <div class="p-col p-md-3">
+        <label class="label" for="input">Nama Pasien </label>
+        <input type="text" [(ngModel)]="itemD.namaPasien" pInputText placeholder="Nama Pasien" disabled />
+      </div>
+      <div class="p-col-12 p-md-2">
+        <label class="label" for="input">Tgl Lahir </label>
+        <input type="text" [(ngModel)]="itemD.tglLahir" pInputText placeholder="tgl Lahir" disabled />
+      </div>
+      <div class="p-col-12 p-md-2">
+        <label class="label" for="input">No Registrasi </label>
+        <input type="text" [(ngModel)]="item.noRegistrasi" pInputText placeholder="No Registrasi " />
+      </div>
+      <div class="p-col-12 p-md-1" style="margin-top:15px">
+        <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="loadDataRiwayat()"></button>
+      </div>
+    </div>
+    <div class="p-col-12">
+      <p-table [value]="dataitemDegistrasi" styleClass="p-datatable-customers" [rows]="20"
+        [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true"
+        [pageLinks]="5" dataKey="noregistrasi">
+        <ng-template pTemplate="header">
+          <tr>
+            <th style="width: 3rem"></th>
+            <th style="width: 30px">No</th>
+            <th style="width: 100px"> Tgl Registrasi</th>
+            <th style="width: 100px"> No Registrasi</th>
+            <th style="width: 200px"> Ruangan</th>
+            <th style="width: 100px"> Jenis Pasien </th>
+            <th style="width: 100px"> Dokter</th>
+            <th style="width: 100px"> Tgl Pulang </th>
+            <th style="width: 80px"> Lama Rawat</th>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-item let-index="rowIndex+1" let-expanded="expanded">
+          <tr>
+            <td>
+              <button type="button" pButton pRipple [pRowToggler]="item"
+                class="p-button-text p-button-rounded p-button-plain"
+                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+            </td>
+            <td style="width: 30px">{{index}}</td>
+            <td style="width: 100px">{{item.tglregistrasi}}</td>
+            <td style="width: 100px">{{item.noregistrasi}}</td>
+            <td style="width: 200px">{{item.namaruangan}}</td>
+            <td style="width: 100px">{{item.kelompokpasien}}</td>
+            <td style="width: 100px">{{item.dokter}}</td>
+            <td style="width: 100px">{{item.tglpulang}}</td>
+            <td style="width: 80px">{{item.lamarawat}}</td>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="rowexpansion" let-product>
+          <tr>
+            <td colspan="9">
+              <div class="p-p-3">
+                <p-table [value]="product.details" dataKey="id">
+                  <ng-template pTemplate="header">
+          <tr>
+
+
+            <th>Ruangan</th>
+            <th>Dokter</th>
+            <th>kelompokpasien</th>
+            <th>Kamar</th>
+            <th>Bed</th>
+            <th>Tgl Masuk </th>
+            <th>Tgl Keluar </th>
+            <th>Diagnosa </th>
+
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-order>
+          <tr>
+            <td>{{order.namaruangan}}</td>
+            <td>{{order.namadokter}}</td>
+            <td>{{order.namakelas}}</td>
+            <td>{{order.namakamar}}</td>
+            <td>{{order.nobed}}</td>
+            <td>{{order.tglmasuk}}</td>
+            <td>{{order.tglkeluar}}</td>
+            <td>
+              <span  *ngFor="let diag of order.kddiagnosa" [class]="'order-badge order-instock'">
+                {{diag}}
+              </span>
+            </td>
+
+          </tr>
+        </ng-template>
+
+      </p-table>
+    </div>
+    </td>
+    </tr>
+    </ng-template>
+    </p-table>
+  </div>
+  </div>
+
+  <ng-template pTemplate="footer">
+    <p-button icon="pi pi-check" (click)="pop_riwayataReg=false" label="Tutup" styleClass="p-button-text"></p-button>
+  </ng-template>
+</p-dialog>

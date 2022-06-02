@@ -1,0 +1,19 @@
+<div class="p-grid" *ngIf="item.pasien.nocm != undefined">
+    <div class="p-col-12 p-md-12">
+        <p-panel header="Rekam Medis" [toggleable]="true">
+            <div class="p-grid">
+                <p-card header="" [style]="{width: '90px','height':'90px'}" styleClass="p-card-shadow">
+                    <ng-template pTemplate="header">
+                        <i class="pi pi-user" style="font-size: 50px;padding:20px;"></i>
+                    </ng-template>
+                </p-card>
+                <div class="p-col-12 p-md-3">
+                    <label class="label" for="input">No Rekam Medis </label>
+                    <input type="text" [(ngModel)]="item.pasien.nocm" pInputText placeholder="No Rekam Medis" disabled />
+                </div>
+
+
+            </div>
+        </p-panel>
+    </div>
+</div>

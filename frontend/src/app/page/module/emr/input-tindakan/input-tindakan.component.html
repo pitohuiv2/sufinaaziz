@@ -1,0 +1,361 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Tindakan</h4>
+        <div class="p-grid">
+            <div class="p-col-12" [class.p-md-3]="hideEMR">
+                <app-head-pasien *ngIf="hideEMR"> </app-head-pasien>
+            </div>
+            <div class="p-col-12" [class.p-md-9]="hideEMR">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-12">
+                        <p-panel header="Detail Tindakan" [toggleable]="true">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-3">
+                                    <p-checkbox [(ngModel)]="item.paket" binary="true" inputId="item.paket"
+                                        (onChange)="cekPaket(item.paket)">
+                                    </p-checkbox>
+                                    <label class="label" for="item.paket"> Paket</label>
+                                </div>
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-12">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-2">
+                                            <label class="label-required" for="input"> Tgl Pelayanan </label>
+                                            <p-calendar [(ngModel)]="item.tglPelayanan" [showIcon]="true"
+                                                [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                                [showTime]="true" dateFormat="yy-mm-dd" placeholder="Tgl Pelayanan"
+                                                hourFormat="24" [maxDate]="maxDateValue">
+                                            </p-calendar>
+                                        </div>
+                                        <div class="p-col-12 p-md-4">
+                                            <label class="label-required" for="input"> Pelayanan</label>
+                                            <!-- <p-autoComplete [(ngModel)]="item.namaProduk" [suggestions]="listProduk"
+                                                (completeMethod)="filterProduk($event)" field="namaproduk"
+                                                [dropdown]="true" placeholder="Filter Nama Pelayanan"
+                                                (onSelect)="getHargaTindakan()">
+                                            </p-autoComplete> -->
+                                            <p-autoComplete [(ngModel)]="item.namaProduk" [suggestions]="listProduk"
+                                            (completeMethod)="filterProduk($event)" field="namaproduk" [dropdown]="true"
+                                            (onSelect)="getHargaTindakan()" placeholder="Filter Pelayanan">
+                                            <ng-template let-item pTemplate="item">
+                                                <table class="country-item">
+                                                    <tr>
+                                                        <th>Deskripsi</th>
+                                                        <th>Harga</th>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>{{item.namaproduk}}</td>
+                                                        <td>{{item.hargasatuan}}</td>
+                                                    </tr>
+                                                </table>
+                                            </ng-template>
+                                        </p-autoComplete>
+                                        </div>
+                                        <div class="p-col-12 p-md-3">
+                                            <label class="label-required" for="input"> Harga</label>
+                                            <input type="text" [(ngModel)]="item.hargaTindakan" pInputText
+                                                placeholder="Harga Pelayanan" disabled />
+                                        </div>
+                                        <div class="p-col-12 p-md-2">
+                                            <label for="horizontal" class="label-required">Jumlah</label>
+                                            <p-inputNumber [(ngModel)]="item.jumlah" [showButtons]="true"
+                                                buttonLayout="horizontal" inputId="horizontal" spinnerMode="horizontal"
+                                                [step]="1" decrementButtonClass="p-button-danger"
+                                                incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus"
+                                                decrementButtonIcon="pi pi-minus">
+                                            </p-inputNumber>
+                                        </div>
+                                        <div class="p-col-12 p-md-1" style="margin-top: 15px;">
+                                            <p-checkbox [(ngModel)]="item.iscito" binary="true" inputId="item.iscito">
+                                            </p-checkbox>
+                                            <label class="label" for="item.iscito"> Cito</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-col-12">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-2">
+                                            <label class="label-required" for="input">Jenis Pelaksana </label>
+                                            <p-dropdown [options]="listJenisPelaksana" [(ngModel)]="item.jenisPelaksana"
+                                                [filter]="true" [showClear]="true" placeholder="Jenis Pelaksana"
+                                                optionLabel="jenispetugaspe"
+                                                (onChange)="getPegawaiByJenis(item.jenisPelaksana)">
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="p-col-12 p-md-4">
+                                            <label class="label-required" for="input">Petugas Pelaksana </label>
+                                            <p-multiSelect [options]="listPegawai" [(ngModel)]="item.petugasPelaksana"
+                                                defaultLabel="Pilih Petugas Pelaksana" optionLabel="namalengkap"
+                                                display="chip">
+                                            </p-multiSelect>
+                                        </div>
+
+                                        <div class="p-col-12 p-md-2" style="margin-top: 15px;">
+                                            <button pButton type="button" icon="pi pi-plus-circle"
+                                                class="p-button p-mr-2" (click)="showKeun(1)"
+                                                pTooltip="Tambah Petugas Pelaksana" label=""></button>
+                                            <!-- <button pButton type="button" icon="pi pi-times-circle"
+                                            class="p-button p-button-danger p-mr-2" (click)="hide()"
+                                            pTooltip="Hapus Petugas Pelaksana" label=""></button> -->
+                                        </div>
+                                        <div class="p-col-12 p-md-3" style="margin-top: 15px;">
+                                            <p-checkbox [(ngModel)]="item.paramedis" binary="true"
+                                                inputId="item.paramedis">
+                                            </p-checkbox>
+                                            <label class="label" for="item.paramedis"> Dilakukan Oleh Paramedis</label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-col-12" *ngIf="show1">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-2">
+                                            <label class="label-required" for="input">Jenis Pelaksana </label>
+                                            <p-dropdown [options]="listJenisPelaksana"
+                                                [(ngModel)]="item.jenisPelaksana1" [filter]="true" [showClear]="true"
+                                                placeholder="Jenis Pelaksana" optionLabel="jenispetugaspe"
+                                                (onChange)="getPegawaiByJenis(item.jenisPelaksana1)">
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="p-col-12 p-md-4">
+                                            <label class="label-required" for="input">Petugas Pelaksana </label>
+                                            <p-multiSelect [options]="listPegawai" [(ngModel)]="item.petugasPelaksana1"
+                                                defaultLabel="Pilih Petugas Pelaksana" optionLabel="namalengkap"
+                                                display="chip">
+                                            </p-multiSelect>
+                                        </div>
+
+                                        <div class="p-col-12 p-md-2" style="margin-top: 15px;">
+                                            <button pButton type="button" icon="pi pi-plus-circle"
+                                                class="p-button p-mr-2" (click)="showKeun(2)"
+                                                pTooltip="Tambah Petugas Pelaksana" label=""></button>
+                                            <button pButton type="button" icon="pi pi-times-circle"
+                                                class="p-button p-button-danger p-mr-2" (click)="hide(1)"
+                                                pTooltip="Hapus Petugas Pelaksana" label=""></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-col-12" *ngIf="show2">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-2">
+                                            <label class="label-required" for="input">Jenis Pelaksana </label>
+                                            <p-dropdown [options]="listJenisPelaksana"
+                                                [(ngModel)]="item.jenisPelaksana2" [filter]="true" [showClear]="true"
+                                                placeholder="Jenis Pelaksana" optionLabel="jenispetugaspe"
+                                                (onChange)="getPegawaiByJenis(item.jenisPelaksana2)">
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="p-col-12 p-md-4">
+                                            <label class="label-required" for="input">Petugas Pelaksana </label>
+                                            <p-multiSelect [options]="listPegawai" [(ngModel)]="item.petugasPelaksana2"
+                                                defaultLabel="Pilih Petugas Pelaksana" optionLabel="namalengkap"
+                                                display="chip">
+                                            </p-multiSelect>
+                                        </div>
+
+                                        <div class="p-col-12 p-md-2" style="margin-top: 15px;">
+                                            <button pButton type="button" icon="pi pi-plus-circle"
+                                                class="p-button p-mr-2" (click)="showKeun(3)"
+                                                pTooltip="Tambah Petugas Pelaksana" label=""></button>
+                                            <button pButton type="button" icon="pi pi-times-circle"
+                                                class="p-button p-button-danger p-mr-2" (click)="hide(2)"
+                                                pTooltip="Hapus Petugas Pelaksana" label=""></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-col-12" *ngIf="show3">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-2">
+                                            <label class="label-required" for="input">Jenis Pelaksana </label>
+                                            <p-dropdown [options]="listJenisPelaksana"
+                                                [(ngModel)]="item.jenisPelaksana3" [filter]="true" [showClear]="true"
+                                                placeholder="Jenis Pelaksana" optionLabel="jenispetugaspe"
+                                                (onChange)="getPegawaiByJenis(item.jenisPelaksana3)">
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="p-col-12 p-md-4">
+                                            <label class="label-required" for="input">Petugas Pelaksana </label>
+                                            <p-multiSelect [options]="listPegawai" [(ngModel)]="item.petugasPelaksana3"
+                                                defaultLabel="Pilih Petugas Pelaksana" optionLabel="namalengkap"
+                                                display="chip">
+                                            </p-multiSelect>
+                                        </div>
+
+                                        <div class="p-col-12 p-md-2" style="margin-top: 15px;">
+                                            <button pButton type="button" icon="pi pi-plus-circle"
+                                                class="p-button p-mr-2" (click)="showKeun(4)"
+                                                pTooltip="Tambah Petugas Pelaksana" label=""></button>
+                                            <button pButton type="button" icon="pi pi-times-circle"
+                                                class="p-button p-button-danger p-mr-2" (click)="hide(3)"
+                                                pTooltip="Hapus Petugas Pelaksana" label=""></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="p-col-12" *ngIf="show4">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-2">
+                                            <label class="label-required" for="input">Jenis Pelaksana </label>
+                                            <p-dropdown [options]="listJenisPelaksana"
+                                                [(ngModel)]="item.jenisPelaksana4" [filter]="true" [showClear]="true"
+                                                placeholder="Jenis Pelaksana" optionLabel="jenispetugaspe"
+                                                (onChange)="getPegawaiByJenis(item.jenisPelaksana4)">
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="p-col-12 p-md-4">
+                                            <label class="label-required" for="input">Petugas Pelaksana </label>
+                                            <p-multiSelect [options]="listPegawai" [(ngModel)]="item.petugasPelaksana4"
+                                                defaultLabel="Pilih Petugas Pelaksana" optionLabel="namalengkap"
+                                                display="chip">
+                                            </p-multiSelect>
+                                        </div>
+
+                                        <div class="p-col-12 p-md-2" style="margin-top: 15px;">
+                                            <button pButton type="button" icon="pi pi-plus-circle"
+                                                class="p-button p-mr-2" (click)="showKeun(5)"
+                                                pTooltip="Tambah Petugas Pelaksana" label=""></button>
+                                            <button pButton type="button" icon="pi pi-times-circle"
+                                                class="p-button p-button-danger p-mr-2" (click)="hide(4)"
+                                                pTooltip="Hapus Petugas Pelaksana" label=""></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="p-col-12" *ngIf="show5">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-2">
+                                            <label class="label-required" for="input">Jenis Pelaksana </label>
+                                            <p-dropdown [options]="listJenisPelaksana"
+                                                [(ngModel)]="item.jenisPelaksana5" [filter]="true" [showClear]="true"
+                                                placeholder="Jenis Pelaksana" optionLabel="jenispetugaspe"
+                                                (onChange)="getPegawaiByJenis(item.jenisPelaksana5)">
+                                            </p-dropdown>
+                                        </div>
+                                        <div class="p-col-12 p-md-4">
+                                            <label class="label-required" for="input">Petugas Pelaksana </label>
+                                            <p-multiSelect [options]="listPegawai" [(ngModel)]="item.petugasPelaksana5"
+                                                defaultLabel="Pilih Petugas Pelaksana" optionLabel="namalengkap"
+                                                display="chip">
+                                            </p-multiSelect>
+                                        </div>
+
+                                        <div class="p-col-12 p-md-2" style="margin-top: 15px;">
+                                            <!-- <button pButton type="button" icon="pi pi-plus-circle" class="p-button p-mr-2"
+                                                    (click)="showKeun(5)" pTooltip="Tambah Petugas Pelaksana" label=""></button> -->
+                                            <button pButton type="button" icon="pi pi-times-circle"
+                                                class="p-button p-button-danger p-mr-2" (click)="hide(5)"
+                                                pTooltip="Hapus Petugas Pelaksana" label=""></button>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2 p-md-offset-8">
+                                    <button pButton type="button" icon="pi pi-plus" class="p-button p-mr-2"
+                                        (click)="tambahTindakan()" pTooltip="Tambah Data Ke Table" label="Tambah"
+                                        [disabled]="isClosing"></button>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <button pButton type="button" icon="pi pi-trash"
+                                        class="p-button p-button-warning p-mr-2" (click)="hapusAll()"
+                                        pTooltip="Hapus Semua Tindakan" label="Hapus Semua"></button>
+                                </div>
+
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-12">
+                                    <p-table [value]="dataTindakan" styleClass="p-datatable-customers" [rows]="20"
+                                        [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                        [paginator]="true" scrollable="true" [pageLinks]="5" dataKey="rowNumber">
+                                        <ng-template pTemplate="header">
+                                            <tr>
+                                                <th style="width: 100px"></th>
+                                                <th style="width: 100px"> Tgl Pelayanan</th>
+                                                <th style="width: 250px"> Nama Pelayanan</th>
+                                                <th style="width: 200px"> Harga</th>
+                                                <th style="width: 100px"> Jumlah </th>
+                                                <th style="width: 150px"> Sub Total</th>
+                                                <th style="width: 100px"> Cito </th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-item let-index="rowIndex+1"
+                                            let-expanded="expanded">
+                                            <tr>
+                                                <td style="width: 100px">
+                                                    <button type="button" pButton pRipple [pRowToggler]="item"
+                                                        class="p-button-text p-button-rounded p-button-plain p-mr-1"
+                                                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'">
+                                                    </button>
+                                                    <button pButton type="button" icon="pi pi-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2"
+                                                    pTooltip="Hapus Data" label=""
+                                                    (click)="hapusItem(item)"></button>
+                                                </td>
+                                                <td style="width: 100px">{{item.tglPelayanan}}</td>
+                                                <td style="width: 250px">{{item.produk.namaproduk}}</td>
+                                                <td style="width: 200px">{{item.hargaSatuan}}</td>
+                                                <td style="width: 100px">{{item.qty}}</td>
+                                                <td style="width: 150px">{{item.subTotal}}</td>
+                                                <td style="width: 100px">{{item.statuscito}}</td>
+                                              
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="rowexpansion" let-details>
+                                            <tr>
+                                                <td colspan="8">
+                                                    <div class="p-p-3">
+                                                        <p-table [value]="details.pelayananpetugas" dataKey="id">
+                                                            <ng-template pTemplate="header">
+                                            <tr>
+                                                <th>Jenis Pelaksana</th>
+                                                <th>Nama Pelaksana</th>
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-it>
+                                            <tr>
+                                                <td>{{it.jenisPetugas.jenisPelaksana}}</td>
+                                                <td>{{it.namalengkap}}</td>
+                                            </tr>
+                                        </ng-template>
+
+                                    </p-table>
+                                </div>
+                                </td>
+                                </tr>
+                                </ng-template>
+                                <ng-template pTemplate="summary">
+                                    <tr>
+                                        <td rowspan="6">Grand Total : </td>
+                                        <td> {{item.totalAlls}}</td>
+                                    </tr>
+                                </ng-template>
+                                </p-table>
+                            </div>
+                    </div>
+                    </p-panel>
+                </div>
+
+                <div class="p-col-12 p-md-12">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-2 p-md-offset-8">
+                            <button pButton type="button" icon="pi pi-save" class="p-button p-mr-2" (click)="save()"
+                                pTooltip="Simpan" label="Simpan" [disabled]="isSimpan"></button>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <button pButton type="button" icon="pi pi-arrow-left"
+                                class="p-button p-button-danger p-mr-2" (click)="cancel()" pTooltip="Kembali"
+                                label="Batal"></button>
+                        </div>
+                        <div class="p-col-12 p-md-2" *ngIf="isNext">
+                            <p-splitButton label="Action" styleClass="p-button-success" icon="pi pi-ellipsis-v"
+                                [model]="listBtn">
+                            </p-splitButton>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>

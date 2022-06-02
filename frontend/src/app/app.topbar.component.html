@@ -1,0 +1,120 @@
+<app-loader></app-loader>
+<div class="topbar clearfix">
+    <a href="#" id="menu-button" (click)="appMain.onMenuButtonClick($event,0)">
+        <!-- <span class="pi pi-angle-left"></span> -->
+        <span class="pi pi-chevron-circle-left"></span>
+    </a>
+    <!-- <a class="morpheus-logo-link" href="#">
+        <img src="assets/layout/images/morpheus-logo-{{app.theme}}.svg" class="morpheus-logo" />
+        <span class="morpheus-logo-text">
+            morpheus
+        </span>
+    </a> -->
+
+    <!-- <a class="morpheus-logo-link"> -->
+        <a style="margin-left: 20px;">
+        <img src="assets/img/logo_rs_trans.png" style="height: 37px;vertical-align: middle;margin-top:3px;margin-right: 10px;" />
+
+        <img src="assets/layout/images/logo-small.png"  style="height: 50px;vertical-align: middle;margin-top:3px" />
+        <!-- <span class="morpheus-logo-text profile-name-rs">
+            {{appMain.namaProfile}}
+        </span> -->
+        <div class="layout-profile-userinfo">
+            <span class="layout-profile-rs">{{appMain.namaProfile}}</span>
+            <span class="layout-profile-vendor">{{appMain.namaVendor}}</span>
+        </div>
+        <!-- <div class="layout-profile-userinfo">
+            <span class="layout-profile-name">Arlene Welch</span><span class="layout-profile-role">Design Ops</span>
+        </div> -->
+    </a>
+
+
+    <a id="topbar-menu-button" href="#" (click)="appMain.onTopbarMenuButtonClick($event)">
+        <i class="pi pi-bars"></i>
+    </a>
+
+    <ul class="topbar-menu fadeInDown" [ngClass]="{'topbar-menu-visible': appMain.topbarMenuActive}">
+        <li #search class="search-item" [ngClass]="{'active-topmenuitem':appMain.activeTopbarItem === search}"
+            (click)="appMain.onTopbarSearchItemClick($event)">
+            <!-- <span class="md-inputfield">
+                <input type="text" pInputText placeholder="Search">
+                <i class="pi pi-search"></i>
+            </span> -->
+            <!-- <span class="md-inputfield" style="font-size: 14px;">
+                {{appMain.tanggalGlobal | date:'EEEE, dd MMMM yyyy HH:mm:ss'}}
+            </span> -->
+        </li>
+        <li #notifications [ngClass]="{'active-topmenuitem':appMain.activeTopbarItem === notifications}">
+            <a href="#" (click)="appMain.onTopbarItemClick($event,notifications)">
+                <i class="topbar-icon pi pi-fw pi-bell"></i>
+                <span class="topbar-badge animated rubberBand" style="background-color:#D32F2F;">0</span>
+                <span class="topbar-item-name">Notifications</span>
+            </a>
+            <ul class="fadeInDown">
+                <li role="menuitem">
+                    <a href="#" (click)="appMain.onTopbarSubItemClick($event)">
+                        <i class="pi pi-fw pi-sliders-h"></i>
+                        <span>Tidak ada Pemberitahuan</span>
+                    </a>
+                </li>
+
+            </ul>
+        </li>
+
+        <li style="margin-top:-10px" #profile class="user-profile"
+            [ngClass]="{'active-topmenuitem':appMain.activeTopbarItem === profile}">
+            <a href="#" class="ng-star-inserted" (click)="appMain.onTopbarItemClick($event,profile)">
+                <!-- <img src="assets/layout/images/avatar.png" alt="roma-layout" style="width: 36px;
+                    margin-top: 4px;"> -->
+                <i class="topbar-icon fa fa-user-circle-o" style="margin-top:10px"></i>
+                <div class="layout-profile-userinfo">
+                    <span class="layout-profile-name">{{appMain.namaUser}}</span>
+                    <span class="layout-profile-role">{{appMain.kelompokUser}}</span>
+                </div>
+                <i class="icon-userinfo pi pi-angle-down"></i>
+            </a>
+            <ul class="fadeInDown">
+                <li role="menuitem">
+                    <a href="#" (click)="appMain.onTopbarSubItemClick($event)"><i
+                            class="pi pi-fw pi-user"></i><span>Profile</span></a>
+                </li>
+                <li role="menuitem">
+                    <a href="#" (click)="appMain.popPassword($event)"><i
+                            class="pi pi-fw pi-lock"></i><span>Password</span></a>
+                </li>
+                <li role="menuitem">
+                    <a (click)="appMain.logout()"><i class="pi pi-fw pi-sign-out"></i><span>Logout</span></a>
+                </li>
+            </ul>
+        </li>
+        <!-- <li #profile class="profile-item" [ngClass]="{'active-topmenuitem':appMain.activeTopbarItem === profile}">
+            <a href="#" (click)="appMain.onTopbarItemClick($event,profile)">
+
+                <i class="topbar-icon pi pi-user"></i>
+                <span class="profile-text">Profile</span>
+            </a>
+
+            <ul class="fadeInDown">
+                <li role="menuitem">
+                    <a href="#" (click)="appMain.onTopbarSubItemClick($event)">
+                        <i class="pi pi-fw pi-user"></i>
+                        <span>Profile</span>
+                    </a>
+                </li>
+                <li role="menuitem">
+                    <a href="#" (click)="appMain.popPassword($event)">
+                        <i class="pi pi-fw pi-lock"></i>
+                        <span>Password</span>
+                    </a>
+                </li>
+           
+                <li role="menuitem">
+                    <a (click)="appMain.logout()">
+                        <i class="pi pi-fw pi-sign-out"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </li> -->
+    </ul>
+</div>

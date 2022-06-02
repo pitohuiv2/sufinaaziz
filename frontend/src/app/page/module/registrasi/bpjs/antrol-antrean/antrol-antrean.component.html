@@ -1,0 +1,243 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Pembuatan Antrean</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-accordion>
+                    <!-- <p-accordionTab header="Referensi Poli">
+                      
+                    </p-accordionTab>
+                    <p-accordionTab header="Referensi Dokter">
+
+                    </p-accordionTab>
+                    <p-accordionTab header="Referensi Jadwal Dokter">
+
+                    </p-accordionTab>
+                    <p-accordionTab header="Update Jadwal Dokter">
+
+                    </p-accordionTab> -->
+                    <p-accordionTab header="Tambah Antrean">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <p-checkbox [(ngModel)]="item.pasienbaru" binary="true" inputId="item.pasienbaru">
+                                </p-checkbox>
+                                <label for="item.pasienbaru"> Pasien Baru?</label>
+                            </div>
+                            <div class="p-col-12 p-md-3" *ngIf="!item.pasienbaru">
+                                <label class="label" for="input">No RM </label>
+                                <input type="text" [(ngModel)]="item.norm" pInputText placeholder="No RM " />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Kode Booking </label>
+                                <input type="text" [(ngModel)]="item.kodebooking" pInputText
+                                    placeholder="Kode Booking" />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Jenis Pasien</label>
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-6">
+                                        <p-radioButton inputId="ri" name="pelayanan" [value]="1"
+                                            [(ngModel)]="item.jenispasien">
+                                        </p-radioButton>
+                                        <label for="ri"> JKN</label>
+                                    </div>
+                                    <div class="p-col-12 p-md-6">
+                                        <p-radioButton inputId="rj" name="pelayanan" [value]="2"
+                                            [(ngModel)]="item.jenispasien">
+                                        </p-radioButton>
+                                        <label for="rj"> NON JKN</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">No Kartu </label>
+                                <input type="text" [(ngModel)]="item.nomorkartu" pInputText placeholder="No Kartu" />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">NIK </label>
+                                <input type="text" [(ngModel)]="item.nik" pInputText placeholder="NIK" />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">No HP </label>
+                                <input type="text" [(ngModel)]="item.nohp" pInputText placeholder="No HP" />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Tgl Periksa </label>
+                                <p-calendar [(ngModel)]="item.tanggalperiksa" [minDate]="minDateValue"  [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                    dateFormat="yy-mm-dd" hourFormat="24" placeholder="Tgl Periksa">
+                                </p-calendar>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Poli </label>
+                                <p-dropdown [options]="listPoli" [(ngModel)]="item.poli" [filter]="true"
+                                    [showClear]="true" placeholder="Poli" optionLabel="nama" appendTo="body"
+                                    (onChange)="cariJadwal($event)">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Dokter </label>
+                                <p-dropdown [options]="listDokter" [(ngModel)]="item.dokter" [filter]="true"
+                                    [showClear]="true" placeholder="Dokter" optionLabel="namadokter" appendTo="body">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Jenis Kunjungan </label>
+                                <p-dropdown [options]="listJenis" [(ngModel)]="item.jeniskunjungan" [filter]="true"
+                                    [showClear]="true" placeholder="Jenis" optionLabel="nama" appendTo="body">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">No Referensi </label>
+                                <input type="text" [(ngModel)]="item.nomorreferensi" pInputText
+                                    placeholder="norujukan/kontrol pasien JKN,diisi kosong jika NON JKN" />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">No Antrean </label>
+                                <input type="text" [(ngModel)]="item.nomorantrean" pInputText
+                                    placeholder="No Antrean" />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Angka Antrean </label>
+                                <input type="number" [(ngModel)]="item.angkaantrean" pInputText
+                                    placeholder="Angka Antrean" />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Estimasi Dilayani </label>
+                                <p-calendar [(ngModel)]="item.estimasidilayani" [showIcon]="true"
+                                    [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                    [showTime]="true" dateFormat="yy-mm-dd" hourFormat="24"
+                                    placeholder="Estimasi Dilayani">
+                                </p-calendar>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Sisa Kuota JKN </label>
+                                <input type="number" [(ngModel)]="item.sisakuotajkn" pInputText
+                                    placeholder="Sisa Kuota JKN" />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Kuota JKN </label>
+                                <input type="number" [(ngModel)]="item.kuotajkn" pInputText placeholder=" Kuota JKN" />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Sisa Kuota Non JKN </label>
+                                <input type="number" [(ngModel)]="item.sisakuotanonjkn" pInputText
+                                    placeholder="Sisa Kuota Non JKN" />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Kuota Non JKN </label>
+                                <input type="number" [(ngModel)]="item.kuotanonjkn" pInputText
+                                    placeholder=" Kuota Non JKN" />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Keterangan </label>
+                                <input type="text" [(ngModel)]="item.keterangan" pInputText placeholder="Keterangan" />
+                            </div>
+                            <div class="p-col-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-1 p-md-offset-10" style="margin-top: 16px;">
+                                        <button pButton pRipple type="button" icon="pi pi-save"
+                                            class="p-button-success p-mr-1" pTooltip="Simpan" label="Simpan"
+                                            (click)="save()"></button>
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton pRipple label="Batal" icon="pi pi-times"
+                                            class="p-button-secondary p-mr-1" (click)="clear()"></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Update Waktu Antrean">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Kode Booking </label>
+                                <input type="text" [(ngModel)]="item.kodebooking" pInputText
+                                    placeholder="Kode Booking" />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Waktu </label>
+                                <p-calendar [(ngModel)]="item.waktu" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="true"
+                                    dateFormat="yy-mm-dd">
+                                </p-calendar>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Task ID </label>
+                                <p-dropdown [options]="listTask" [(ngModel)]="item.taskid" [filter]="true"
+                                    [showClear]="true" placeholder="Task ID" optionLabel="waktu" appendTo="body">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                <button pButton type="button" class="p-button-primary p-mr-1" icon="pi pi-save"
+                                    (click)="postWaktu()"></button>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Batal Antrean">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Kode Booking </label>
+                                <input type="text" [(ngModel)]="item.kodebooking" pInputText
+                                    placeholder="Kode Booking" />
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Keterangan </label>
+                                <input type="text" [(ngModel)]="item.keterangan" pInputText placeholder="Keterangan" />
+                            </div>
+
+                            <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                <button pButton type="button" class="p-button-primary p-mr-1" icon="pi pi-save"
+                                    (click)="batalAntrena()"></button>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="List Waktu Task Id">
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Kode Booking </label>
+                                    <input type="text" [(ngModel)]="item.kodebooking" pInputText
+                                        placeholder="Kode Booking" />
+                                </div>
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        pTooltip="Cari" (click)="listTaskC()"></button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-col-12">
+                            <p-table #dt [columns]="column" [value]="dataSource" styleClass="p-datatable-customers"
+                                [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                                [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                                sortMode="multiple" selectionMode="single">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+
+                                        <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                                            style="width: {{column.width}}">
+                                            {{column.header}} <p-sortIcon field="{{column.field}}"></p-sortIcon>
+
+                                        </th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+
+                                        <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                            <span class="p-column-title"> {{column.header}} </span>
+                                            {{rowData[column.field]}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </p-accordionTab>
+
+                </p-accordion>
+            </div>
+        </div>
+    </div>
+</div>

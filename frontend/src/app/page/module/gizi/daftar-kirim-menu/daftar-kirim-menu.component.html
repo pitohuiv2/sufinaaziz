@@ -1,0 +1,182 @@
+<p-confirmPopup></p-confirmPopup>
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Daftar Kirim</h4>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Periode Awal</label>
+                    <p-calendar [(ngModel)]="item.periodeAwal" [showIcon]="true" [monthNavigator]="true"
+                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                    </p-calendar>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Periode Akhir</label>
+                    <p-calendar [(ngModel)]="item.periodeAkhir" [showIcon]="true" [monthNavigator]="true"
+                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                    </p-calendar>
+                </div>
+
+                
+                <div class="p-col-12 p-md-1">
+                    <label class="label" for="input">No RM </label>
+                    <input type="text" [(ngModel)]="item.noCm" pInputText (keyup.enter)="cari()" placeholder="No RM" />
+                </div>
+        
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Nama Pasien </label>
+                    <input type="text" [(ngModel)]="item.namaPasien" pInputText (keyup.enter)="cari()"
+                        placeholder="Nama Pasien" />
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">No Registrasi</label>
+                    <input type="text" [(ngModel)]="item.noRegistrasi" pInputText (keyup.enter)="cari()"
+                        placeholder="No Registrasi" />
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">No Kirim </label>
+                    <input type="text" [(ngModel)]="item.noKirim" pInputText placeholder="No Kirim " (keyup.enter)="cari()" />
+                </div>
+                <!-- <div class="p-col-12 p-md-3">
+                    <label class="label" for="input">Ruangan</label>
+                    <p-multiSelect [options]="listRuangan" [(ngModel)]="item.ruanganMulti" defaultLabel="Ruangan"
+                        optionLabel="namaruangan" display="chip">
+                    </p-multiSelect>
+
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Jenis Waktu</label>
+                    <p-dropdown [options]="listJenisWaktu" [(ngModel)]="item.jenisWaktu" [filter]="true"
+                        [showClear]="true" placeholder="Jenis Waktu" optionLabel="jeniswaktu">
+                    </p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Jenis Diet</label>
+                    <p-multiSelect [options]="listJenisDiet" [(ngModel)]="item.jenisDiet" defaultLabel="Jenis Diet"
+                        optionLabel="jenisdiet" display="chip">
+                    </p-multiSelect>
+                </div> -->
+                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                    <button pButton icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-12">
+                    <p-table #dt [columns]="column" [value]="dataSource" [(selection)]="selectedData"
+                        styleClass="p-datatable-customers" [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                        [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                        sortMode="multiple" dataKey="norec" selectionMode="single">
+
+                        <ng-template pTemplate="header" let-columns>
+                            <tr>
+                                <th style="width: 80px"></th>
+                                <th *ngFor="let col of columns" pSortableColumn="{{col.field}}"
+                                    style="width: {{col.width}}">
+                                    {{col.header}}
+                                    <p-sortIcon field="{{col.field}}">
+                                    </p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex"
+                            let-expanded="expanded">
+                            <tr>
+                                <td style="width: 90px">
+                                    <button type="button" pButton pRipple [pRowToggler]="rowData"
+                                        class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                    <button pButton type="button" icon="pi pi-trash"
+                                        class="p-button-rounded p-button-danger p-mr-2" pTooltip="Batal Kirim" label=""
+                                        (click)="batalKirim($event,rowData)" ></button>
+                                    <button pButton type="button" icon="pi pi-print"
+                                        class="p-button-rounded p-button-success p-mr-2" pTooltip="Cetak Label" label=""
+                                        (click)="cetakLabel(rowData)"></button>
+                                </td>
+                                <td *ngFor="let col of columns" style="width: {{col.width}}">
+                                    <span *ngIf="col.isCurrency != undefined">
+                                        {{formatRupiah(rowData[col.field],'')}}</span>
+                                    <span *ngIf="col.isCurrency == undefined"> {{rowData[col.field]}}</span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="rowexpansion" let-product>
+                            <tr>
+                                <td colspan="7">
+                                    <div class="p-p-3">
+                                        <p-table [value]="product.details" dataKey="id">
+                                            <ng-template pTemplate="header">
+                            <tr>
+                                <th>No Registrasi</th>
+                                <th>No RM</th>
+                                <th>Nama Pasien</th>
+                                <th>Ruangan</th>
+                                <th>Jenis Diet</th>
+                                <th>Jenis Waktu</th>
+                                
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-details>
+                            <tr>
+                                <td>{{details.noregistrasi}}</td>
+                                <td>{{details.norm}}</td>
+                                <td>{{details.namapasien}}</td>
+                                <td>{{details.namaruangan}}</td>
+                                <td>
+                                    <!-- {{details.jenisdiet}} -->
+                                    <span *ngFor="let jenis of details.jenisdiet" [class]="'order-badge order-instock'">
+                                        {{jenis.jenisdiet}}
+                                    </span>
+                                </td>
+                                <td>{{details.jeniswaktu}}</td>
+                            </tr>
+                        </ng-template>
+
+                    </p-table>
+                </div>
+                </td>
+                </tr>
+                </ng-template>
+                </p-table>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-grid">
+        
+
+    </div>
+    <!-- <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-2 p-md-offset-8">
+                    <button pButton icon="fa fa-send" class="p-button-danger" (click)="batalKirim()" label="Batal Kirim"></button>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <button pButton icon="fa fa-print" (click)="cetakLabel()" label="Label"></button>
+                </div>
+               
+            </div>
+        </div> -->
+</div>
+</div>
+
+
+<p-dialog header="Cetak" [(visible)]="pop_Cetak" [modal]="true" [maximizable]="true" [draggable]="true"
+    [resizable]="true">
+    <div class="p-fluid p-grid ">
+        <div class="p-col-12">
+            <label for="horizontal" class="label-required">Jumlah Cetak</label>
+            <p-inputNumber [(ngModel)]="item.jmlCetak" [showButtons]="true" buttonLayout="horizontal"
+                inputId="horizontal" spinnerMode="horizontal" [step]="1" decrementButtonClass="p-button-danger"
+                incrementButtonClass="p-button-success" incrementButtonIcon="pi pi-plus"
+                decrementButtonIcon="pi pi-minus">
+            </p-inputNumber>
+        </div>
+
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton icon="pi pi-print" (click)="cetakEuy()" label="Cetak" class="p-button p-mr-2">
+        </button>
+    </ng-template>
+</p-dialog>

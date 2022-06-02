@@ -1,0 +1,249 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Jadwal Dokter HFIS</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-accordion (onOpen)="onTabOpen($event)">
+                    <p-accordionTab header="List & Update Jadwal" [selected]="true">
+                        <div class="p-grid" *ngIf="!isInput">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Poli</label>
+                                        <p-dropdown [options]="listPoli" [(ngModel)]="item.poli" [filter]="true"
+                                            [showClear]="true" placeholder="Poli" optionLabel="nama" appendTo="body">
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">Tanggal</label>
+                                        <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                            [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                            dateFormat="yy-mm-dd">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="submit" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table #dt [columns]="column" [value]="dataSource" styleClass="p-datatable-customers"
+                                    [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                                    [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true"
+                                    [pageLinks]="5" sortMode="multiple" selectionMode="single">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th style="width: 80px">Aksi</th>
+                                            <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                                                style="width: {{column.width}}">
+                                                {{column.header}} <p-sortIcon field="{{column.field}}"></p-sortIcon>
+
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                            <td style="width: 80px">
+                                                <button pButton type="button" icon="fa fa-edit"
+                                                    class="p-button-rounded p-button-success p-mr-2"
+                                                    pTooltip="Update Jadwal Dokter" label=""
+                                                    (click)="edit(rowData)"></button>
+                                            </td>
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                <span class="p-column-title"> {{column.header}} </span>
+                                                {{rowData[column.field]}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                        <div class="p-grid" *ngIf="isInput">
+
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-4">
+                                        <label class="label" for="input">Subspesialis </label>
+                                        <input type="text" [(ngModel)]="selected.namasubspesialis" pInputText
+                                            placeholder="Subspesialis " [disabled]="true" />
+                                    </div>
+                                    <div class="p-col-12 p-md-4">
+                                        <label class="label" for="input">Poli </label>
+                                        <input type="text" [(ngModel)]="selected.namapoli" pInputText
+                                            placeholder="Poli " [disabled]="true" />
+                                    </div>
+                                    <div class="p-col-12 p-md-4">
+                                        <label class="label" for="input">Dokter </label>
+                                        <input type="text" [(ngModel)]="selected.namadokter" pInputText
+                                            placeholder="Dokter " [disabled]="true" />
+                                    </div>
+                                </div>
+                            </div>
+                            <p-divider align="left">
+                                <div class="p-d-inline-flex p-ai-center">
+                                    <i class="fa fa-plus p-mr-2"></i>
+                                    <b>Add Jadwal</b>
+                                </div>
+                            </p-divider>
+                            <div class="p-col-12 p-md-12">
+
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Hari </label>
+                                        <p-dropdown [options]="listHari" [(ngModel)]="add.hari" [filter]="true"
+                                            [showClear]="true" placeholder="Hari" optionLabel="namahari"
+                                            appendTo="body">
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Jam Buka </label>
+                                        <p-inputMask type="text" [(ngModel)]="add.jambuka" mask="99:99"
+                                            placeholder="Jam Buka" slotChar="HH:mm"></p-inputMask>
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Jam Tutup </label>
+                                        <p-inputMask type="text" [(ngModel)]="add.jamtutup" mask="99:99"
+                                            placeholder="Jam Tutup" slotChar="HH:mm"></p-inputMask>
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1" icon="pi pi-plus"
+                                            (click)="tambah()"></button>
+
+                                    </div>
+
+
+                                    <div class="p-col-12">
+                                        <p-table #dt2 [columns]="columnAdd" [value]="dataSourceAdd"
+                                            styleClass="p-datatable-customers" [rowHover]="true" [paginator]="false"
+                                            scrollable="true" sortMode="multiple" selectionMode="single">
+                                            <ng-template pTemplate="header" let-columns>
+                                                <tr>
+                                                    <th style="width: 100px">Aksi</th>
+                                                    <th *ngFor="let column of columns"
+                                                        pSortableColumn="{{column.field}}"
+                                                        style="width: {{column.width}}">
+                                                        {{column.header}} <p-sortIcon field="{{column.field}}">
+                                                        </p-sortIcon>
+
+                                                    </th>
+                                                </tr>
+                                            </ng-template>
+
+                                            <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                                let-rowIndex="rowIndex">
+                                                <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                                    <td style="width: 100px">
+                                                        <button pButton type="button" icon="fa fa-trash"
+                                                            class="p-button-rounded p-button-danger p-mr-2"
+                                                            pTooltip="Hapus" label="" (click)="hapus(rowData)"></button>
+                                                        <button pButton type="button" icon="fa fa-edit"
+                                                            class="p-button-rounded p-button-warning p-mr-2"
+                                                            pTooltip="Edit" label=""
+                                                            (click)="editRow(rowData)"></button>
+                                                    </td>
+                                                    <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                        <span class="p-column-title"> {{column.header}} </span>
+                                                        {{rowData[column.field]}}
+                                                    </td>
+                                                </tr>
+                                            </ng-template>
+                                        </p-table>
+                                    </div>
+                                    <div class="p-col-12">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-1 p-md-offset-10" style="margin-top: 16px;">
+                                                <button pButton pRipple type="button" icon="pi pi-save"
+                                                    class="p-button-success p-mr-1" pTooltip="Simpan" label="Simpan"
+                                                    (click)="save()"></button>
+                                            </div>
+                                            <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                                <button pButton pRipple label="Batal" icon="pi pi-times"
+                                                    class="p-button-secondary p-mr-1" (click)="clear()"></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Mapping Dokter HFIS ke RS" >
+                        <div class="p-col-12 p-md-12">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Dokter RS</label>
+                                    <p-dropdown [options]="listDokterRS" [(ngModel)]="item.dokterRS" [filter]="true"
+                                        [showClear]="true" placeholder="Dokter RS" optionLabel="namalengkap"
+                                        appendTo="body">
+                                    </p-dropdown>
+                                </div>
+                                <div class="p-col-12 p-md-3">
+                                    <label class="label" for="input">Dokter HFIS</label>
+                                    <p-dropdown [options]="listDokterHFIS" [(ngModel)]="item.dokterHFIS" [filter]="true"
+                                        [showClear]="true" placeholder="Dokter HFIS" optionLabel="nama" appendTo="body">
+                                    </p-dropdown>
+                                </div>
+
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="submit" class="p-button-success p-mr-1" icon="pi pi-plus"
+                                        pTooltip="Add" (click)="addDokter()"></button>
+                                    <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        pTooltip="Cari" (click)="cariD()"></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="p-col-12">
+                            <p-table #dt2 [columns]="column2" [value]="dataSource2" styleClass="p-datatable-customers"
+                                [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                                [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                                sortMode="multiple" selectionMode="single">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th style="width: 80px">Aksi</th>
+                                        <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                                            style="width: {{column.width}}">
+                                            {{column.header}} <p-sortIcon field="{{column.field}}"></p-sortIcon>
+
+                                        </th>
+                                    </tr>
+                                </ng-template>
+
+                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                        <td style="width: 80px">
+                                            <button pButton type="button" icon="fa fa-edit"
+                                                class="p-button-rounded p-button-warning p-mr-2" pTooltip="Edit"
+                                                label="" (click)="editD(rowData)"></button>
+
+                                            <button pButton type="button" icon="fa fa-trash"
+                                                class="p-button-rounded p-button-danger p-mr-2" pTooltip="Hapus"
+                                                label="" (click)="hapusDok(rowData)"></button>
+                                        </td>
+                                        <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                            <span class="p-column-title"> {{column.header}} </span>
+                                            {{rowData[column.field]}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="p-col-12" *ngIf="isInput">
+    <div class="notification">
+        <span style="font-style: italic;">* Data yang berhasil disimpan menunggu aproval dari BPJS atau
+            otomatis approve jadwal dokter
+            oleh sistem, misal pengajuan perubahan jadwal oleh RS diantara jam 00.00 - 20.00 , kemudian
+            alokasi approve manual oleh BPJS/cabang di jam 20.01-00.00. Jika pukul 00.00 belum dilakukan
+            aproval oleh kantor cabang, maka otomatis approve by sistem akan dilaksanakan setelah jam 00.00
+            dan yang berubahnya esoknya (H+1).</span>
+    </div>
+</div>

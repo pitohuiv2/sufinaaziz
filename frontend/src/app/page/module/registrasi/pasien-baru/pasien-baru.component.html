@@ -1,0 +1,285 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog>
+<div class="p-fluid p-formgrid ">
+    <div class="p-grid">
+        <div class="p-col-12 p-md-4">
+            <div class="card card-w-title" style="height: 700px; overflow: auto;">
+                <h4>Info Pasien</h4>
+                <div class="p-grid">
+
+                    <div class="p-col-12 p-md-12">
+                        <label class="label-required" for="input">NIK </label>
+                        <input type="text" [(ngModel)]="item.noIdentitas" pInputText
+                            placeholder="Tekan Enter untuk pencarian NIK" maxlength="16"
+                            (keyup.enter)="getNik('nik',item.noIdentitas)" />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label-required" for="input">Nama Pasien </label>
+                        <input type="text" [(ngModel)]="item.namaPasien" pInputText placeholder="Nama Pasien" />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label-required" for="input">Tempat Lahir </label>
+                        <input type="text" [(ngModel)]="item.tempatLahir" pInputText placeholder="Tempat Lahir" />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label-required" for="input">Tgl Lahir </label>
+                        <p-calendar [(ngModel)]="item.tglLahir" [showIcon]="true" [monthNavigator]="true"
+                            [yearNavigator]="true" yearRange="1980:2030" [showTime]="false" dateFormat="dd-mm-yy"
+                            placeholder="dd-mm-yyyy">
+                        </p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label-required" for="input">Jenis Kelamin </label>
+                        <p-dropdown [options]="listDataJenisKelamin" [(ngModel)]="item.jenisKelamin" [filter]="true"
+                            [showClear]="true" placeholder="Jenis Kelamin" optionLabel="jeniskelamin">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Agama </label>
+                        <p-dropdown [options]="listDataAgama" [(ngModel)]="item.agama" [filter]="true"
+                            [showClear]="true" placeholder="Agama" optionLabel="agama">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Status Perkawinan </label>
+                        <p-dropdown [options]="listDataStatusPerkawinan" [(ngModel)]="item.statusPerkawinan"
+                            [filter]="true" [showClear]="true" placeholder="Status Perkawinan"
+                            optionLabel="statusperkawinan"></p-dropdown>
+
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Golongan Darah </label>
+                        <p-dropdown [options]="listGolonganDarah" [(ngModel)]="item.golonganDarah" [filter]="true"
+                            [showClear]="true" placeholder="Golongan Darah" optionLabel="golongandarah"></p-dropdown>
+
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Pendidikan </label>
+                        <p-dropdown [options]="listDataPendidikan" [(ngModel)]="item.pendidikan" [filter]="true"
+                            [showClear]="true" placeholder="Pendidikan" optionLabel="pendidikan" dataKey="id">
+                        </p-dropdown>
+
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Pekerjaan </label>
+                        <p-dropdown [options]="listDataPekerjaan" [(ngModel)]="item.pekerjaan" [filter]="true"
+                            [showClear]="true" placeholder="Pekerjaan" optionLabel="pekerjaan" dataKey="id">
+                        </p-dropdown>
+
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12 p-md-4">
+            <div class="card card-w-title" style="height: 700px; overflow: auto;">
+                <h4>Detail Pasien</h4>
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-12">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <label class="label-required" for="input">Alamat </label>
+                                <textarea [(ngModel)]="item.alamatLengkap" rows="4" cols="30" pInputTextarea></textarea>
+                            </div>
+                            <div class="p-col-12 p-md-12" style="margin-top:8px">
+                                <label class="label" for="input">Kode Pos </label>
+                                <input type="text" [(ngModel)]="item.kodePos" pInputText placeholder="Kode Pos"
+                                    (keyup.enter)="findKodePos(item.kodePos)" />
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label-required" for="input">Kelurahan </label>
+                                <p-autoComplete [(ngModel)]="item.desaKelurahan" [suggestions]="listDataKelurahan"
+                                    (completeMethod)="filterDesa($event)" field="namadesakelurahan" [dropdown]="true"
+                                    (onSelect)="selectDesa($event)" placeholder="Kelurahan">
+                                    <ng-template let-item pTemplate="item">
+                                        <table class="country-item">
+                                            <tr>
+                                                <th>Kelurahan</th>
+                                                <th>Kecamatan</th>
+                                                <th>Kota Kabupaten</th>
+                                                <th>Provinsi</th>
+                                            </tr>
+                                            <tr>
+                                                <td>{{item.namadesakelurahan}}</td>
+                                                <td>{{item.namakecamatan}}</td>
+                                                <td>{{item.namakotakabupaten}}</td>
+                                                <td>{{item.namapropinsi}}</td>
+                                            </tr>
+                                        </table>
+                                    </ng-template>
+                                </p-autoComplete>
+                                <!-- <p-dropdown [options]="listDataKelurahan" [(ngModel)]="item.desaKelurahan"
+                                        [filter]="true" [showClear]="true" placeholder="Kelurahan" optionLabel="namadesakelurahan"></p-dropdown> -->
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Kecamatan </label>
+                                <p-autoComplete [(ngModel)]="item.kecamatan" [suggestions]="listDataKecamatan"
+                                    (completeMethod)="filterKec($event)" field="namakecamatan" [dropdown]="true"
+                                    placeholder="Kecamatan">
+                                </p-autoComplete>
+                                <!-- <p-dropdown [options]="listDataKecamatan" [(ngModel)]="item.kecamatan" [filter]="true"
+                                        [showClear]="true" placeholder="Kecamatan" optionLabel="namakecamatan"></p-dropdown> -->
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Kota Kabupaten </label>
+                                <p-dropdown [options]="listDataKotaKabupaten" [(ngModel)]="item.kotaKabupaten"
+                                    [filter]="true" [showClear]="true" placeholder="Kota Kabupaten"
+                                    optionLabel="namakotakabupaten" dataKey="id"></p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Provinsi </label>
+                                <p-dropdown [options]="listDataPropinsi" [(ngModel)]="item.propinsi" [filter]="true"
+                                    [showClear]="true" placeholder="Provinsi " optionLabel="namapropinsi" dataKey="id">
+                                </p-dropdown>
+                            </div>
+
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Kebangsaan </label>
+                                <p-dropdown [options]="listKebangsaan" [(ngModel)]="item.kebangsaan" [filter]="true"
+                                    [showClear]="true" placeholder="Kebangsaan" optionLabel="name"
+                                    (onChange)="changeKebangsaan($event)">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Etnis </label>
+                                <p-dropdown [options]="listSuku" [(ngModel)]="item.suku" [filter]="true"
+                                    [showClear]="true" placeholder="Etnis" optionLabel="suku">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <label class="label" for="input">Negara </label>
+                                <p-dropdown [options]="listNegara" [(ngModel)]="item.negara" [filter]="true"
+                                    [showClear]="true" placeholder="Negara" optionLabel="namanegara">
+                                </p-dropdown>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- <div class="p-col-12 p-md-6">
+                       
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12 p-md-4">
+            <div class="card card-w-title" style="height: 700px; overflow: auto;">
+                <h4></h4>
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">No BPJS </label>
+                        <input type="text" [(ngModel)]="item.noBpjs" pInputText
+                            placeholder="Tekan Enter untuk pencarian No BPJS"
+                            (keyup.enter)="getNik('nokartu',item.noBpjs)" />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">No Asuransi Lain </label>
+                        <input type="text" [(ngModel)]="item.noAsuransiLain" pInputText
+                            placeholder="No Asuransi Lain" />
+                    </div>
+
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">No Telpon </label>
+                        <input type="text" [(ngModel)]="item.noTelepon" pInputText placeholder="No Telpon " />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label-required" for="input">No HP </label>
+                        <input type="text" [(ngModel)]="item.noHp" pInputText placeholder="No HP" />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Nama Ayah </label>
+                        <input type="text" [(ngModel)]="item.namaAyah" pInputText placeholder="Nama Ayah " />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Nama Ibu </label>
+                        <input type="text" [(ngModel)]="item.namaIbu" pInputText placeholder="Nama Ibu " />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Nama Keluarga </label>
+                        <input type="text" [(ngModel)]="item.namaKeluarga" pInputText placeholder="Nama Keluarga " />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Nama Suami / Istri </label>
+                        <input type="text" [(ngModel)]="item.namaSuamiIstri" pInputText
+                            placeholder="Nama Suami / Istri" />
+                    </div>
+                    <div class="p-col-12 p-md-12" style="margin-top: 15px;">
+                        <p-checkbox [(ngModel)]="item.cekPenanggungJawab" binary="true"
+                            inputId="item.cekPenanggungJawab"></p-checkbox>
+                        <label for="item.cekPenanggungJawab"> Penanggung Jawab Pasien</label>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="p-col-12 p-md-12" *ngIf="item.cekPenanggungJawab == true">
+            <div class="card card-w-title">
+                <h4>Penanggung Jawab Pasien</h4>
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Nama Penanggung Jawab </label>
+                        <input type="text" [(ngModel)]="item.PenanggungJawab" pInputText
+                            placeholder="Nama Penanggung Jawab" />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Hubungan Dengan Pasien</label>
+                        <input type="text" [(ngModel)]="item.Hubungan" pInputText
+                            placeholder="Hubungan Dengan Pasien" />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">No Telepon</label>
+                        <input type="text" [(ngModel)]="item.TeleponP" pInputText placeholder="No Telepon" />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Bahasa Sehari-hari</label>
+                        <input type="text" [(ngModel)]="item.Bahasa" pInputText placeholder="Bahasa Sehari-hari" />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Jenis Kelamin</label>
+                        <p-dropdown [options]="listDataJenisKelamin" [(ngModel)]="item.jenisKelaminP" [filter]="true"
+                            [showClear]="true" placeholder="Jenis Kelamin" optionLabel="jeniskelamin">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Umur</label>
+                        <input type="text" [(ngModel)]="item.UmurP" pInputText placeholder="Umur" />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Pekerjaan</label>
+                        <p-dropdown [options]="listDataPekerjaan" [(ngModel)]="item.pekerjaanP" [filter]="true"
+                            [showClear]="true" placeholder="Pekerjaan" optionLabel="pekerjaan">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Alamat Penanggung Jawab </label>
+                        <textarea [(ngModel)]="item.alamatRumah" rows="5" cols="30" pInputTextarea></textarea>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Nama Dokter Pengirim</label>
+                        <input type="text" [(ngModel)]="item.DokterPengirim" pInputText
+                            placeholder="Nama Dokter Pengirim" />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Alamat Dokter Pengirim </label>
+                        <textarea [(ngModel)]="item.alamatDokterPengirim" rows="5" cols="30" pInputTextarea></textarea>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="p-grid">
+        <div class="p-col-12 p-md-1 p-md-offset-10" *ngIf="!isNext">
+            <button pButton type="button" icon="pi pi-save" class="p-button p-mr-2" (click)="save()" pTooltip="Simpan"
+                label="Simpan"></button>
+        </div>
+        <div class="p-col-12 p-md-1 p-md-offset-10" *ngIf="isNext">
+            <button pButton type="button" icon="pi pi-arrow-right" class="p-button p-mr-2" (click)="registrasi()"
+                pTooltip="Registrasi " label="Registrasi"></button>
+        </div>
+        <div class="p-col-12 p-md-1">
+            <button pButton type="button" icon="pi pi-arrow-left" class="p-button p-button-danger p-mr-2"
+                (click)="cancel()" pTooltip="Simpan" label="Batal"></button>
+        </div>
+    </div>
+</div>

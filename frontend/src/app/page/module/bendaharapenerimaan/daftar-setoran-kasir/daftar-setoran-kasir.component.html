@@ -1,0 +1,129 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog>
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Daftar Setoran Kasir</h4>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-11">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Periode Awal</label>
+                            <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                            </p-calendar>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Periode Akhir</label>
+                            <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                                [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                            </p-calendar>
+                        </div>
+                        <div class="p-col-12 p-md-3">
+                            <label class="label" for="input">Petugas Penerima</label>
+                            <p-multiSelect [options]="listPetugasPenerima" [(ngModel)]="item.selectedKasir"
+                                optionLabel="namalengkap"></p-multiSelect>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Cara Bayar</label>
+                            <p-dropdown [options]="listCaraBayar" [(ngModel)]="item.CaraBayar" [filter]="true"
+                                [showClear]="true" placeholder="Cara Bayar" optionLabel="carabayar"></p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Cara Setor</label>
+                            <p-dropdown [options]="listCaraSetor" [(ngModel)]="item.CaraSetor" [filter]="true"
+                                [showClear]="true" placeholder="Cara Setor" optionLabel="carasetor"></p-dropdown>
+                        </div>
+                        <div class="p-col-12 p-md-1">
+                            <label class="label" for="input">jml Rows</label>
+                            <input type="text" [(ngModel)]="item.jmlRows" pInputText (keyup.enter)="cari()"
+                                placeholder="Jml Rows" />
+                        </div>
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-1">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-12" style="margin-top: 16px;">
+                            <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <p-table #dt [columns]="column" [value]="dataTable" [(selection)]="selected"
+                styleClass="p-datatable-customers" [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                sortMode="multiple" selectionMode="single" dataKey="norec" (onRowSelect)="onRowSelect($event)">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th style="width: 80px">Aksi</th>
+                        <th style="width: 80px"></th>
+                        <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" style="width: {{col.width}}">
+                            {{col.header}}
+                            <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex"
+                    let-expanded="expanded">
+                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                        <td style="width: 80px">
+                            <button pButton type="button" icon="fa fa-ban"
+                                class="p-button-rounded p-button-danger p-mr-2" pTooltip="Batal Setor" label=""
+                                (click)="batalSetor2(rowData)"></button>
+                        </td>
+                        <td style="width: 80px">
+                            <button type="button" pButton pRipple [pRowToggler]="rowData"
+                                class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                        </td>
+                        <td *ngFor="let col of columns" style="width: {{col.width}}">
+                            <span *ngIf="col.isCurrency != undefined">
+                                {{formatRupiah(rowData[col.field],'')}}
+                            </span>
+                            <span *ngIf="col.isCurrency == undefined"> {{rowData[col.field]}}</span>
+                        </td>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="rowexpansion" let-data>
+                    <tr>
+                        <td colspan="10">
+                            <div class="p-p-3">
+                                <p-table [value]="data.details" dataKey="noclosingidfk">
+                                    <ng-template pTemplate="header">
+                    <tr>
+                        <th>No Bayar</th>
+                        <th>Nama Pasien</th>
+                        <th>Desk</th>
+                        <th>Keterangan</th>
+                        <th>Total Bayar</th>
+                        <th>Petugas Kasir</th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-detail>
+                    <tr>
+                        <td>{{detail.nosbm}}</td>
+                        <td>{{detail.namapasien}}</td>
+                        <td>{{detail.namapasien_klien}}</td>
+                        <td>{{detail.keterangan}}</td>
+                        <td>{{detail.totalpenerimaan}}</td>
+                        <td>{{detail.namalengkap}}</td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        </td>
+        </tr>
+        </ng-template>
+        </p-table>
+    </div>
+    <!-- <div class="p-col-12 p-md-12">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-2 p-md-offset-10" style="margin-top:10px">
+                <button pButton type="submit" icon="fa fa-ban" pTooltip="Batal Setor" (click)="batalSetor()"
+                    label="Batal Setor" style="background-color: red;"></button>
+            </div>
+        </div>
+    </div> -->
+</div>
+</div>

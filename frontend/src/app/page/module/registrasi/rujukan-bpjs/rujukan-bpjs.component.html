@@ -1,0 +1,469 @@
+<div class="p-fluid p-formgrid p-mt-3">
+    <div class="card card-w-title">
+        <h4>Pembuatan Rujukan</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-tabView (onChange)="handleChangeTab($event)" [(activeIndex)]="index">
+                    <p-tabPanel header="List Rujukan" leftIcon="fa fa-th-list">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">Periode Awal</label>
+                                        <p-calendar [(ngModel)]="daftar.periodeAwal" [showIcon]="true"
+                                            [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                            [showTime]="false" dateFormat="yy-mm-dd">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">Periode Akhir</label>
+                                        <p-calendar [(ngModel)]="daftar.periodeAkhir" [showIcon]="true"
+                                            [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                            [showTime]="false" dateFormat="yy-mm-dd">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">No RM </label>
+                                        <input type="text" [(ngModel)]="daftar.nocm" pInputText placeholder="No RM" />
+                                    </div>
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">No Rujukan</label>
+                                        <input type="text" [(ngModel)]="daftar.noRujukan" pInputText
+                                            placeholder="No Rujukan" />
+                                    </div>
+
+
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="submit" class="p-button-success p-mr-1"
+                                            icon="pi pi-search" pTooltip="Cari" (click)="getGridData()"></button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table #dt [columns]="column" [value]="dataSource" styleClass="p-datatable-customers"
+                                    [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                                    [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true"
+                                    [pageLinks]="5" sortMode="multiple" selectionMode="single">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th style="width: 180px">Aksi</th>
+                                            <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                                                style="width: {{column.width}}">
+                                                {{column.header}} <p-sortIcon field="{{column.field}}"></p-sortIcon>
+
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                            <td style="width: 180px">
+                                                <button pButton type="button" icon="fa fa-edit"
+                                                    class="p-button-rounded p-button-success p-mr-2" pTooltip="Edit"
+                                                    label="" (click)="editRujukan(rowData)"></button>
+
+                                                <button pButton type="button" icon="fa fa-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2"
+                                                    (click)="hapusRuj(rowData)" pTooltip="Hapus" label=""></button>
+
+                                                <button pButton type="button" icon="fa fa-print"
+                                                    class="p-button-rounded p-button-info p-mr-2"
+                                                    (click)="cetak(rowData)" pTooltip="Cetak" label=""></button>
+
+                                            </td>
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                <span class="p-column-title"> {{column.header}} </span>
+                                                {{rowData[column.field]}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Buat Baru" leftIcon="fa fa-edit">
+                        <div class="p-grid" *ngIf="!showInput">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">Tgl SEP</label>
+                                        <p-calendar [(ngModel)]="daftar.tglSep" [showIcon]="true"
+                                            [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                            [showTime]="false" dateFormat="yy-mm-dd">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Jenis Pelayanan</label>
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="ri" name="pelayanan" [value]="1"
+                                                    [(ngModel)]="daftar.tipe">
+                                                </p-radioButton>
+                                                <label for="ri"> Rawat Inap</label>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="rj" name="pelayanan" [value]="2"
+                                                    [(ngModel)]="daftar.tipe">
+                                                </p-radioButton>
+                                                <label for="rj"> Rawat Jalan</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="submit" class="p-button-success  p-mr-1"
+                                            icon="pi pi-search" pTooltip="Cari" (click)="cariHistory()"></button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table #dt2 [columns]="column2" [value]="dataSource2"
+                                    styleClass="p-datatable-customers" [rowHover]="true" [rows]="20"
+                                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                    selectionMode="single">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input pInputText type="text" width="50" [(ngModel)]="daftar.cari"
+                                                    (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder="Pencarian " />
+                                            </span>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th style="width: 180px">No SEP</th>
+                                            <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                                                style="width: {{column.width}}">
+                                                {{column.header}} <p-sortIcon field="{{column.field}}"></p-sortIcon>
+
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                            <td style="width: 180px">
+                                                <button pButton type="button" icon=""
+                                                    class="p-button-rounded p-button-help p-mr-2"
+                                                    pTooltip="Buat Rujukan" label="{{rowData.noSep}}"
+                                                    (click)="setSEP(rowData)"></button>
+                                            </td>
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                <span class="p-column-title"> {{column.header}} </span>
+                                                {{rowData[column.field]}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                        <div class="p-grid" *ngIf="showInput">
+                            <div class="p-col-12 p-md-4">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-12">
+                                        <p-panel header="SEP" [toggleable]="true">
+                                            <div class="p-col-12 p-md-12  timeline">
+                                                <ul>
+                                                    <li class="satu"><i class="pi pi-circle-on"></i>
+                                                        <div class="event-content">
+                                                            <span>No SEP</span>
+                                                            <span class="event-title">{{sep.noSep}}</span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="dua"><i class="pi pi-circle-on"></i>
+                                                        <div class="event-content">
+                                                            <span>Tgl SEP</span>
+                                                            <span class="event-title">{{sep.tglSep}}</span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="tiga"><i class="pi pi-circle-on"></i>
+                                                        <div class="event-content">
+                                                            <span>Jenis Pelayanan</span>
+                                                            <span class="event-title">{{sep.jnsPelayanan}}</span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="lima"><i class="pi pi-circle-on"></i>
+                                                        <div class="event-content">
+                                                            <span>Diagnosa</span>
+                                                            <span class="event-title">{{sep.diagnosa}}</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </p-panel>
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                        <p-panel header="Peserta" [toggleable]="true">
+                                            <div class="p-col-12 p-md-12  timeline">
+                                                <ul>
+                                                    <li class="satu"><i class="pi pi-circle-on"></i>
+                                                        <div class="event-content">
+                                                            <span>No Kartu</span>
+                                                            <span class="event-title">{{sep.peserta.noKartu}}</span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="dua"><i class="pi pi-circle-on"></i>
+                                                        <div class="event-content">
+                                                            <span>Nama</span>
+                                                            <span class="event-title">{{sep.peserta.nama}}</span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="tiga"><i class="pi pi-circle-on"></i>
+                                                        <div class="event-content">
+                                                            <span>Tgl Lahir</span>
+                                                            <span class="event-title">{{sep.peserta.tglLahir}}</span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="lima"><i class="pi pi-circle-on"></i>
+                                                        <div class="event-content">
+                                                            <span>JK</span>
+                                                            <span class="event-title">{{sep.peserta.sex}}</span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="enam"><i class="pi pi-circle-on"></i>
+                                                        <div class="event-content">
+                                                            <span>Kelas</span>
+                                                            <span
+                                                                class="event-title">{{sep.peserta.hakKelas.keterangan}}</span>
+                                                        </div>
+                                                    </li>
+                                                    <li class="tujuh"><i class="pi pi-circle-on"></i>
+                                                        <div class="event-content">
+                                                            <span>Faskes</span>
+                                                            <span class="event-title">{{sep.peserta.provUmum.kdProvider
+                                                                +"~"+sep.peserta.provUmum.nmProvider}}</span>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </p-panel>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="p-col-12 p-md-8">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-12">
+                                        <p-panel header="Rujukan" [toggleable]="true">
+                                            <div class="p-grid">
+                                                <div class="p-col-12 p-md-3">
+                                                    <label class="label" for="input">Tgl Rujukan </label>
+                                                    <p-calendar [(ngModel)]="itemV2.tglRujukan" [showIcon]="true"
+                                                        [monthNavigator]="true" [yearNavigator]="true"
+                                                        yearRange="1980:2030" [showTime]="false" dateFormat="yy-mm-dd"
+                                                        placeholder="yyyy-mm-dd">
+                                                    </p-calendar>
+                                                </div>
+                                                <div class="p-col-12 p-md-4">
+                                                    <label class="label" for="input">Pelayanan </label>
+                                                    <div class="p-grid">
+                                                        <div class="p-col-12 p-md-6">
+                                                            <p-radioButton inputId="ri2" name="pelayanan2" [value]="1"
+                                                                [(ngModel)]="itemV2.jnsPelayanan">
+                                                            </p-radioButton>
+                                                            <label for="ri2"> Rawat Inap</label>
+                                                        </div>
+                                                        <div class="p-col-12 p-md-6">
+                                                            <p-radioButton inputId="rj2" name="pelayanan2" [value]="2"
+                                                                [(ngModel)]="itemV2.jnsPelayanan">
+                                                            </p-radioButton>
+                                                            <label for="rj2"> Rawat Jalan</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="p-col-12 p-md-5">
+                                                    <label class="label" for="input">Tipe </label>
+                                                    <div class="p-grid">
+                                                        <div class="p-col-12 p-md-4">
+                                                            <p-radioButton inputId="ri22" name="pelayanan22" [value]="0"
+                                                                [(ngModel)]="itemV2.tipeRujukan" (onClick)="cekTipe(0)">
+                                                            </p-radioButton>
+                                                            <label for="ri22"> Penuh</label>
+                                                        </div>
+                                                        <div class="p-col-12 p-md-4">
+                                                            <p-radioButton inputId="rj23" name="pelayanan22" [value]="1"
+                                                                [(ngModel)]="itemV2.tipeRujukan" (onClick)="cekTipe(1)">
+                                                            </p-radioButton>
+                                                            <label for="rj23"> Partial</label>
+                                                        </div>
+                                                        <div class="p-col-12 p-md-4">
+                                                            <p-radioButton inputId="rj22" name="pelayanan22" [value]="2"
+                                                                [(ngModel)]="itemV2.tipeRujukan" (onClick)="cekTipe(2)">
+                                                            </p-radioButton>
+                                                            <label for="rj22"> Rujuk Balik</label>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="p-col-12 p-md-6">
+                                                    <label class="label" for="input">Diagnosa Rujukan </label>
+                                                    <p-autoComplete [(ngModel)]="itemV2.diagRujukan"
+                                                        [suggestions]="listDiagnosa"
+                                                        (completeMethod)="filterAutoComDiag($event)"
+                                                        [dropdown]="false" field="nama"
+                                                        placeholder="Ketik minimal 3 karakter">
+                                                    </p-autoComplete>
+                                                </div>
+                                                <div class="p-col-12 p-md-6">
+                                                    <label class="label" for="input">Di Rujuk Ke </label>
+                                                    <div class="p-grid">
+                                                        <div class="p-col-12 p-md-10">
+                                                            <input type="text" [(ngModel)]="itemV2.ppkDirujuk"
+                                                                pInputText placeholder="Nama Faskes"
+                                                                [disabled]="true" />
+                                                        </div>
+                                                        <div class="p-col-12 p-md-2"
+                                                            *ngIf="itemV2.tipeRujukan==0 || itemV2.tipeRujukan==1">
+                                                            <button pButton type="submit" class="p-button-help p-mr-1"
+                                                                icon="pi pi-briefcase" pTooltip="Cari Faskes"
+                                                                (click)="cariFaskes()"></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="p-col-12 p-md-6" *ngIf="itemV2.tipeRujukan==0 ">
+                                                    <label class="label" for="input">Spesialis/SubSpesialis </label>
+                                                    <input type="text" [(ngModel)]="itemV2.poliRujukan" pInputText
+                                                        placeholder="Spesialis/SubSpesialis" [disabled]="true" />
+
+                                                </div>
+                                                <div class="p-col-12 p-md-6">
+                                                    <label class="label" for="input">Catatan </label>
+                                                    <input type="text" [(ngModel)]="itemV2.catatan" pInputText
+                                                        placeholder="Catatan" />
+                                                </div>
+                                            </div>
+                                            <div class="p-col-12 p-md-12">
+                                                <div class="p-grid">
+                                                    <div class="p-col-12 p-md-2 p-md-offset-6">
+                                                        <button pButton type="button" icon="pi pi-save"
+                                                            class="p-button p-mr-2" (click)="save()" pTooltip="Simpan"
+                                                            label="Simpan" [disabled]="isSimpan"></button>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-2">
+                                                        <button pButton type="button" icon="pi pi-arrow-left"
+                                                            class="p-button p-button-danger p-mr-2" (click)="cancel()"
+                                                            pTooltip="" label="Batal"></button>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-2">
+                                                        <button pButton pRipple label="Cetak" icon="pi pi-print"
+                                                            [disabled]="disabledCetak" class="p-button-warning"
+                                                            (click)="cetakAfter()"></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </p-panel>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                </p-tabView>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="Jadwal Praktek dan Sarana Rumah Sakit Rujukan" [(visible)]="popJadwal" [modal]="true"
+    [maximizable]="true" [draggable]="true" [style]="{'width': '70vw'}" [resizable]="true">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+
+            <div class="p-col-12 p-md-12">
+                <div class="p-grid">
+
+                    <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">PPK Rujuk</label>
+                        <p-autoComplete [(ngModel)]="jadwal.ppkDirujuk" [suggestions]="listFaskes"
+                            (completeMethod)="filterAutoCom($event)"
+                            field="nama" [dropdown]="true" placeholder="Ketik minimal 3 karakter" appendTo="body">
+                        </p-autoComplete>
+                    </div>
+                    <div class="p-col-12 p-md-3">
+                        <label class="label" for="input">Tgl.Rencana Rujukan</label>
+                        <p-calendar [(ngModel)]="itemV2.tglRencanaKunjungan" [showIcon]="true" [monthNavigator]="true"
+                            appendTo="body" [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                            dateFormat="yy-mm-dd">
+                        </p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                        <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                            pTooltip="Cari" (click)="cariJadwal()"></button>
+
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-12">
+                <p-tabView>
+                    <p-tabPanel header="Spesialis/SubSpesialis" leftIcon="fa fa-th-list">
+                        <div class="p-col-12 ">
+                            <p-table #dtx [columns]="columnSub" [value]="dataSourceSub"
+                                styleClass="p-datatable-customers" [rowHover]="true" [rows]="20"
+                                [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                                scrollable="true" [pageLinks]="5" sortMode="multiple" selectionMode="single">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th style="width: 80px">Aksi</th>
+                                        <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                                            style="width: {{column.width}}">
+                                            {{column.header}} <p-sortIcon field="{{column.field}}">
+                                            </p-sortIcon>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                        <td style="width: 80px">
+                                            <button pButton type="button" icon="fa fa-check"
+                                                class="p-button-rounded p-button-help p-mr-2" pTooltip="Gunakan"
+                                                label="" (click)="pakeSub(rowData)"></button>
+                                        </td>
+                                        <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                            <span class="p-column-title"> {{column.header}} </span>
+                                            {{rowData[column.field]}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+
+                    </p-tabPanel>
+                    <p-tabPanel header="Sarana" leftIcon="fa fa-briefcase">
+                        <div class="p-col-12 ">
+                            <p-table #dtx [columns]="columnSarana" [value]="dataSourceSarana"
+                                styleClass="p-datatable-customers" [rowHover]="true" [rows]="20"
+                                [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                                scrollable="true" [pageLinks]="5" sortMode="multiple" selectionMode="single">
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                                            style="width: {{column.width}}">
+                                            {{column.header}} <p-sortIcon field="{{column.field}}">
+                                            </p-sortIcon>
+
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                                    <tr>
+                                        <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                            <span class="p-column-title"> {{column.header}} </span>
+                                            {{rowData[column.field]}}
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                            </p-table>
+                        </div>
+
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+        </div>
+    </div>
+</p-dialog>

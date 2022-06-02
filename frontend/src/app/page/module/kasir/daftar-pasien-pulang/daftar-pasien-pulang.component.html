@@ -1,0 +1,288 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog>
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Pasien Pulang</h4>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Periode Awal</label>
+                    <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                    </p-calendar>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Periode Akhir</label>
+                    <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                    </p-calendar>
+                </div>
+                <!-- <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Instalasi</label>
+                    <p-dropdown [options]="listDepartemen" [(ngModel)]="item.dataDepartemen" [filter]="true"
+                        [showClear]="true" placeholder="Instalasi" optionLabel="departemen" (onChange)="isiRuangan()">
+                    </p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Ruangan</label>
+                    <p-dropdown [options]="listRuangan" [(ngModel)]="item.dataRuangan" [filter]="true"
+                        [showClear]="true" placeholder="Ruangan" optionLabel="ruangan"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Tipe Pasien</label>
+                    <p-dropdown [options]="listKelompokPasien" [(ngModel)]="item.dataKelPasien" [filter]="true"
+                        [showClear]="true" placeholder="Tipe Pasien" optionLabel="kelompokpasien"></p-dropdown>
+                </div> -->
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">No RM </label>
+                    <input type="text" [(ngModel)]="item.noRM" pInputText (keyup.enter)="cari()"
+                        placeholder="No Rekam Medis" />
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">No Registrasi</label>
+                    <input type="text" [(ngModel)]="item.Noregistrasi" pInputText (keyup.enter)="cari()"
+                        placeholder="No Registrasi" />
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Nama Pasien </label>
+                    <input type="text" [(ngModel)]="item.namaPasien" pInputText (keyup.enter)="cari()"
+                        placeholder="Nama Pasien" />
+                </div>
+                <div class="p-col-12 p-md-1">
+                    <label class="label" for="input"> Rows</label>
+                    <input type="text" [(ngModel)]="item.jmlRows" pInputText (keyup.enter)="cari()"
+                        placeholder="Jml Rows" />
+                </div>
+                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                    <button pButton type="button" icon="pi pi-search" pTooltip="Cari" class="p-mr-1"
+                        (click)="cari()"></button>
+                    <button pButton type="button" class="p-button-success" icon="pi pi-filter" pTooltip="Filter Detail"
+                        (click)="filter()"></button>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-12">
+                <p-table #dt [columns]="column" [value]="dataTable" [(selection)]="selected"
+                    styleClass="p-datatable-customers" [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                    [rowsPerPageOptions]="[5,10,25,50,100]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                    sortMode="multiple" selectionMode="single" (onRowSelect)="onRowSelect($event)">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th width="200px">Aksi</th>
+                            <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                                style="width: {{column.width}}">
+                                {{column.header}} <p-sortIcon field="{{column.field}}"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                            <td width="200px">
+
+                                <button pButton type="button" icon="pi pi-check-square" pTooltip="Verifikasi"
+                                    (click)="verifikasiTagihan(rowData)" label=""
+                                    class="p-button-rounded p-button-success p-mr-1"></button>
+                                <!-- <button pButton type="button" icon="pi pi-users" pTooltip="Detail Registrasi"
+                                    (click)="detailRegistrasi(rowData)" label=""
+                                    class="p-button-rounded p-button-primary p-mr-1"></button>
+
+                                <button pButton type="button" icon="pi pi-money-bill" pTooltip="Detail Tagihan"
+                                    (click)="detailTagihan(rowData)" label=""
+                                    class="p-button-rounded p-button-primary p-mr-1"></button> -->
+
+                                <button pButton type="button" icon="pi pi-list" pTooltip="Detail Verifikasi"
+                                    (click)="detailVerifikasi(rowData)" label=""
+                                    class="p-button-rounded p-button-info p-mr-1"></button>
+
+                                <!-- <button pButton type="button" icon="pi pi-lock" pTooltip="Closing Pemeriksaan"
+                                    *ngIf="item.closing == false" (click)="closingPemeriksaan(rowData)" label=""
+                                    class="p-button-rounded p-button-warning p-mr-1"></button>
+
+                                <button pButton type="button" icon="fa fa-money" pTooltip="Bayar Tagihan"
+                                    *ngIf="item.bayar == true" (click)="bayarTagihan(rowData)" label=""
+                                    class="p-button-rounded p-button-success p-mr-1"></button>
+
+                                <button pButton type="button" icon="pi pi-lock-open" pTooltip="Batal Closing"
+                                    *ngIf="item.closing == true" (click)="batalClosing(rowData)" label=""
+                                    class="p-button-rounded p-button-danger p-mr-1"></button>
+
+                                <button pButton type="button" icon="pi pi-undo" pTooltip="Batal Pulang"
+                                    (click)="batalPulang(rowData)" label=""
+                                    class="p-button-rounded p-button-danger p-mr-1"></button> -->
+
+                                <p-splitButton label="" styleClass="p-button-help p-ml-auto"
+                                    [style]="{'display':'inline-flex'}" icon="pi pi-ellipsis-v" [model]="listBtn"
+                                    (onDropdownClick)="selectData(rowData)" appendTo="body" ></p-splitButton>
+                            </td>
+                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                <span class="{{rowData.class}}" *ngIf="column.isTag == true"> {{rowData[column.field]}}</span>
+                                <span  *ngIf="column.isTag != true"> {{rowData[column.field]}}</span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000" rejectButtonStyleClass="p-button-text">
+            </p-confirmDialog>
+            <!-- <div class="p-col-12 p-md-12">
+                <div class="p-grid">
+                  
+                </div>
+            </div> -->
+            <!-- <div class="p-col-12 p-md-12">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-2" >
+                        <button pButton type="button" icon="pi pi-money-bill" pTooltip="Detail Registrasi"
+                            (click)="detailRegistrasi()" label="Detail Registrasi"></button>
+                    </div>
+                    <div class="p-col-12 p-md-2" >
+                        <button pButton type="button" icon="pi pi-money-bill" pTooltip="Detail Tagihan"
+                            (click)="detailTagihan()" label="Detail Tagihan"></button>
+                    </div>
+                    <div class="p-col-12 p-md-2" >
+                        <button pButton type="button" icon="pi pi-money-bill" pTooltip="Rekap Tagihan"
+                            (click)="rekapTagihan()" label="Rekap Tagihan"></button>
+                    </div> 
+                    <div class="p-col-12 p-md-2" >
+                        <button pButton type="button" icon="pi pi-list" pTooltip="Detail Verifikasi"
+                            (click)="detailVerifikasi()" label="Detail Verifikasi"></button>
+                    </div>
+                    <div class="p-col-12 p-md-2" >
+                        <button pButton type="button" icon="pi pi-check-square" pTooltip="Verifikasi"
+                            (click)="verifikasiTagihan()" label="Verifikasi"></button>
+                    </div>
+                    <div class="p-col-12 p-md-2"  *ngIf="item.closing == false">
+                        <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"
+                            rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+                        <button pButton type="button" icon="pi pi-lock" pTooltip="Closing Pemeriksaan"
+                            (click)="closingPemeriksaan()" label="Closing Pemeriksaan"></button>
+                    </div>
+                    <div class="p-col-12 p-md-2"  *ngIf="item.bayar == true">
+                        <button pButton type="button" icon="fa fa-money" pTooltip="Bayar Tagihan"
+                            (click)="bayarTagihan()" label="Bayar Tagihan"></button>
+                    </div>
+                    <div class="p-col-12 p-md-2"  *ngIf="item.closing == true">
+                        <p-confirmDialog [style]="{width: '50vw'}" [baseZIndex]="10000"
+                            rejectButtonStyleClass="p-button-text"></p-confirmDialog>
+                        <button pButton type="button" icon="pi pi-lock-open" pTooltip="Batal Closing"
+                            (click)="batalClosing()" label="Batal Closing" style="background-color: red;"></button>
+                    </div>
+                    <div class="p-col-12 p-md-2" >
+                        <button pButton type="button" icon="pi pi-user-edit" pTooltip="Batal Pulang"
+                            (click)="batalPulang()" label="Batal Pulang" style="background-color: red;"></button>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+</div>
+<p-dialog header="Detail Verifikasi" [(visible)]="pop_detailVerifikasi" [modal]="true" [maximizable]="true"
+    [draggable]="true" [resizable]="true" [style]="{width: '120px', minWidth: '1200px'}"
+    [contentStyle]="{minHeight: '350px'}">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-table #dt [columns]="columnDV" [value]="dataTableDV" [(selection)]="selectedDV"
+                    styleClass="p-datatable-customers" [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                    [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                    sortMode="multiple" selectionMode="single" dataKey="norec" (onRowSelect)="onRowSelectDV($event)">
+                    <ng-template pTemplate="header" let-columns>
+                        <tr>
+                            <th style="width: 80px"></th>
+                            <th *ngFor="let col of columns" pSortableColumn="{{col.field}}"
+                                style="width: {{col.width}}">
+                                {{col.header}}
+                                <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                            </th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex"
+                        let-expanded="expanded">
+                        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                            <td style="width: 80px">
+                                <button type="button" pButton pRipple [pRowToggler]="rowData"
+                                    class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                    [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                            </td>
+                            <td *ngFor="let col of columns" style="width: {{col.width}}">
+                                <span *ngIf="col.isCurrency != undefined">
+                                    {{formatRupiah(rowData[col.field],'')}}
+                                </span>
+                                <span *ngIf="col.isCurrency == undefined"> {{rowData[col.field]}}</span>
+                            </td>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="rowexpansion" let-data>
+                        <tr>
+                            <td colspan="10">
+                                <div class="p-p-3">
+                                    <p-table [value]="data.details" dataKey="norec">
+                                        <ng-template pTemplate="header">
+                        <tr>
+                            <th>Tgl Bayar</th>
+                            <th>No Bayar</th>
+                            <th>Cara Bayar</th>
+                            <th>Total Dibayar</th>
+                            <th>Kasir</th>
+                        </tr>
+                    </ng-template>
+                    <ng-template pTemplate="body" let-detail>
+                        <tr>
+                            <td>{{detail.tglsbm}}</td>
+                            <td>{{detail.nosbm}}</td>
+                            <td>{{detail.carabayar}}</td>
+                            <td>{{detail.totaldibayar}}</td>
+                            <td>{{detail.kasir}}</td>
+                        </tr>
+                    </ng-template>
+                </p-table>
+            </div>
+            </td>
+            </tr>
+            </ng-template>
+            </p-table>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-10"></div>
+                <div class="p-col-12 p-md-2">
+                    <button pButton type="button" icon="fa fa-ban" pTooltip="Unverifikasi Tagihan"
+                        (click)="UnverifikasiTagihan()" label="Unverifikasi" style="background-color: red;"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</p-dialog>
+
+<p-dialog header="Filter" [(visible)]="popFilter" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+    [draggable]="false" [resizable]="true">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-4">
+                <label class="label" for="input">Instalasi</label>
+                <p-dropdown [options]="listDepartemen" [(ngModel)]="item.dataDepartemen" [filter]="true"
+                    [showClear]="true" placeholder="Instalasi" optionLabel="departemen" (onChange)="isiRuangan()"
+                    appendTo="body">
+                </p-dropdown>
+            </div>
+            <div class="p-col-12 p-md-4">
+                <label class="label" for="input">Ruangan</label>
+                <p-dropdown [options]="listRuangan" [(ngModel)]="item.dataRuangan" [filter]="true" [showClear]="true"
+                    placeholder="Ruangan" optionLabel="ruangan" appendTo="body"></p-dropdown>
+            </div>
+            <div class="p-col-12 p-md-4">
+                <label class="label" for="input">Tipe Pasien</label>
+                <p-dropdown [options]="listKelompokPasien" [(ngModel)]="item.dataKelPasien" [filter]="true"
+                    [showClear]="true" placeholder="Tipe Pasien" optionLabel="kelompokpasien" appendTo="body">
+                </p-dropdown>
+            </div>
+
+
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <p-button icon="pi pi-filter" (click)="cariFilter()" label="Filter" class="p-button-success">
+        </p-button>
+        <p-button icon="pi pi-close" (click)="clearFilter()" label="Clear" styleClass="p-button-text">
+        </p-button>
+    </ng-template>
+</p-dialog>

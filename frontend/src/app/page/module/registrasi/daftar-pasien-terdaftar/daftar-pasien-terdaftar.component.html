@@ -1,0 +1,147 @@
+<!-- <p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog> -->
+<p-confirmPopup></p-confirmPopup>
+
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Pasien List</h4>
+        <div class="p-grid">
+
+            <div class="p-col-12 p-md-2 p-md-offset-1">
+                <label class="label" for="input">No RM </label>
+                <input type="text" [(ngModel)]="item.noRM" pInputText (keyup.enter)="cari()"
+                    placeholder="No Rekam Medis" />
+            </div>
+            <div class="p-col p-md-2">
+                <label class="label" for="input">Nama Pasien </label>
+                <input type="text" [(ngModel)]="item.namaPasien" pInputText (keyup.enter)="cari()"
+                    placeholder="Nama Pasien" />
+            </div>
+            <div class="p-col-12 p-md-1">
+                <label class="label" for="input">NIK </label>
+                <input type="text" [(ngModel)]="item.nik" pInputText (keyup.enter)="cari()" placeholder="NIK" />
+            </div>
+            <div class="p-col-12 p-md-1">
+                <label class="label" for="input">No BPJS </label>
+                <input type="text" [(ngModel)]="item.noBPJS" pInputText (keyup.enter)="cari()" placeholder="No BPJS " />
+            </div>
+            <div class="p-col-12 p-md-2">
+                <label class="label" for="input">Tgl Lahir </label>
+                <p-calendar [(ngModel)]="item.tglLahir" [showIcon]="true" [monthNavigator]="true" [yearNavigator]="true"
+                    yearRange="1980:2030" [showTime]="false" dateFormat="dd-mm-yy">
+                </p-calendar>
+            </div>
+            <div class="p-col-12 p-md-2">
+                <label class="label" for="input">Alamat </label>
+                <input type="text" [(ngModel)]="item.alamat" pInputText (keyup.enter)="cari()" placeholder="Alamat " />
+            </div>
+            <div class="p-col-12 p-md-1" style="margin-top:15px">
+                <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+            </div>
+        </div>
+        <div class="p-col-12">
+            <p-table #dt [columns]="column" [value]="dataTable" [(selection)]="selected"
+                styleClass="p-datatable-customers" [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                sortMode="multiple" selectionMode="single">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th style="width: 80px">Aksi</th>
+                        <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                            style="width: {{column.width}}">
+                            {{column.header}} <p-sortIcon field="{{column.field}}"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                        <td style="width: 80px">
+                            <button pButton type="button" icon="fa fa-stethoscope" class="p-button-rounded  p-mr-2"
+                                pTooltip="Input Triase Pasien Baru" label=""
+                                (click)="popUpTriasePasienBaru2(rowData)"></button>
+
+                            <button pButton type="button" icon="fa fa-medkit" class="p-button-rounded p-mr-2"
+                                (click)="inputTriase2(rowData)" pTooltip="Input Triase Pasien" label=""></button>
+
+                        </td>
+                        <td *ngFor="let column of columns" style="width: {{column.width}}">
+                            {{rowData[column.field]}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <!-- <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-6" style="margin-top:10px"></div>
+                <div class="p-col-12 p-md-3" style="margin-top:10px">
+                    <button pButton type="submit" icon="fa fa-medkit" pTooltip="Input Triase Pasien Baru"
+                        (click)="popUpTriasePasienBaru()" label="Input Triase Pasien Baru"></button>
+                </div>
+                <div class="p-col-12 p-md-3" style="margin-top:10px">
+                    <button pButton type="submit" icon="fa fa-medkit" pTooltip="Input Triase Pasien"
+                        (click)="inputTriase()" label="Input Triase Pasien"></button>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>
+<p-dialog header="Data Pasien" [(visible)]="pop_DataPasien" [modal]="true" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [style]="{width: '800px', minWidth: '800px'}" [contentStyle]="{minHeight: '300px'}">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">Nama Pasien </label>
+                        <input type="text" [(ngModel)]="item.namaPasien" pInputText placeholder="Nama Pasien" />
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">Jenis Kelamin</label>
+                        <p-dropdown [options]="listJenisKelamin" [(ngModel)]="item.jenisKelamin" [filter]="true"
+                            [showClear]="true" placeholder="Jenis Kelamin" optionLabel="jeniskelamin" appendTo="body">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">Tempat Lahir </label>
+                        <input type="text" [(ngModel)]="item.tempatLahir" pInputText placeholder="Tempat Lahir"
+                            appendTo="body" />
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">Tanggal Lahir </label>
+                        <p-calendar [(ngModel)]="item.tglLahir" [showIcon]="true" [monthNavigator]="true"
+                            [yearNavigator]="true" yearRange="1980:2030" [showTime]="false" dateFormat="yy-mm-dd"
+                            hourFormat="24" placeholder="Tgl Registrasi" [disabled]="isTglRegistrasi" appendTo="body">
+                        </p-calendar>
+                    </div>
+                    <div class="p-col-12 p-md-2">
+                        <label class="label" for="input">Notelepon</label>
+                        <input type="text" [(ngModel)]="item.Notelepon" pInputText placeholder="No Telepon"
+                            appendTo="body" />
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-12">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Alamat </label>
+                        <textarea pInputTextarea [(ngModel)]="item.Alamat" placeholder="Alamat"
+                            style="height: 85px;"></textarea>
+                    </div>
+                </div>
+            </div>
+            <div class="p-col-12 p-md-12">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-8"></div>
+                    <div class="p-col-12 p-md-2" style="margin-top:15px">
+                        <button pButton type="submit" icon="fa fa-floppy-o" pTooltip="Simpan"
+                            (click)="simpanPasienTriase()" label="Simpan" [disabled]="isSimpan"></button>
+                    </div>
+                    <div class="p-col-12 p-md-2" style="margin-top:15px">
+                        <button pButton type="submit" icon="fa fa-times-circle-o" pTooltip="Tutup"
+                            (click)="tutupPasienTriase()" label="Tutup" style="background-color: red;"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-dialog>

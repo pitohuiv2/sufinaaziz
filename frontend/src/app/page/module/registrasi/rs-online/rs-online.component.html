@@ -1,0 +1,635 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>RS Online</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-tabView (onChange)="handleChangeTab($event)">
+                    <p-tabPanel header="Pasien Masuk" leftIcon="fa fa-medkit">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text"
+                                        (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                        placeholder="Pencarian " />
+                                </span>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table #dt [value]="dataSource" styleClass="p-datatable-customers" [rowHover]="true"
+                                    [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                    [globalFilterFields]="['tanggal']" responsiveLayout="scroll">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex">
+                                            <button type="button" pButton pRipple icon="pi pi-refresh" (click)="cari()"
+                                                class="p-button-success p-mr-2" pTooltip="Reload "
+                                                tooltipPosition="bottom">
+                                            </button>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th class="text-center" rowspan="4">#</th>
+                                            <th class="text-center" rowspan="4">Tanggal</th>
+                                            <th class="text-center" colspan="4">Rawat Jalan</th>
+                                            <th class="text-center" colspan="4">Rawat Inap</th>
+                                            <th class="text-center" colspan="4">IGD</th>
+                                            <th class="text-center" rowspan="4">Tgl Lapor</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-item>
+                                        <tr>
+                                            <td> <button pButton type="button" icon="pi pi-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2" pTooltip="Hapus"
+                                                    label="" (click)="hapusPasienMasuk(item)"></button></td>
+                                            <td>{{item.tanggal}}</td>
+                                            <td>{{item.rj_suspect_l}}</td>
+                                            <td>{{item.rj_suspect_p}}</td>
+                                            <td>{{item.rj_confirm_l}}</td>
+                                            <td>{{item.rj_confirm_p}}</td>
+                                            <td>{{item.ri_suspect_l}}</td>
+                                            <td>{{item.ri_suspect_p}}</td>
+                                            <td>{{item.ri_confirm_l}}</td>
+                                            <td>{{item.ri_confirm_p}}</td>
+                                            <td>{{item.igd_suspect_l}}</td>
+                                            <td>{{item.igd_suspect_p}}</td>
+                                            <td>{{item.igd_confirm_l}}</td>
+                                            <td>{{item.igd_confirm_p}}</td>
+                                            <td>{{item.tgl_lapor}}</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-2 p-md-offset-9">
+                                <label class="label" for="input">Tanggal</label>
+                                <p-calendar [(ngModel)]="item.tgl1" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                    dateFormat="yy-mm-dd">
+                                </p-calendar>
+                            </div>
+                            <div class="p-col-12 p-md-1" style="margin-top: 15px;">
+                                <button pButton type="button" icon="pi pi-save" class="p-button-success p-mr-2"
+                                    (click)="udpatePasienMasuk()" pTooltip="Update" label="Update"></button>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Dirawat Komorbid" leftIcon="fa fa-stethoscope">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text"
+                                        (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                                        placeholder="Pencarian " />
+                                </span>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table #dt2 [value]="dataSource2" styleClass="p-datatable-customers" [rowHover]="true"
+                                    [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                    [globalFilterFields]="['tanggal']" responsiveLayout="scroll">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex">
+                                            <button type="button" pButton pRipple icon="pi pi-refresh" (click)="cari2()"
+                                                class="p-button-success p-mr-2" pTooltip="Reload "
+                                                tooltipPosition="bottom">
+                                            </button>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th class="text-center" rowspan="4">#</th>
+                                            <th class="text-center" rowspan="4">Tanggal</th>
+                                            <th class="text-center" colspan="4">Nicu Khusus Covid</th>
+                                            <th class="text-center" colspan="4">PICU Khusus Covid</th>
+                                            <th class="text-center" colspan="4">ICU Tekanan Negatif dengan Ventilator
+                                            </th>
+                                            <th class="text-center" colspan="4">ICU Tekanan Negatif Tanpa Ventilator
+                                            </th>
+                                            <th class="text-center" colspan="4">ICU Tanpa Tekanan Negatif Tanpa
+                                                Ventilator</th>
+                                            <th class="text-center" colspan="4">Isolasi Tekanan Negatif</th>
+                                            <th class="text-center" colspan="4">Isolasi Tanpa Tekanan Negatif</th>
+                                            <th class="text-center" rowspan="4">Tgl Lapor</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-item>
+                                        <tr>
+                                            <td> <button pButton type="button" icon="pi pi-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2" pTooltip="Hapus"
+                                                    label="" (click)="hapusKomorbid(item)"></button></td>
+                                            <td>{{item.tanggal}}</td>
+                                            <td>{{item.nicu_khusus_covid_suspect_l}}</td>
+                                            <td>{{item.nicu_khusus_covid_suspect_p}}</td>
+                                            <td>{{item.nicu_khusus_covid_confirm_l}}</td>
+                                            <td>{{item.nicu_khusus_covid_confirm_p}}</td>
+                                            <td>{{item.picu_khusus_covid_suspect_l}}</td>
+                                            <td>{{item.picu_khusus_covid_suspect_p}}</td>
+                                            <td>{{item.picu_khusus_covid_confirm_l}}</td>
+                                            <td>{{item.picu_khusus_covid_confirm_p}}</td>
+                                            <td>{{item.icu_tekanan_negatif_dengan_ventilator_suspect_l}}</td>
+                                            <td>{{item.icu_tekanan_negatif_dengan_ventilator_suspect_p}}</td>
+                                            <td>{{item.icu_tekanan_negatif_dengan_ventilator_confirm_l}}</td>
+                                            <td>{{item.icu_tekanan_negatif_dengan_ventilator_confirm_p}}</td>
+                                            <td>{{item.icu_tekanan_negatif_tanpa_ventilator_suspect_l}}</td>
+                                            <td>{{item.icu_tekanan_negatif_tanpa_ventilator_suspect_p}}</td>
+                                            <td>{{item.icu_tekanan_negatif_tanpa_ventilator_confirm_l}}</td>
+                                            <td>{{item.icu_tekanan_negatif_tanpa_ventilator_confirm_p}}</td>
+                                            <td>{{item.icu_dengan_ventilator_suspect_l}}</td>
+                                            <td>{{item.icu_dengan_ventilator_suspect_p}}</td>
+                                            <td>{{item.icu_dengan_ventilator_confirm_l}}</td>
+                                            <td>{{item.icu_dengan_ventilator_confirm_p}}</td>
+                                            <td>{{item.icu_tanpa_ventilator_suspect_l}}</td>
+                                            <td>{{item.icu_tanpa_ventilator_suspect_p}}</td>
+                                            <td>{{item.icu_tanpa_ventilator_confirm_l}}</td>
+                                            <td>{{item.icu_tanpa_ventilator_confirm_p}}</td>
+                                            <td>{{item.isolasi_tekanan_negatif_suspect_l}}</td>
+                                            <td>{{item.isolasi_tekanan_negatif_suspect_p}}</td>
+                                            <td>{{item.isolasi_tekanan_negatif_confirm_l}}</td>
+                                            <td>{{item.isolasi_tekanan_negatif_confirm_p}}</td>
+                                            <td>{{item.isolasi_tanpa_tekanan_negatif_suspect_l}}</td>
+                                            <td>{{item.isolasi_tanpa_tekanan_negatif_suspect_p}}</td>
+                                            <td>{{item.isolasi_tanpa_tekanan_negatif_confirm_l}}</td>
+                                            <td>{{item.isolasi_tanpa_tekanan_negatif_confirm_p}}</td>
+                                            <td>{{item.tgl_lapor}}</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-2 p-md-offset-9">
+                                <label class="label" for="input">Tanggal</label>
+                                <p-calendar [(ngModel)]="item.tgl2" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                    dateFormat="yy-mm-dd">
+                                </p-calendar>
+                            </div>
+                            <div class="p-col-12 p-md-1" style="margin-top: 15px;">
+                                <button pButton type="button" icon="pi pi-save" class="p-button-success p-mr-2"
+                                    (click)="updateKomorbid()" pTooltip="Update" label="Update"></button>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Dirawat Tanpa Komorbid" leftIcon="pi pi-sitemap">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text"
+                                        (input)="dt3.filterGlobal($event.target.value, 'contains')"
+                                        placeholder="Pencarian " />
+                                </span>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table #dt3 [value]="dataSource3" styleClass="p-datatable-customers" [rowHover]="true"
+                                    [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                    [globalFilterFields]="['tanggal']" responsiveLayout="scroll">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex">
+                                            <button type="button" pButton pRipple icon="pi pi-refresh" (click)="cari3()"
+                                                class="p-button-success p-mr-2" pTooltip="Reload "
+                                                tooltipPosition="bottom">
+                                            </button>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th class="text-center" rowspan="4">#</th>
+                                            <th class="text-center" rowspan="4">Tanggal</th>
+                                            <th class="text-center" colspan="4">Nicu Khusus Covid</th>
+                                            <th class="text-center" colspan="4">PICU Khusus Covid</th>
+                                            <th class="text-center" colspan="4">ICU Tekanan Negatif dengan Ventilator
+                                            </th>
+                                            <th class="text-center" colspan="4">ICU Tekanan Negatif Tanpa Ventilator
+                                            </th>
+                                            <th class="text-center" colspan="4">ICU Tanpa Tekanan Negatif Tanpa
+                                                Ventilator</th>
+                                            <th class="text-center" colspan="4">Isolasi Tekanan Negatif</th>
+                                            <th class="text-center" colspan="4">Isolasi Tanpa Tekanan Negatif</th>
+                                            <th class="text-center" rowspan="4">Tgl Lapor</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                            <th class="text-center" colspan="2">Suspect</th>
+                                            <th class="text-center" colspan="2">Confirm</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                            <th class="text-center">L</th>
+                                            <th class="text-center">P</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-item>
+                                        <tr>
+                                            <td> <button pButton type="button" icon="pi pi-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2" pTooltip="Hapus"
+                                                    label="" (click)="hapusKomorbid2(item)"></button></td>
+                                            <td>{{item.tanggal}}</td>
+                                            <td>{{item.nicu_khusus_covid_suspect_l}}</td>
+                                            <td>{{item.nicu_khusus_covid_suspect_p}}</td>
+                                            <td>{{item.nicu_khusus_covid_confirm_l}}</td>
+                                            <td>{{item.nicu_khusus_covid_confirm_p}}</td>
+                                            <td>{{item.picu_khusus_covid_suspect_l}}</td>
+                                            <td>{{item.picu_khusus_covid_suspect_p}}</td>
+                                            <td>{{item.picu_khusus_covid_confirm_l}}</td>
+                                            <td>{{item.picu_khusus_covid_confirm_p}}</td>
+                                            <td>{{item.icu_tekanan_negatif_dengan_ventilator_suspect_l}}</td>
+                                            <td>{{item.icu_tekanan_negatif_dengan_ventilator_suspect_p}}</td>
+                                            <td>{{item.icu_tekanan_negatif_dengan_ventilator_confirm_l}}</td>
+                                            <td>{{item.icu_tekanan_negatif_dengan_ventilator_confirm_p}}</td>
+                                            <td>{{item.icu_tekanan_negatif_tanpa_ventilator_suspect_l}}</td>
+                                            <td>{{item.icu_tekanan_negatif_tanpa_ventilator_suspect_p}}</td>
+                                            <td>{{item.icu_tekanan_negatif_tanpa_ventilator_confirm_l}}</td>
+                                            <td>{{item.icu_tekanan_negatif_tanpa_ventilator_confirm_p}}</td>
+                                            <td>{{item.icu_dengan_ventilator_suspect_l}}</td>
+                                            <td>{{item.icu_dengan_ventilator_suspect_p}}</td>
+                                            <td>{{item.icu_dengan_ventilator_confirm_l}}</td>
+                                            <td>{{item.icu_dengan_ventilator_confirm_p}}</td>
+                                            <td>{{item.icu_tanpa_ventilator_suspect_l}}</td>
+                                            <td>{{item.icu_tanpa_ventilator_suspect_p}}</td>
+                                            <td>{{item.icu_tanpa_ventilator_confirm_l}}</td>
+                                            <td>{{item.icu_tanpa_ventilator_confirm_p}}</td>
+                                            <td>{{item.isolasi_tekanan_negatif_suspect_l}}</td>
+                                            <td>{{item.isolasi_tekanan_negatif_suspect_p}}</td>
+                                            <td>{{item.isolasi_tekanan_negatif_confirm_l}}</td>
+                                            <td>{{item.isolasi_tekanan_negatif_confirm_p}}</td>
+                                            <td>{{item.isolasi_tanpa_tekanan_negatif_suspect_l}}</td>
+                                            <td>{{item.isolasi_tanpa_tekanan_negatif_suspect_p}}</td>
+                                            <td>{{item.isolasi_tanpa_tekanan_negatif_confirm_l}}</td>
+                                            <td>{{item.isolasi_tanpa_tekanan_negatif_confirm_p}}</td>
+                                            <td>{{item.tgl_lapor}}</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-2 p-md-offset-9">
+                                <label class="label" for="input">Tanggal</label>
+                                <p-calendar [(ngModel)]="item.tgl3" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                    dateFormat="yy-mm-dd">
+                                </p-calendar>
+                            </div>
+                            <div class="p-col-12 p-md-1" style="margin-top: 15px;">
+                                <button pButton type="button" icon="pi pi-save" class="p-button-success p-mr-2"
+                                    (click)="updateKomorbid2()" pTooltip="Update" label="Update"></button>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Pasien Keluar" leftIcon="pi pi-sign-out">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text"
+                                        (input)="dt4.filterGlobal($event.target.value, 'contains')"
+                                        placeholder="Pencarian " />
+                                </span>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table #dt4 [value]="dataSource4" styleClass="p-datatable-customers" [rowHover]="true"
+                                    [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                    [globalFilterFields]="['tanggal']" responsiveLayout="scroll">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex">
+                                            <button type="button" pButton pRipple icon="pi pi-refresh"
+                                                (click)="cariKeluar()" class="p-button-success p-mr-2"
+                                                pTooltip="Reload " tooltipPosition="bottom">
+                                            </button>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th class="text-center" rowspan="4">#</th>
+                                            <th class="text-center" rowspan="4">Tanggal</th>
+                                            <th class="text-center" rowspan="4">Sembuh / APD (Atas Persetujuan Dokter)
+                                            </th>
+                                            <th class="text-center" rowspan="4">Discarded</th>
+                                            <th style="text-align: center" colspan="20">Meninggal</th>
+                                            <th class="text-center" rowspan="4">Di Rujuk</th>
+                                            <th class="text-center" rowspan="4">Isman</th>
+                                            <th class="text-center" rowspan="4">APS</th>
+                                            <th class="text-center" rowspan="4">Tgl Lapor</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center" rowspan="2">Confirm dengan Komorbid</th>
+                                            <th class="text-center" rowspan="2">Confirm tanpa Komorbid</th>
+                                            <th style="text-align: center" colspan="8">Probable dengan Komorbid</th>
+                                            <th style="text-align: center" colspan="8">Probable tanpa Komorbid</th>
+                                            <th class="text-center" rowspan="2">Discarded dengan Komorbid</th>
+                                            <th class="text-center" rowspan="2">Discarded tanpa Komorbid</th>
+                                        </tr>
+                                        <tr>
+                                            <th class="text-center">Usia 0 - 6 hari</th>
+                                            <th class="text-center">Usia 7 - 28 hari</th>
+                                            <th class="text-center">Usia 29 hari -< 1 tahun</th>
+                                            <th class="text-center">Usia 1 - 4 tahun</th>
+                                            <th class="text-center">Usia 5 - 18 tahun</th>
+                                            <th class="text-center">Usia 19 - 40 tahun</th>
+                                            <th class="text-center">Usia 41 - 60 tahun</th>
+                                            <th class="text-center">Usia > 60 tahun</th>
+                                            <th class="text-center">Usia 0 - 6 hari</th>
+                                            <th class="text-center">Usia 7 - 28 hari</th>
+                                            <th class="text-center">Usia 29 hari -< 1 tahun</th>
+                                            <th class="text-center">Usia 1 - 4 tahun</th>
+                                            <th class="text-center">Usia 5 - 18 tahun</th>
+                                            <th class="text-center">Usia 19 - 40 tahun</th>
+                                            <th class="text-center">Usia 41 - 60 tahun</th>
+                                            <th class="text-center">Usia > 60 tahun</th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-item>
+                                        <tr>
+                                            <td> <button pButton type="button" icon="pi pi-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2" pTooltip="Hapus"
+                                                    label="" (click)="hapusKeluar(item)"></button></td>
+                                            <td>{{item.tanggal}}</td>
+                                            <td>{{item.sembuh}}</td>
+                                            <td>{{item.discarded}}</td>
+                                            <td>{{item.meninggal_komorbid}}</td>
+                                            <td>{{item.meninggal_tanpa_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_pre_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_neo_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_bayi_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_balita_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_anak_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_remaja_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_dws_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_lansia_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_pre_tanpa_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_neo_tanpa_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_bayi_tanpa_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_balita_tanpa_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_anak_tanpa_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_remaja_tanpa_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_dws_tanpa_komorbid}}</td>
+                                            <td>{{item.meninggal_prob_lansia_tanpa_komorbid}}</td>
+                                            <td>{{item.meninggal_discarded_komorbid}}</td>
+                                            <td>{{item.meninggal_discarded_tanpa_komorbid}}</td>
+                                            <td>{{item.dirujuk}}</td>
+                                            <td>{{item.isman}}</td>
+                                            <td>{{item.aps}}</td>
+                                            <td>{{item.tgl_lapor}}</td>
+
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-2 p-md-offset-9">
+                                <label class="label" for="input">Tanggal</label>
+                                <p-calendar [(ngModel)]="item.tgl4" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                    dateFormat="yy-mm-dd">
+                                </p-calendar>
+                            </div>
+                            <div class="p-col-12 p-md-1" style="margin-top: 15px;">
+                                <button pButton type="button" icon="pi pi-save" class="p-button-success p-mr-2"
+                                    (click)="updateKeluar()" pTooltip="Update" label="Update"></button>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Tempat Tidur" leftIcon="fa fa-bed">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text"
+                                        (input)="dt5.filterGlobal($event.target.value, 'contains')"
+                                        placeholder="Pencarian " />
+                                </span>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table #dt5 [value]="dataSource5" styleClass="p-datatable-customers" [rowHover]="true"
+                                    [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                    [globalFilterFields]="['tt']" responsiveLayout="scroll">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex">
+                                            <button type="button" pButton pRipple icon="pi pi-refresh"
+                                                (click)="cariTT()" class="p-button-success p-mr-2"
+                                                pTooltip="Reload " tooltipPosition="bottom">
+                                            </button>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th>#</th>
+                                            <th >Ruangan</th>
+                                            <th >Tempat Tidur</th>
+                                            <th >Jumlah Ruangan</th>
+                                            <th >Kapasitas</th>
+                                            <th >Terpakai</th>
+                                            <th >Kosong</th>
+                                        </tr>
+                                       
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-item>
+                                        <tr>
+                                            <td> <button pButton type="button" icon="pi pi-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2" pTooltip="Hapus"
+                                                    label="" (click)="hapusTT(item)"></button></td>
+                                            <td>{{item.ruang}}</td>
+                                            <td>{{item.tt}}</td>
+                                            <td>{{item.jumlah_ruang}}</td>
+                                            <td>{{item.jumlah}}</td>
+                                            <td>{{item.terpakai}}</td>
+                                            <td>{{item.kosong}}</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <!-- <div class="p-col-12 p-md-2 p-md-offset-9">
+                                <label class="label" for="input">Tanggal</label>
+                                <p-calendar [(ngModel)]="item.tgl5" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                    dateFormat="yy-mm-dd">
+                                </p-calendar>
+                            </div> -->
+                            <div class="p-col-12 p-md-1 p-md-offset-11" style="margin-top: 15px;">
+                                <button pButton type="button" icon="pi pi-save" class="p-button-success p-mr-2"
+                                    (click)="updateTT()" pTooltip="Update" label="Update"></button>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="SDM" leftIcon="fa fa-users">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text"
+                                        (input)="dt6.filterGlobal($event.target.value, 'contains')"
+                                        placeholder="Pencarian " />
+                                </span>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table #dt6 [value]="dataSource6" styleClass="p-datatable-customers" [rowHover]="true"
+                                    [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                    [globalFilterFields]="['kebutuhan']" responsiveLayout="scroll">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex">
+                                            <button type="button" pButton pRipple icon="pi pi-refresh"
+                                                (click)="cariSDM()" class="p-button-success p-mr-2"
+                                                pTooltip="Reload " tooltipPosition="bottom">
+                                            </button>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th>#</th>
+                                            <th >Kebutuhan SDM</th>
+                                            <th >Jumlah Existing</th>
+                                            <th >Jumlah Diterima</th>
+                                            <th >Jumlah</th>
+                                            <th >Tgl Update</th>
+                                        </tr>
+                                       
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-item>
+                                        <tr>
+                                            <td> <button pButton type="button" icon="pi pi-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2" pTooltip="Hapus"
+                                                    label="" (click)="hapsuSDN(item)"></button></td>
+                                            <td>{{item.kebutuhan}}</td>
+                                            <td>{{item.jumlah_eksisting}}</td>
+                                            <td>{{item.jumlah_diterima}}</td>
+                                            <td>{{item.jumlah}}</td>
+                                            <td>{{item.tglupdate}}</td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <!-- <div class="p-col-12 p-md-2 p-md-offset-9">
+                                <label class="label" for="input">Tanggal</label>
+                                <p-calendar [(ngModel)]="item.tgl5" [showIcon]="true" [monthNavigator]="true"
+                                    [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                    dateFormat="yy-mm-dd">
+                                </p-calendar>
+                            </div> -->
+                            <div class="p-col-12 p-md-1 p-md-offset-11" style="margin-top: 15px;">
+                                <button pButton type="button" icon="pi pi-save" class="p-button-success p-mr-2"
+                                    (click)="updaetSDM()" pTooltip="Update" label="Update"></button>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+        </div>
+    </div>
+</div>

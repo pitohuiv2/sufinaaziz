@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <script>document.write('<base href="' + document.location + '" />');</script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <title>RSUD Pagelaran - Landing Page</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Lexend:wght@100;300&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="theme/purple/theme-light.css">
+    <link rel="stylesheet" type="text/css" href="layout/css/layout-blue.css">
+    <link rel="stylesheet" type="text/css" href="primeng.min.css">
+    <link rel="stylesheet" type="text/css" href="primeflex.min.css">
+    <link href="fontawesome-free-5.15.4-web/css/all.css" rel="stylesheet">
+    <!--load all styles -->
+    <link rel="stylesheet" type="text/css" href="primeicons-static.css">
+</head>
+<style>
+    body {
+        font-family: 'Lexend', sans-serif;
+    }
+</style>
+
+<body class="landing-body">
+    <div class="landing-wrapper">
+        <div id="header" class="flex flex-column">
+            <div class="header-top flex align-items-center justify-content-between">
+                <h4 class="font-bold m-0 cursor-pointer">RSUD Pagelaran</h4>
+                <div>
+                    <a id="menu-button" class="align-items-center justify-content-center cursor-pointer"
+                        onclick="openMenu()">
+                        <i class="pi pi-bars"></i>
+                    </a>
+
+                    <ul id="landing-menu" class="landing-menu list-none">
+                        <li class="flex justify-content-end">
+                            <a onclick="closeMenu()" id="landing-menu-close" tabindex="0" class="cursor-pointer">
+                                <i class="pi pi-times"></i>
+                            </a>
+                        </li>
+
+                        <li>
+                            <a href="#header">HOME</a>
+                        </li>
+                        <li>
+                            <a href="#features">SIMRS</a>
+                        </li>
+                        <li>
+                            <a href="#statistics">MAPS</a>
+                        </li>
+                        <li>
+                            <a href="#pricing">ABOUT</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="header-content flex flex-1 align-items-center justify-content-evenly">
+                <div class="header-content-left flex flex-column">
+                    <img src="layout/images/landing/header-effect-2.svg" alt="verona" class="absolute" />
+                     <!-- <img src="layout/images/landing/header-effect-2.svg" alt="verona" class="absolute" /> -->
+                    <div style="padding-left: 80px; padding-top: 70px">
+                        <div class="font-bold header-text mb-3">P-Cure Neo </div>
+                        <div class="subtext text-3xl line-height-4 mb-6">RSUD Pagelaran Hospital Information System<br />
+                        
+                        </div>
+
+                        <!-- <button type="button" class="p-button w-11rem">
+                            <span class="p-button-text">TRY FREE NOW</span>
+                        </button> -->
+                    </div>
+                </div>
+                <div class="header-content-right flex align-items-center justify-content-center">
+                    <img src="img.png" alt="verona" style="height:300px;border-radius: 10px;"  />
+                    <!-- <img src="layout/images/landing/screen.png" alt="verona" class="w-auto" /> -->
+                </div>
+            </div>
+        </div>
+
+        <div id="features" class="p-4 md:p-8 md:pb-5">
+            <div class="flex flex-wrap justify-content-center lg:justify-content-around">
+                <a href="http://10.10.10.200:4200" class="flex flex-column align-items-center lg:align-items-start mb-6">
+                    <div class="responsive mb-5 flex align-items-center justify-content-center"
+                        style="min-height: 260px">
+                        <img src="layout/images/landing/icon-modern-responsive.svg" height="165" />
+                    </div>
+                    <h2 class="m-0 mb-5">SIMRS</h2>
+                    <p>Hospital Information System.</p>
+                </a>
+                <a href="http://10.10.10.200:4400" class="flex flex-column align-items-center lg:align-items-start mb-6">
+                    <div class="design mb-5 flex align-items-center justify-content-center" style="min-height: 260px">
+                        <img src="layout/images/landing/icon-modern-design.svg" height="165" />
+                    </div>
+                    <h2 class="m-0 mb-5">E-Reservasi</h2>
+                    <p>Make an Appointment</p>
+                </a>
+                <a href="http://10.10.10.200:8001" class="flex flex-column align-items-center lg:align-items-start mb-6">
+                    <div class="clean mb-5 flex align-items-center justify-content-center" style="min-height: 260px">
+                        <img src="chart.png" height="165" />
+                    </div>
+                    <h2 class="m-0 mb-5">EIS</h2> 
+                    <p>Dashboard Executive Information System</p>
+                </a>
+                <a href="http://10.10.10.200:4300"  class=" flex flex-column align-items-center lg:align-items-start mb-6">
+                    <div class="responsive mb-5 flex align-items-center justify-content-center" style="min-height: 260px">
+                        <img src="103817.png" height="165" />
+                    </div>
+                    <h2 class="m-0 mb-5">KIOS-K</h2>
+                    <p>Queueing & Self Registration</p>
+                </a>
+                <a href="http://10.10.10.200:8002"  class=" flex flex-column align-items-center lg:align-items-start mb-6">
+                    <div class="design mb-5 flex align-items-center justify-content-center" style="min-height: 260px">
+                        <img src="bed.png" height="165" />
+                    </div>
+                    <h2 class="m-0 mb-5">Bed </h2>
+                    <p>Online Bed Information</p>
+                </a>
+               
+            </div>
+
+        </div>
+
+        <!-- <div id="statistics" class="flex align-items-center justify-content-between"> -->
+        <!-- <h2 class="p-0 m-0">Join the people of Verona now…</h2> -->
+        <!-- <button type="button" class="p-button">
+                <span class="p-button-text">TRY FREE NOW</span>
+            </button> -->
+        <!-- </div> -->
+
+        <div id="statistics" class="p-1 md:p-0">
+            <div class="grid">
+                <div class="col-12">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d15832.93102556269!2d107.1392522!3d-7.2142687!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x41820cc0ff531a92!2sRSUD%20Pagelaran%20Cianjur!5e0!3m2!1sid!2sid!4v1637312961942!5m2!1sid!2sid"
+                        width="100%" height="350" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+                </div>
+                <!-- <div class="col-12 md:col-4">
+                    <div class="price-box flex flex-column align-items-center justify-content-center px-5 lg:px-7">
+                        <img src="layout/images/landing/asset-free.svg" class="mt-2 mb-4">
+                        <h4 class="m-0 mb-2">Free</h4>
+                        <div class="mb-4">
+                            <span class="font-bold text-6xl">$0</span>
+                            <span class="font-bold text-xl subtext">/month</span>
+                        </div>
+                        <button type="button" class="p-button">
+                            <span class="p-button-text">TRY NOW</span>
+                        </button>
+                        <ul class="list-none p-0 mt-4 mb-7">
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3">Responsive Layout</span>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon opacity-0 border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3 subtext opacity-50">Unlimited Push Messages</span>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon opacity-0 border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3 subtext opacity-50">50 Support Ticket</span>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon opacity-0 border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3 subtext opacity-50">Free Shipping</span>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon opacity-0 border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3 subtext opacity-50">Unlimited Storage</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12 md:col-4">
+                    <div class="price-box flex flex-column align-items-center justify-content-center px-5 lg:px-7">
+                        <img src="layout/images/landing/asset-premium.svg" class="mt-2 mb-4">
+                        <h4 class="m-0 mb-2">Premium</h4>
+                        <div class="mb-4">
+                            <span class="font-bold text-6xl">$190</span>
+                            <span class="font-bold text-xl subtext">/month</span>
+                        </div>
+                        <button type="button" class="p-button">
+                            <span class="p-button-text">TRY NOW</span>
+                        </button>
+                        <ul class="list-none p-0 mt-4 mb-7">
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3">Responsive Layout</span>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3">Unlimited Push Messages</span>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3">50 Support Ticket</span>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3">Free Shipping</span>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3">10 GB Storage</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="col-12 md:col-4">
+                    <div class="price-box flex flex-column align-items-center justify-content-center px-5 lg:px-7">
+                        <img src="layout/images/landing/asset-enterprise.svg" class="mt-2 mb-4">
+                        <h4 class="m-0 mb-2">Enterprise</h4>
+                        <div class="mb-4">
+                            <span class="font-bold text-6xl">Custom</span>
+                            <span class="font-bold text-xl subtext">/month</span>
+                        </div>
+                        <button type="button" class="p-button">
+                            <span class="p-button-text">TRY NOW</span>
+                        </button>
+                        <ul class="list-none p-0 mt-4 mb-7">
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3">Responsive Layout</span>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3">Unlimited Push Messages</span>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3">50 Support Ticket</span>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3">Free Shipping</span>
+                            </li>
+                            <li class="flex align-items-center mb-3">
+                                <div
+                                    class="price-icon border-circle border-solid border-1 w-2rem h-2rem flex align-items-center justify-content-center">
+                                    <i class="pi pi-check"></i>
+                                </div>
+                                <span class="ml-2 line-height-3">Unlimited Storage</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div> -->
+            </div>
+        </div>
+        <div id="pricing">
+        </div>
+        <div id="footer"
+            class="px-4 md:px-8 py-5 flex flex-wrap align-items-start justify-content-around md:justify-content-between">
+            <img src="logo_rs_trans.png" alt="logo" width="64" height="64" class="mb-4 cursor-pointer" />
+            <span style="font-size:20px;color:white;margin-top: 20px;"> RSUD Pagelaran</span>
+            <div
+                class="footer-left-section flex flex-1 align-items-start justify-content-center md:justify-content-start">
+                <div class="mx-3 md:mx-8 mb-4 flex flex-column align-items-center">
+                    <!-- <h5 class="mb-4">ABOUT</h5> -->
+
+                    <ul class="list-none p-0 m-0">
+                        <li class="flex"><a href="#" target="_blank" class="py-2 cursor-pointer"> <i
+                                    class="fas fa-map-marker-alt"></i> Alamat :</a></li>
+                        <li class="flex"><a href="#" target="_blank" class="py-2 cursor-pointer">Jl. Raya Taman
+                                Pagelaran No.18, Pagelaran, Kabupaten Cianjur, Jawa Barat 43266</a></li>
+                        <li class="flex"><a href="#" target="_blank" class="py-2 cursor-pointer"><i
+                                    class="fas fa-at"></i> Email : </a></li>
+                        <li class="flex"><a href="#" target="_blank" class="py-2 cursor-pointer"><i
+                                    class="fas fa-phone"></i> Telpon : </a></li>
+                        <li class="flex"><a href="#" target="_blank" class="py-2 cursor-pointer"><i
+                                    class="fas fa-fax"></i> Fax : </a></li>
+                        <!-- <li class="flex"><a href="#" target="_blank" class="py-2 cursor-pointer">Pandora</a></li> -->
+                    </ul>
+                </div>
+                <div class="mx-3 md:mx-7 mb-4 flex flex-column">
+                    <h5 class="mb-4">| PELAYANAN</h5>
+                    <ul class="list-none p-0 m-0">
+                        <li class="flex"><a href="#" target="_blank" class="py-2 cursor-pointer">Rawat Inap & Perawatan
+                                Intensif</a></li>
+                        <li class="flex"><a href="#" target="_blank" class="py-2 cursor-pointer">IGD</a></li>
+                        <li class="flex"><a href="#" target="_blank" class="py-2 cursor-pointer">Farmasi/Apotek</a></li>
+                        <li class="flex"><a href="#" target="_blank" class="py-2 cursor-pointer">Poliklinik &
+                                Rehabilitasi Medik</a></li>
+                        <li class="flex"><a href="#" target="_blank" class="py-2 cursor-pointer">Laboratorium &
+                                Radiologi</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-right-section flex align-items-center justify-content-evenly w-full md:w-auto mt-4">
+                <a href="#"><i class="pi pi-facebook"></i></a>
+                <a href="#" target="_blank"><i class="pi pi-youtube mx-3 md:mx-6"></i></a>
+                <a href="#"><i class="pi pi-twitter"></i></a>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+        //<![CDATA[
+        var wrapper = document.querySelector('.landing-wrapper');
+        var body = document.querySelector('.landing-body');
+        var menuitems = document.querySelectorAll('.landing-menu-item');
+
+        function openMenu() {
+            wrapper.classList.add('landing-menu-active');
+            body.classList.add('block-scroll');
+        }
+
+        function closeMenu() {
+            wrapper.classList.remove('landing-menu-active');
+            body.classList.remove('block-scroll');
+        }
+
+        for (var i = 0; i < menuitems.length; i++) {
+            var menuitem = menuitems[i];
+            menuitem.addEventListener('click', function (e) {
+                closeMenu();
+            });
+        }
+
+        var links = document.querySelectorAll('a[href^="#"]');
+        for (var i = 0; i < links.length; i++) {
+            var link = links[i];
+            link.addEventListener('click', function (e) {
+                if (document.documentElement.scrollIntoView) {
+                    e.preventDefault();
+                    document.getElementById(event.currentTarget.getAttribute('href').substring(1)).scrollIntoView({
+                        behavior: 'smooth',
+                        offsetTop: 20
+                    });
+                }
+            });
+        }
+
+        window.onload = function () {
+            document.onclick = function (e) {
+                if (e.target.className !== 'pi pi-bars') {
+                    closeMenu();
+                }
+            };
+        };
+    </script>
+</body>
+
+</html>

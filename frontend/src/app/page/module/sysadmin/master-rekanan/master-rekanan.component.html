@@ -1,0 +1,348 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-tabView (onChange)="handleChangeTab($event)">
+                    <p-tabPanel header="Tipe Pasien" leftIcon="fa fa-list">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text"
+                                        (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                                        placeholder="Pencarian " />
+                                </span>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table #dt1 [columns]="columnTp" [value]="dataSourceTp"
+                                    styleClass="p-datatable-customers" [rowHover]="true" [rows]="10"
+                                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                    [globalFilterFields]="['kelompokpasien']" selectionMode="single">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex">
+                                            <button type="button" pButton pRipple icon="pi pi-plus" (click)="tambahTp()"
+                                                class="p-button-success p-mr-2" pTooltip="Tambah "
+                                                tooltipPosition="bottom">
+                                            </button>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th style="width: 80px"></th>
+                                            <th *ngFor="let col of columns" pSortableColumn="{{col.field}}"
+                                                style="width: {{col.width}}">
+                                                {{col.header}}
+                                                <p-sortIcon field="{{col.field}}">
+                                                </p-sortIcon>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td style="width: 80px">
+                                                <button pButton type="button" icon="pi pi-user-edit"
+                                                    class="p-button-rounded p-mr-2" pTooltip="Edit " label=""
+                                                    (click)="editTp(rowData)"></button>
+                                                <button pButton type="button" icon="pi pi-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2"
+                                                    pTooltip="Nonaktifkan" label="" (click)="hapusTp(rowData)"></button>
+                                            </td>
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                <span class="{{rowData.class}}" *ngIf="column.isTag == true">
+                                                    {{rowData[column.field]}}</span>
+                                                <span *ngIf="column.isTag != true"> {{rowData[column.field]}}</span>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Jenis Rekanan/Supplier" leftIcon="fa fa-list">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text"
+                                        (input)="dt2.filterGlobal($event.target.value, 'contains')"
+                                        placeholder="Pencarian " />
+                                </span>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table #dt2 [columns]="columnJRkn" [value]="dataSourceJRkn"
+                                    styleClass="p-datatable-customers" [rowHover]="true" [rows]="10"
+                                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                    [globalFilterFields]="['jenisrekanan']" selectionMode="single">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex">
+                                            <button type="button" pButton pRipple icon="pi pi-plus"
+                                                (click)="tambahJRkn()" class="p-button-success p-mr-2"
+                                                pTooltip="Tambah " tooltipPosition="bottom">
+                                            </button>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th style="width: 80px"></th>
+                                            <th *ngFor="let col of columns" pSortableColumn="{{col.field}}"
+                                                style="width: {{col.width}}">
+                                                {{col.header}}
+                                                <p-sortIcon field="{{col.field}}">
+                                                </p-sortIcon>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td style="width: 80px">
+                                                <button pButton type="button" icon="pi pi-user-edit"
+                                                    class="p-button-rounded p-mr-2" pTooltip="Edit " label=""
+                                                    (click)="editJRkn(rowData)"></button>
+                                                <button pButton type="button" icon="pi pi-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2"
+                                                    pTooltip="Nonaktifkan" label=""
+                                                    (click)="hapusJRkn(rowData)"></button>
+                                            </td>
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                <span class="{{rowData.class}}" *ngIf="column.isTag == true">
+                                                    {{rowData[column.field]}}</span>
+                                                <span *ngIf="column.isTag != true"> {{rowData[column.field]}}</span>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Rekanan/Supplier" leftIcon="fa fa-list">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-4">
+                                <span class="p-input-icon-left">
+                                    <i class="pi pi-search"></i>
+                                    <input pInputText type="text"
+                                        (input)="dt3.filterGlobal($event.target.value, 'contains')"
+                                        placeholder="Pencarian " />
+                                </span>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table #dt3 [columns]="columnRkn" [value]="dataSourceRkn"
+                                    styleClass="p-datatable-customers" [rowHover]="true" [rows]="10"
+                                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                    [globalFilterFields]="['namarekanan']" selectionMode="single">
+                                    <ng-template pTemplate="caption">
+                                        <div class="p-d-flex">
+                                            <button type="button" pButton pRipple icon="pi pi-plus"
+                                                (click)="tambahRkn()" class="p-button-success p-mr-2" pTooltip="Tambah "
+                                                tooltipPosition="bottom">
+                                            </button>
+                                        </div>
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th style="width: 120px"></th>
+                                            <th *ngFor="let col of columns" pSortableColumn="{{col.field}}"
+                                                style="width: {{col.width}}">
+                                                {{col.header}}
+                                                <p-sortIcon field="{{col.field}}">
+                                                </p-sortIcon>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td style="width: 120px">
+                                                <button pButton type="button" icon="pi pi-user-edit"
+                                                    class="p-button-rounded p-mr-2" pTooltip="Edit " label=""
+                                                    (click)="editRkn(rowData)"></button>
+                                                <button pButton type="button" icon="pi pi-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2"
+                                                    pTooltip="Nonaktifkan" label=""
+                                                    (click)="hapusRkn(rowData)"></button>
+                                            </td>
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                <span class="{{rowData.class}}" *ngIf="column.isTag == true">
+                                                    {{rowData[column.field]}}</span>
+                                                <span *ngIf="column.isTag != true"> {{rowData[column.field]}}</span>
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Map Rekanan/Supplier To Tipe Pasien" leftIcon="fa fa-list">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Tipe Pasien</label>
+                                        <p-dropdown [options]="listKelompokPasien" [(ngModel)]="item.dataTipePasien"
+                                            [filter]="true" [showClear]="true" placeholder="Tipe Pasien"
+                                            optionLabel="kelompokpasien" (onChange)="changeMap($event)"></p-dropdown>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <p-panel header="List Ruangan" [toggleable]="true">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-2">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input pInputText type="text" [(ngModel)]="searchText"
+                                                    placeholder="Filter" />
+                                            </span>
+                                        </div>
+                                        <div class="p-col-12 p-md-2">
+                                            <button pButton type="button" icon="pi pi-times"
+                                                class="p-button p-button-danger p-mr-2" (click)="clearFilter()"
+                                                pTooltip="Clear Filter"></button>
+                                        </div>
+                                        <div class="p-col-12 p-md-2">
+                                            <button pButton type="button" icon="pi pi-check"
+                                                class="p-button-success p-mr-2" (click)="cekAll()"
+                                                label="Cek Semua"></button>
+                                        </div>
+                                        <div class="p-col-12 p-md-2">
+                                            <button pButton type="button" icon="pi pi-refresh"
+                                                class="p-button-warning p-mr-2" (click)="clearSelection()"
+                                                label="Hapus Terpilih"></button>
+                                        </div>
+                                       <div class="p-grid" style="overflow: auto; height: 350px;padding: 20px;"
+                                            *ngIf="listProdukCek.length != 0">
+                                            <div class="p-col-12 p-md-2 p-field-checkbox"
+                                                *ngFor="let list of listProdukCek | filter : searchText">
+                                                <p-checkbox [(ngModel)]="item.layanan[list.id]" binary="true"
+                                                    name="group1" inputId="{{list.id}}" (onChange)="getSelected()">
+                                                </p-checkbox>
+                                                <label for="{{list.id}}"> {{list.namarekanan}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid" style="margin-top: 10px;">
+                                        <div class="p-col-12 p-md-1 p-md-offset-11">
+                                            <button pButton type="button" icon="pi pi-save" class="p-button p-mr-2"
+                                                (click)="saveMap()" label="Simpan"></button>
+                                        </div>
+                                    </div>
+                                </p-panel>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <p-panel
+                                    header="Detail Rekanan Terpilih : {{countSelected}} dari : {{item.dataTipePasien?item.dataTipePasien.kelompokpasien:'-'}}"
+                                    [toggleable]="true" *ngIf="listChecked.length > 0">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-2" *ngFor="let check of listChecked">
+                                            <p-tag styleClass="p-mr-2" severity="warning" [style]="{'width':'100%'}"
+                                                value="{{check.namarekanan}}"></p-tag>
+                                        </div>
+                                    </div>
+
+                                </p-panel>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--  TIPE PASIEN -->
+<p-dialog header="Tambah Tipe Pasien " [(visible)]="popUpTp" [modal]="true" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [style]="{width: '500px', minWidth: '500px'}">
+    <div class="p-fluid p-grid ">
+        <div class="p-col-12 p-md-12">
+            <p-panel header="Detail " [toggleable]="true">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Tipe Pasien </label>
+                        <input type="text" [(ngModel)]="itemtp.tipePasien" pInputText placeholder="Tipe Pasien " />
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton icon="pi pi-save" (click)="saveTp()" label="Simpan" class="p-button p-button-success p-mr-2"
+            [disabled]="isSimpan"></button>
+        <button pButton icon="fa fa-refresh" (click)="popUpTp=false" label="Batal" class="p-button  p-mr-2">
+        </button>
+    </ng-template>
+</p-dialog>
+<!-- END TIPE PASIEN -->
+
+<!--  JENIS REKANAN/SUPPLIER -->
+<p-dialog header="Tambah Jenis Rekanan" [(visible)]="popUpJRkn" [modal]="true" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [style]="{width: '500px', minWidth: '500px'}">
+    <div class="p-fluid p-grid ">
+        <div class="p-col-12 p-md-12">
+            <p-panel header="Detail " [toggleable]="true">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Jenis Rekanan</label>
+                        <input type="text" [(ngModel)]="itemjrkn.jenisRekanan" pInputText placeholder="Jenis Rekanan" />
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton icon="pi pi-save" (click)="saveJRkn()" label="Simpan" class="p-button p-button-success p-mr-2"
+            [disabled]="isSimpan"></button>
+        <button pButton icon="fa fa-refresh" (click)="popUpJRkn=false" label="Batal" class="p-button  p-mr-2">
+        </button>
+    </ng-template>
+</p-dialog>
+<!-- END JENIS REKANAN/SUPPLIER -->
+
+<!--  REKANAN/SUPPLIER -->
+<p-dialog header="Tambah Rekanan/ Supplier" [(visible)]="popUpRkn" [modal]="true" [maximizable]="true"
+    [draggable]="true" [resizable]="true" [style]="{width: '750px', minWidth: '750px'}">
+    <div class="p-fluid p-grid ">
+        <div class="p-col-12 p-md-12">
+            <p-panel header="Detail " [toggleable]="true">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-6">
+                        <label class="label" for="input">Nama Rekanan</label>
+                        <input type="text" [(ngModel)]="itemrkn.namaRekanan" pInputText placeholder="Nama Rekanan" />
+                    </div>
+                    <div class="p-col-12 p-md-6">
+                        <label class="label" for="input">Jenis Rekanan</label>
+                        <p-dropdown [options]="listJenisRekanan" [(ngModel)]="itemrkn.dataJenisRekanan" [filter]="true"
+                            [showClear]="true" placeholder="Jenis Rekanan" optionLabel="jenisrekanan" appendTo="body">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-6">
+                        <label class="label" for="input">Email</label>
+                        <input type="text" [(ngModel)]="itemrkn.email" pInputText placeholder="Email" />
+                    </div>
+                    <div class="p-col-12 p-md-6">
+                        <label class="label" for="input">Telepon</label>
+                        <input type="text" [(ngModel)]="itemrkn.telepon" pInputText placeholder="Telepon" />
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <label class="label" for="input">Alamat Lengkap</label>
+                        <textarea [(ngModel)]="itemrkn.alamat" rows="5" cols="30" pInputTextarea></textarea>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton icon="pi pi-save" (click)="saveRkn()" label="Simpan" class="p-button p-button-success p-mr-2"
+            [disabled]="isSimpan"></button>
+        <button pButton icon="fa fa-refresh" (click)="popUpRkn=false" label="Batal" class="p-button  p-mr-2">
+        </button>
+    </ng-template>
+</p-dialog>
+<!-- END REKANAN/SUPPLIER -->

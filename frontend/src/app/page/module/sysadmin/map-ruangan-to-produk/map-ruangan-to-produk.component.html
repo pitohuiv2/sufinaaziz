@@ -1,0 +1,153 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Map Ruangan To Pelayanan</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-tabView (onChange)="handleChangeTab($event)">
+                    <p-tabPanel header="Daftar Mapping" leftIcon="fa fa-users">
+                        <div class="p-grid">
+
+                            <div class="p-col-12 p-md-2">
+                                <label class="label" for="input">Instalasi</label>
+                                <p-dropdown [options]="d_Departemen" [(ngModel)]="item.qDept" [filter]="true"
+                                    [showClear]="true" placeholder="Instalasi" optionLabel="departemen"
+                                    (onChange)="isiRuangan()">
+                                </p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-2">
+                                <label class="label" for="input">Ruangan</label>
+                                <p-dropdown [options]="d_Ruangan" [(ngModel)]="item.qRuangn" [filter]="true"
+                                    [showClear]="true" placeholder="Ruangan" optionLabel="ruangan"></p-dropdown>
+                            </div>
+                            <div class="p-col-12 p-md-3">
+                                <label class="label" for="input">Nama Pelayanan </label>
+                                <input type="text" [(ngModel)]="item.qProduk" pInputText
+                                    placeholder="Nama Pelayanan " />
+                            </div>
+                            <div class="p-col-12 p-md-1">
+                                <label class="label" for="input">Rows </label>
+                                <input type="text" [(ngModel)]="item.limit" pInputText placeholder="Rows " />
+                            </div>
+                            <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                <button pButton type="submit" icon="pi pi-search" pTooltip="Cari"
+                                    (click)="cari()"></button>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table [columns]="column" [value]="dataSource" [(selection)]="selectedGrid"
+                                    styleClass="p-datatable-customers" [rowHover]="true" [rows]="20"
+                                    [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                    selectionMode="single">
+
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th style="width: 50px"></th>
+                                            <th *ngFor="let col of columns" pSortableColumn="{{col.field}}"
+                                                style="width: {{col.width}}">
+                                                {{col.header}}
+                                                <p-sortIcon field="{{col.field}}">
+                                                </p-sortIcon>
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr>
+                                            <td style="width: 50px">
+
+                                                <button pButton type="button" icon="pi pi-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2" pTooltip="Hapus "
+                                                    label="" (click)="hapusRow(rowData)"></button>
+                                            </td>
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                {{rowData[column.field]}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="Mapping Pelayanan" leftIcon="pi pi-sitemap">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">Instalasi</label>
+                                        <p-dropdown [options]="d_Departemen" [(ngModel)]="item.instalasi"
+                                            [filter]="true" [showClear]="true" placeholder="Instalasi"
+                                            optionLabel="departemen" (onChange)="isiRuangan2()">
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">Ruangan</label>
+                                        <p-dropdown [options]="d_Ruangan2" [(ngModel)]="item.ruangan" [filter]="true"
+                                            [showClear]="true" placeholder="Ruangan" optionLabel="ruangan"
+                                            (onChange)="changeMap($event)"></p-dropdown>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <p-panel header="Detail Pelayanan" [toggleable]="true">
+                                    <div class="p-grid">
+                                        <div class="p-col-12 p-md-2">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input pInputText type="text" [(ngModel)]="searchText"
+                                                    placeholder="Filter" />
+                                            </span>
+                                        </div>
+                                        <div class="p-col-12 p-md-1">
+                                            <button pButton type="button" icon="pi pi-times"
+                                                class="p-button p-button-danger p-mr-2" (click)="clearFilter()"
+                                                pTooltip="Clear Filter"></button>
+                                        </div>
+                                        <div class="p-col-12 p-md-1">
+                                            <button pButton type="button" icon="pi pi-check"
+                                                class="p-button-success p-mr-2" (click)="cekAll()"
+                                                label="Cek Semua"></button>
+                                        </div>
+                                        <div class="p-col-12 p-md-1">
+                                            <button pButton type="button" icon="pi pi-refresh"
+                                                class="p-button-warning p-mr-2" (click)="clearSelection()"
+                                                label="Hapus Terpilih"></button>
+                                        </div>
+                                        <div class="p-grid" style="overflow: auto; height: 350px;padding: 20px;"
+                                            *ngIf="listProdukCek.length > 0">
+                                            <div class="p-col-12 p-md-2 p-field-checkbox"
+                                                *ngFor="let list of listProdukCek | filter : searchText">
+                                                <p-checkbox [(ngModel)]="item.layanan[list.id]" binary="true"
+                                                    name="group1" inputId="{{list.id}}" (onChange)="getSelected()">
+                                                </p-checkbox>
+                                                <label for="{{list.id}}"> {{list.namaproduk}}</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-grid" style="margin-top: 10px;">
+                                        <div class="p-col-12 p-md-1 p-md-offset-11">
+                                            <button pButton type="button" icon="pi pi-save" class="p-button p-mr-2"
+                                                (click)="saveMap()" label="Simpan"></button>
+                                        </div>
+                                    </div>
+                                </p-panel>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <p-panel header="Detail Pelayanan Terpilih : {{countSelected}}" [toggleable]="true"
+                                    *ngIf="listChecked.length > 0">
+                                       <div class="p-grid">
+                                        <div class="p-col-12 p-md-2" *ngFor="let check of listChecked">
+                                            <p-tag styleClass="p-mr-2" severity="warning" [style]="{'width':'100%'}"
+                                                value="{{check.namaproduk}}"></p-tag>
+                                        </div>
+                                    </div>
+
+                                </p-panel>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+        </div>
+    </div>
+</div>

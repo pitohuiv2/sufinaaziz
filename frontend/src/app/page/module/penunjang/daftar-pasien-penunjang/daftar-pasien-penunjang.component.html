@@ -1,0 +1,178 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Pasien Penunjang List</h4>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-12">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Periode Awal</label>
+                            <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd"
+                                [disabled]="disableVer">
+                            </p-calendar>
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Periode Akhir</label>
+                            <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                                [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd"
+                                [disabled]="disableVer">
+                            </p-calendar>
+                        </div>
+                      
+                        <div class="p-col-12 p-md-1">
+                            <label class="label" for="input"> Rows</label>
+                            <input type="text" [(ngModel)]="item.jmlRows" pInputText (keyup.enter)="cari()"
+                                placeholder=" Rows" />
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">No Rekam Medis </label>
+                            <input type="text" [(ngModel)]="item.noRM" pInputText (keyup.enter)="cari()"
+                                placeholder="No Rekam Medis" />
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Noregistrasi</label>
+                            <input type="text" [(ngModel)]="item.Noregistrasi" pInputText (keyup.enter)="cari()"
+                                placeholder="Noregistrasi" />
+                        </div>
+                        <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Nama Pasien </label>
+                            <input type="text" [(ngModel)]="item.namaPasien" pInputText (keyup.enter)="cari()"
+                                placeholder="Nama Pasien" />
+                        </div>
+                        <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                            <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()" class="p-mr-1"></button>
+                            <button pButton type="button" class="p-button-success" icon="pi pi-filter" pTooltip="Filter Detail"
+                            (click)="filter()"></button>
+                        </div>
+                        <!-- <div class="p-col-12 p-md-2">
+                            <label class="label" for="input">Ruangan Tujuan</label>
+                            <p-dropdown [options]="listRuanganTujuan" [(ngModel)]="item.dataRuanganTujuan"
+                                [filter]="true" [showClear]="true" placeholder="Ruangan" optionLabel="namaruangan">
+                            </p-dropdown>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <p-table #dt [columns]="column" [value]="dataTable" [(selection)]="selected"
+                styleClass="p-datatable-customers" [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                sortMode="multiple" selectionMode="single">
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th   style="width:180px">Aksi</th>
+                        <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                            style="width: {{column.width}}">
+                            {{column.header}} <p-sortIcon field="{{column.field}}"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                        <td style="width: 180px">
+                            <button pButton type="button" icon="fa fa-info-circle"
+                                class="p-button-rounded p-button-success p-mr-2" pTooltip="Rincian" label=""
+                                (click)="RincianPenunjang2(rowData)"></button>
+
+                            <button pButton type="button" icon="fa fa-stethoscope" class="p-button-rounded p-mr-2"
+                                (click)="pengkajianMedis2(rowData)" pTooltip="Pengkajian Medis" label=""></button>
+
+                            <button pButton type="button" icon="fa fa-heart"
+                                class="p-button-rounded p-button-warning p-mr-2" (click)="ubahGolDarah2(rowData)"
+                                pTooltip="Ubah Golongan Darah" label=""></button>
+
+                        
+                        </td>
+                        <td *ngFor="let column of columns" style="width: {{column.width}}">
+                            {{rowData[column.field]}}
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-6">
+                    <div class="p-grid">
+                      
+                    </div>
+                </div>
+                <div class="p-col-12 p-md-6">
+                    <!-- <div class="p-grid">
+                        <div class="p-col-12 p-md-4" style="margin-top:15px">
+                            <button pButton type="submit" icon="fa fa-info-circle" pTooltip="Rincian"
+                                (click)="RincianPenunjang()" label="Rincian"></button>
+                        </div>
+                        <div class="p-col-12 p-md-4" style="margin-top:15px">
+                            <button pButton type="submit" icon="fa fa-stethoscope" pTooltip="Pengkajian Medis"
+                                (click)="pengkajianMedis()" label="Pengkajian Medis"></button>
+                        </div>
+                        <div class="p-col-12 p-md-4" style="margin-top:15px">
+                            <button pButton type="submit" icon="fa fa-heart" pTooltip="Ubah Golongan Darah"
+                                (click)="ubahGolDarah()" label="Ubah Golongan Darah"></button>
+                        </div>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<p-dialog header="Golongan Darah" [(visible)]="pop_GolonganDarah" [modal]="true" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [style]="{width: '400px', minWidth: '400px'}">
+    <div class="p-fluid p-formgrid ">
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">Golongan Darah</label>
+                        <p-dropdown [options]="listGolonganDarah" [(ngModel)]="item.golDarah" [filter]="true"
+                            [showClear]="true" placeholder="Golongan Darah" optionLabel="golongandarah" appendTo="body">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-4" style="margin-top: 15px;">
+                        <button pButton type="submit" icon="fa fa-floppy-o" pTooltip="Simpan" (click)="simpanGolDarah()"
+                            label="Simpan"></button>
+                    </div>
+                    <div class="p-col-12 p-md-4" style="margin-top: 15px;">
+                        <button pButton type="submit" icon="fa fa-ban" pTooltip="Batal" (click)="batalGolDarah()"
+                            label="Batal" style="background-color: red;"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</p-dialog>
+<p-dialog header="Filter" [(visible)]="popFilter" [modal]="true" [style]="{width: '50vw'}" [maximizable]="true"
+[draggable]="false" [resizable]="true">
+<div class="p-fluid p-formgrid ">
+    <div class="p-grid">
+        <div class="p-col-12 p-md-3">
+            <label class="label" for="input">Instalasi</label>
+            <p-dropdown [options]="listDepartemen" [(ngModel)]="item.dataDepartemen" [filter]="true"  appendTo="body"
+                [showClear]="true" placeholder="Instalasi" optionLabel="departemen"
+                (onChange)="isiRuangan($event)">
+            </p-dropdown>
+        </div>
+        <div class="p-col-12 p-md-3">
+            <label class="label" for="input">Ruangan</label>
+            <p-dropdown [options]="listRuangan" [(ngModel)]="item.dataRuangan" [filter]="true"  appendTo="body"
+                [showClear]="true" placeholder="Ruangan" optionLabel="ruangan"></p-dropdown>
+        </div>
+        <div class="p-col-12 p-md-3">
+            <label class="label" for="input">Tipe Pasien</label>
+            <p-dropdown [options]="listKelompokPasien" [(ngModel)]="item.dataKelPasien" [filter]="true"
+                [showClear]="true" placeholder="Tipe Pasien" optionLabel="kelompokpasien" appendTo="body"></p-dropdown>
+        </div>
+
+
+    </div>
+</div>
+<ng-template pTemplate="footer">
+    <p-button icon="pi pi-filter" (click)="cariFilter()" label="Filter" class="p-button-success">
+    </p-button>
+    <p-button icon="pi pi-close" (click)="clearFilter()" label="Clear" styleClass="p-button-text">
+    </p-button>
+</ng-template>
+</p-dialog>

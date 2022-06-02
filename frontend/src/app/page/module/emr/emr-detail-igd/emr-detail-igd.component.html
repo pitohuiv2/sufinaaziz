@@ -1,0 +1,129 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Triase Instalasi Gawat Darurat</h4>
+        <div class="p-col-12 p-md-12">
+            <p-tabView (onChange)="handleChangeTab($event)" [(activeIndex)]="indexTab">
+
+                <p-tabPanel header="Riwayat Pengkajian" leftIcon="fa fa-list">
+
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-12">
+                            <p-table #dt [columns]="columnRiwayatPengkajian" [value]="dataSourcePengkajian"
+                                [(selection)]="selectedData" styleClass="p-datatable-customers" [rowHover]="true"
+                                [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple" dataKey="norec"
+                                [globalFilterFields]="['namaPelayanan']" selectionMode="single">
+                                <ng-template pTemplate="caption">
+                                    <div class="table-header p-grid">
+                                        <div class="p-col-12 p-md-3">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input pInputText type="text"
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder="Filter" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th style="width: 80px"></th>
+                                        <th *ngFor="let col of columns" pSortableColumn="{{col.field}}"
+                                            style="width: {{col.width}}">
+                                            {{col.header}}
+                                            <p-sortIcon field="{{col.field}}">
+                                            </p-sortIcon>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex"
+                                    let-expanded="expanded">
+                                    <tr>
+                                        <td style="width: 80px">
+                                            <button type="button" pButton pRipple [pRowToggler]="rowData"
+                                                class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                            <button pButton type="button" icon="pi pi-trash"
+                                                class="p-button-rounded p-button-danger p-mr-2" pTooltip="Hapus Data"
+                                                label="" (click)="hapusPengkajian(rowData)"></button>
+                                            <button pButton type="button" icon="pi pi-check-circle"
+                                                class="p-button-rounded p-button-success p-mr-2" pTooltip="Edit Data"
+                                                label="" (click)="editD(rowData)"></button>
+                                        </td>
+                                        <td *ngFor="let col of columns" style="width: {{col.width}}">
+                                            <span *ngIf="col.isCurrency != undefined">
+                                                {{formatRupiah(rowData[col.field],'')}}</span>
+                                            <span *ngIf="col.isCurrency == undefined">
+                                                {{rowData[col.field]}}</span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="rowexpansion" let-product>
+                                    <tr>
+                                        <td colspan="5">
+                                            <div class="p-p-3">
+                                                <p-table [value]="product.details" dataKey="norec">
+                                                    <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Form Yang terisi</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-order>
+                                    <tr>
+
+                                        <span *ngFor="let itemz of order.details" [class]="'order-badge order-instock'">
+                                            {{itemz.namaform}}
+                                            <button pButton type="button" icon="pi pi-trash"
+                                                class="p-button-rounded p-button-danger p-mr-2" pTooltip="Hapus Data"
+                                                label="" (click)="hapusForm(itemz)"></button>
+                                            <button pButton type="button" icon="pi pi-check-circle"
+                                                class="p-button-rounded p-button-success p-mr-2"
+                                                pTooltip="Masuk Ke Form (Edit)" label=""
+                                                (click)="asupKaForm(itemz)"></button>
+                                        </span>
+
+                                    </tr>
+                                </ng-template>
+
+                            </p-table>
+                        </div>
+                        </td>
+                        </tr>
+                        </ng-template>
+                        </p-table>
+                    </div>
+        </div>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-3 p-md-offset-9">
+                <button pButton type="button" icon="pi pi-plus" class="p-button  p-mr-2" (click)="buatBaru()"
+                    pTooltip="Buat Pengkajian Baru " label="Tambah"></button>
+            </div>
+
+        </div>
+
+        </p-tabPanel>
+        <p-tabPanel header="Pengkajian Detail" leftIcon="pi pi-th-large">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-2">
+                    <!-- <p-panel header="Menu" [toggleable]="true"> -->
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-12">
+                            <p-tree [value]="treeSourceMenu" [loading]="isLoadingNav" selectionMode="single"
+                                [(selection)]="selectedFile" (onNodeSelect)="nodeSelect($event)" [filter]="true"
+                                scrollWidth="50px"></p-tree>
+                        </div>
+                    </div>
+                    <!-- </p-panel> -->
+                </div>
+                <div class="p-col-12 p-md-10">
+                    <div class="p-grid">
+                        <div class="p-col-12 p-md-12">
+                            <router-outlet></router-outlet>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </p-tabPanel>
+        </p-tabView>
+
+    </div>

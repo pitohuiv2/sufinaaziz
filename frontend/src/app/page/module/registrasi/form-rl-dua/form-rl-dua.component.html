@@ -1,0 +1,55 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Formulir RL. 2 Ketenagaan</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <div class="p-grid">
+                    <div class="p-col-12">
+                        <p-table [value]="dataSource2" styleClass="p-datatable-customers" [rowHover]="true" [rows]="20"
+                            [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                            scrollable="true" [pageLinks]="5" sortMode="multiple" responsiveLayout="scroll">
+                            <ng-template pTemplate="caption">
+                                <div class="p-d-flex">
+                                    <button type="button" pButton pRipple icon="pi pi-search" (click)="cari2()"
+                                        class="p-button p-mr-2" tooltipPosition="bottom"></button>
+                                    <button type="button" pButton pRipple icon="pi pi-file-excel"
+                                        (click)="exportExcel2()" class="p-button-success p-mr-2" pTooltip="XLS"
+                                        tooltipPosition="bottom"></button>
+                                </div>
+                            </ng-template>
+                            <ng-template pTemplate="header" let-columns>
+                                <tr>
+                                    <th rowspan="2">Kualifikasi Pendidikan</th>
+                                    <th colspan="2" style="text-align:center">Keadaan</th>
+                                    <th colspan="2" style="text-align:center">Kebutuhan</th>
+                                    <th colspan="2" style="text-align:center">Kekurangan</th>
+                                </tr>
+                                <tr>
+                                    <th>Laki-laki</th>
+                                    <th>Perempuan</th>
+                                    <th>Laki-laki</th>
+                                    <th>Perempuan</th>
+                                    <th>Laki-laki</th>
+                                    <th>Perempuan</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-item>
+                                <tr>
+                                    <td>{{item.pendidikan}}</td>
+                                    <td>{{item.keadaanl}}</td>
+                                    <td>{{item.keadaanp}}</td>
+                                    <td>{{item.kebutuhanl}}</td>
+                                    <td>{{item.kebutuhanp}}</td>
+                                    <td>{{item.kekuranganl}}</td>
+                                    <td>{{item.kekuranganp}}</td>
+
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

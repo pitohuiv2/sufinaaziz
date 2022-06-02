@@ -1,0 +1,81 @@
+<p-confirmDialog header="Confirmation" icon="fa fa-question-circle"></p-confirmDialog>
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Stok Opname List</h4>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Ruangan</label>
+                    <p-dropdown [options]="listRuangan" [(ngModel)]="item.dataRuangan" [filter]="true"
+                        [showClear]="true" placeholder="Ruangan" optionLabel="namaruangan"></p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Detail Jenis Produk</label>
+                    <p-dropdown [options]="listDetailJenisProduk" [(ngModel)]="item.dataDjenisProduk" [filter]="true"
+                        [showClear]="true" placeholder="Detail Jenis Produk" optionLabel="detailjenisproduk"
+                        (onChange)="isiJenisProduk()">
+                    </p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Jenis Produk</label>
+                    <p-dropdown [options]="listJenisBarang" [(ngModel)]="item.dataJenisBarang" [filter]="true"
+                        [showClear]="true" placeholder="Jenis Produk" optionLabel="jenisproduk"></p-dropdown>
+                </div>
+
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Periode Awal</label>
+                    <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                    </p-calendar>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Periode Akhir</label>
+                    <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="true" dateFormat="yy-mm-dd">
+                    </p-calendar>
+                </div>
+                <div class="p-col-12 p-md-1">
+                    <div class="p-col-12 p-md-12" style="margin-top: 10px;">
+                        <button pButton type="submit" icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <p-table #dt [columns]="column" [value]="dataTable" [(selection)]="selected"
+                styleClass="p-datatable-customers" [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                sortMode="multiple" selectionMode="single">
+                <ng-template pTemplate="caption">
+                    <div class="p-d-flex">
+                        <button type="button" pButton pRipple icon="pi pi-file-excel" (click)="exportExcel()"
+                            class="p-button-success p-mr-2" pTooltip="Export Excel" tooltipPosition="bottom"></button>
+
+                    </div>
+                </ng-template>
+                <ng-template pTemplate="header" let-columns>
+                    <tr>
+                        <th *ngFor="let col of columns" pSortableColumn="{{col.field}}" style="width: {{col.width}}">
+                            {{col.header}}
+                            <p-sortIcon field="{{col.field}}"></p-sortIcon>
+                        </th>
+                    </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex">
+                    <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                        <td *ngFor="let col of columns" style="width: {{col.width}}">
+                            <span style="text-align: right;" *ngIf="col.isCurrency != undefined">
+                                {{rowData[col.field]| currency:"Rp "}}
+                            </span>
+                            <span *ngIf="col.isCurrency == undefined">
+                                {{rowData[col.field] }}
+                            </span>
+                        </td>
+                    </tr>
+                </ng-template>
+            </p-table>
+        </div>
+
+
+    </div>
+</div>

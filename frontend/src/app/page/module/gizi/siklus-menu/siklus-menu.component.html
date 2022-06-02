@@ -1,0 +1,214 @@
+<p-confirmPopup></p-confirmPopup>
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Master Siklus Gizi</h4>
+        <div class="p-col-12 p-md-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Nama Menu</label>
+                    <input type="text" [(ngModel)]="item.namaProduk" pInputText (keyup.enter)="cari()"
+                        placeholder="Nama Menu" />
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Jenis Waktu</label>
+                    <p-dropdown [options]="listJenisWaktu" [(ngModel)]="item.jenisWaktu" [filter]="true"
+                        [showClear]="true" placeholder="Jenis Waktu" optionLabel="jeniswaktu">
+                    </p-dropdown>
+                </div>
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Jenis Diet</label>
+                    <p-dropdown [options]="listJenisDiet" [(ngModel)]="item.jenisDiet" [filter]="true"
+                        [showClear]="true" placeholder="Jenis Diet" optionLabel="jenisdiet">
+                    </p-dropdown>
+                </div>
+                <!-- <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Kategori Diet</label>
+                    <p-dropdown [options]="listKategoriDiet" [(ngModel)]="item.kategorydiet" [filter]="true"
+                        [showClear]="true" placeholder="Kategori Diet" optionLabel="kategorydiet">
+                    </p-dropdown>
+                </div> -->
+                <div class="p-col-12 p-md-2">
+                    <label class="label" for="input">Siklus Ke</label>
+                    <input type="number" [(ngModel)]="item.siklusKe" pInputText (keyup.enter)="cari()"
+                        placeholder="Siklus Ke" />
+                </div>
+                <div class="p-col-12 p-md-1">
+                    <label class="label" for="input">Rows</label>
+                    <input type="text" [(ngModel)]="item.jmlRow" pInputText (keyup.enter)="cari()"
+                        placeholder="Siklus Ke" />
+                </div>
+                <div class="p-col-12 p-md-1" style="margin-top: 15px;">
+                    <button pButton icon="pi pi-search" pTooltip="Cari" (click)="cari()"></button>
+                </div>
+                <!-- <div class="p-col-12 p-md-1" style="margin-top:15px">
+                    <button pButton icon="pi pi-user-plus" pTooltip="Tambah" (click)="tambah()" label="Tambah"></button>
+                </div> -->
+            </div>
+        </div>
+        <div class="p-col-12">
+            <div class="p-grid">
+                <div class="p-col-12 p-md-12">
+                    <!-- <p-table [value]="dataSource" sortField="sikluske" sortMode="single" (onSort)="onSort()">
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th>Name</th>
+                                <th>Country</th>
+                            
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-customer let-rowIndex="rowIndex">
+                            <tr *ngIf="rowGroupMetadata[customer.sikluske].index === rowIndex">
+                                <td colspan="5">
+                                    <img [alt]="customer.sikluske" src="assets/layout/images/p-cure.png" width="32" style="vertical-align: middle" />
+                                    <span class="p-text-bold p-ml-2">{{customer.sikluske}}</span>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    {{customer.namaproduk}}
+                                </td>
+                              
+                            </tr>
+                        </ng-template>
+                    </p-table> -->
+                    <p-table #dt [columns]="column" [value]="dataSource" [(selection)]="selectedData"
+                        styleClass="p-datatable-customers" [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                        [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true" [pageLinks]="5"
+                        sortMode="multiple" dataKey="norec" selectionMode="single">
+                        <ng-template pTemplate="caption">
+                            <div class="p-d-flex">
+                                <button type="button" pButton pRipple icon="pi pi-plus" (click)="tambah()"
+                                    class="p-button-success p-mr-2" pTooltip="Tambah Siklus" tooltipPosition="bottom">
+                                </button>
+                            </div>
+                        </ng-template>
+                        <ng-template pTemplate="header" let-columns >
+                            <tr>
+                                <th style="width: 80px"></th>
+                                <th *ngFor="let col of columns" pSortableColumn="{{col.field}}"
+                                    style="width: {{col.width}}">
+                                    {{col.header}}
+                                    <p-sortIcon field="{{col.field}}">
+                                    </p-sortIcon>
+                                </th>
+                            </tr>
+                        </ng-template>
+                        <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex"
+                          >
+                           
+                            <tr>
+                                <td style="width: 80px">
+                                    <button pButton type="button" icon="pi pi-trash"
+                                        class="p-button-rounded p-button-danger p-mr-2" pTooltip="Hapus Data" label=""
+                                        (click)="hapusData($event,rowData)"></button>
+                                   
+                                </td>
+                                <td *ngFor="let col of columns" style="width: {{col.width}}">
+                                    <span *ngIf="col.isCurrency != undefined">
+                                        {{formatRupiah(rowData[col.field],'')}}</span>
+                                    <span *ngIf="col.isCurrency == undefined"> {{rowData[col.field]}}</span>
+                                </td>
+                            </tr>
+                        </ng-template>
+                    </p-table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<p-dialog header="Tambah Siklus" [(visible)]="pop_Tambah" [modal]="true" [maximizable]="true" [draggable]="true"
+    [resizable]="true" [style]="{width: '900px', minWidth: '900px'}">
+    <div class="p-fluid p-grid ">
+        <div class="p-col-12 p-md-12">
+            <p-panel header="Detail Siklus" [toggleable]="true">
+                <div class="p-grid">
+
+                    <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">Siklus Ke</label>
+                        <input type="number" [(ngModel)]="popUp.siklusKe" pInputText placeholder="Siklus Ke" />
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">Jenis Diet</label>
+                        <p-dropdown [options]="listJenisDiet" [(ngModel)]="popUp.jenisDiet" [filter]="true"
+                            [showClear]="true" placeholder="Jenis Waktu" optionLabel="jenisdiet">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">Jenis Waktu</label>
+                        <p-dropdown [options]="listJenisWaktu" [(ngModel)]="popUp.jenisWaktu" [filter]="true"
+                            [showClear]="true" placeholder="Jenis Waktu" optionLabel="jeniswaktu">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-4">
+                        <label class="label" for="input">Kategori Diet</label>
+                        <p-dropdown [options]="listKategoriDiet" [(ngModel)]="popUp.kategory" [filter]="true"
+                            [showClear]="true" placeholder="Kategori Diet" optionLabel="kategorydiet">
+                        </p-dropdown>
+                    </div>
+                    <div class="p-col-12 p-md-12">
+                        <p-panel header="Kelas" [toggleable]="true">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-4 p-field-checkbox" *ngFor="let list of listKelas">
+                                    <p-checkbox [(ngModel)]="popUp.kelas[list.id]" binary="true" inputId="{{list.id}}">
+                                    </p-checkbox>
+                                    <label for="{{list.id}}"> {{list.namakelas}}</label>
+                                </div>
+                            </div>
+                        </p-panel>
+                    </div>
+
+                </div>
+            </p-panel>
+        </div>
+        <div class="p-col-12 p-md-12">
+            <p-panel header="Detail Menu" [toggleable]="true">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-4">
+                        <span class="p-input-icon-left">
+                            <i class="pi pi-search"></i>
+                            <input pInputText type="text" [(ngModel)]="searchText" placeholder="Filter" />
+                        </span>
+                    </div>
+                    <div class="p-col-12 p-md-1">
+                        <button pButton type="button" icon="pi pi-times" class="p-button p-button-danger p-mr-2"
+                            (click)="clearFilter()" pTooltip="Clear Filter"></button>
+                    </div>
+                    <div class="p-grid" style="overflow: auto; height: 250px" *ngIf="listProdukCek.length > 0">
+                        <div class="p-col-12 p-md-3 p-field-checkbox"
+                            *ngFor="let list of listProdukCek | filter : searchText">
+                            <p-checkbox [(ngModel)]="popUp.layanan[list.id]" binary="true" inputId="{{list.id}}"
+                                (onChange)="getSelected()">
+                            </p-checkbox>
+                            <label for="{{list.id}}"> {{list.namaproduk}}</label>
+
+                        </div>
+                    </div>
+                </div>
+            </p-panel>
+
+        </div>
+        <div class="p-col-12">
+            <p-panel header="Detail Pemeriksaan Terpilih" [toggleable]="true" *ngIf="listChecked.length > 0">
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-3" *ngFor="let check of listChecked">
+                        <p-tag styleClass="p-mr-2" severity="warning" [style]="{'width':'100%'}"
+                            value="{{check.namaproduk}}"></p-tag>
+                    </div>
+                </div>
+                <div class="p-grid">
+                    <div class="p-col-12 p-md-2">
+                        <button pButton type="button" icon="pi pi-trash" class="p-button p-button-danger p-mr-2"
+                            (click)="clearSelection()" pTooltip="Hapus Semua Data Terpilih" label="Clear"
+                            [disabled]="isSimpan"></button>
+                    </div>
+                </div>
+            </p-panel>
+        </div>
+    </div>
+    <ng-template pTemplate="footer">
+        <button pButton icon="pi pi-save" (click)="save()" label="Simpan" class="p-button p-button-success p-mr-2" [disabled]="isSimpan"></button>
+        <button pButton icon="fa fa-refresh" (click)="pop_Tambah=false" label="Batal" class="p-button  p-mr-2">
+        </button>
+    </ng-template>
+</p-dialog>

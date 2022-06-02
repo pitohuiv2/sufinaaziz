@@ -1,0 +1,12 @@
+dibagian ssh ceklis USE SSH Tunnel 
+host : majora.id.domainesia.com
+port : 64000
+user : pcuresij
+pass : A5yD8cn6n@-BK6
+
+dibagian  general:
+host : localhost
+port : 5432
+db : pcuresij_ver3
+user : pcuresij_postgres
+pass : d4t4rockstar

@@ -1,0 +1,174 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Referensi</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-accordion>
+                    <p-accordionTab header="Update Ketersediaan Kamar">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">Ruangan </label>
+                                        <input type="text" [(ngModel)]="item.namaruangan" pInputText
+                                            placeholder="Ruangan " />
+                                    </div>
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">Kelas </label>
+                                        <input type="text" [(ngModel)]="item.kelas" pInputText placeholder="Kelas " />
+                                    </div>
+
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="submit" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search" (click)="cariLokal()"></button>
+
+                                    </div>
+                                    <div class="p-col-12 p-md-1 " style="margin-top: 16px;">
+                                        <button pButton pRipple type="button" class="p-button-success p-mr-1"
+                                            pTooltip="Create Baru Ruangan" label="Create" icon="pi pi-save"
+                                            (click)="create()"></button>
+
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton pRipple type="button" class="p-button-danger p-mr-1"
+                                            label="Update" pTooltip="Update Ketersediaan" icon="pi pi-refresh"
+                                            (click)="update()"></button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table [columns]="column3" [value]="dataSource3" styleClass="p-datatable-customers"
+                                    [rowHover]="true" [rows]="20" [rowsPerPageOptions]="[5,10,25,50]"
+                                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                    [paginator]="true" scrollable="true" [pageLinks]="5">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+
+                                            <th *ngFor="let column of columns" style="width: {{column.width}}">
+                                                {{column.header}}
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                <span class="p-column-title"> {{column.header}} </span>
+                                                {{rowData[column.field]}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="List Ketersediaan Kamar RS">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Kode Faskes </label>
+                                        <input type="text" [(ngModel)]="item.kodePPK" pInputText placeholder="PPK" />
+                                    </div>
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">Start </label>
+                                        <input type="text" [(ngModel)]="item.start" pInputText placeholder="Start " />
+                                    </div>
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">Limit </label>
+                                        <input type="text" [(ngModel)]="item.limit" pInputText placeholder="Limit " />
+                                    </div>
+
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="submit" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search" (click)="cari()"></button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table [columns]="column" [value]="dataSource" styleClass="p-datatable-customers"
+                                    [rowHover]="true" [rows]="20" [rowsPerPageOptions]="[5,10,25,50]"
+                                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                    [paginator]="true"
+                                    scrollable="true" scrollable="true" [pageLinks]="5">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th style="width: 40px">Aksi</th>
+                                            <th *ngFor="let column of columns" style="width: {{column.width}}">
+                                                {{column.header}}
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                            <td style="width: 40px">
+                                                <button pButton type="button" icon="fa fa-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2"
+                                                    (click)="removeData(rowData)" pTooltip="Hapus" label=""></button>
+
+                                            </td>
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                <span class="p-column-title"> {{column.header}} </span>
+                                                {{rowData[column.field]}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Referensi Kamar">
+                        <div class="p-grid">
+
+                            <div class="p-col-12">
+                                <p-table #dt1 [columns]="column2" [value]="dataSource2"
+                                    styleClass="p-datatable-customers" [rowHover]="true" [rows]="20"
+                                    [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true"
+                                    currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                                    scrollable="true" [pageLinks]="5" [globalFilterFields]="['namakelas']">
+                                    <ng-template pTemplate="caption">
+                                        <div class="table-header">
+
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input pInputText type="text"
+                                                    (input)="dt1.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder="Filter" [style]="{'width': '200px'}" />
+                                            </span>
+                                        </div>
+
+                                    </ng-template>
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th *ngFor="let column of columns" style="width: {{column.width}}">
+                                                {{column.header}}
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                <span class="p-column-title"> {{column.header}} </span>
+                                                {{rowData[column.field]}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                </p-accordion>
+            </div>
+        </div>
+    </div>
+</div>

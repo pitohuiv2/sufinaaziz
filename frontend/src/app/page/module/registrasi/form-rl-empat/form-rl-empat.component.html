@@ -1,0 +1,237 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Formulir RL. 4 </h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-tabView>
+                    <p-tabPanel header="RL 4.a Data Keadaan Morbiditas Pasien Rawat Inap" leftIcon="fa fa-print">
+                        <div class="p-col-12 ">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Awal</label>
+                                    <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Awal</label>
+                                    <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        pTooltip="Cari" (click)="cari()"></button>
+                                </div>
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-12">
+                                    <p-table [value]="dataSource" styleClass="p-datatable-customers" [rowHover]="true"
+                                        [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                        [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                        responsiveLayout="scroll">
+                                        <ng-template pTemplate="caption">
+                                            <div class="p-d-flex">
+
+                                                <button type="button" pButton pRipple icon="pi pi-file-excel"
+                                                    (click)="exportExcel()" class="p-button-success p-mr-2"
+                                                    pTooltip="XLS" tooltipPosition="bottom"></button>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header" let-columns>
+                                            <tr>
+                                                <th rowspan="3">NO</th>
+                                                <th rowspan="3">NO DTD</th>
+                                                <th rowspan="3" style="width: 150px">NO DAFTAR TERPERINCI </th>
+                                                <th rowspan="3" style="width: 150px;text-align:center">GOLONGAN SEBAB
+                                                    PENYAKIT</th>
+                                                <th colspan="18" style="text-align:center">JUMLAH PASIEN YANG HIDUP DAN
+                                                    MATI MENURUT GOLONGAN UMUR DAN JENIS KELAMIN</th>
+                                                <th colspan="2" style="text-align:center">PASIEN KELUAR (HIDUP & MATI)
+                                                    MENURUT JENIS KELAMIN</th>
+                                                <th rowspan="3" colspan="2">JUMLAH PASIEN KELUAR HIDUP DAN MATI (23+24)
+                                                </th>
+                                                <th rowspan="3"> JUMLAH PASIEN KELUAR MATI</th>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 80px">0-6hr</td>
+                                                <td style="width: 80px">0-6hr</td>
+                                                <td style="width: 80px">7-28hr</td>
+                                                <td style="width: 80px">7-28hr</td>
+                                                <td style="width: 80px">8hr-< 1th</td>
+                                                <td style="width: 80px">8hr-< 1th</td>
+                                                <td style="width: 80px">1-4th</td>
+                                                <td style="width: 80px">1-4th</td>
+
+                                                <td style="width: 80px">5-14th</td>
+                                                <td style="width: 80px">5-14th</td>
+                                                <td style="width: 80px">15-24th</td>
+                                                <td style="width: 80px">15-24th</td>
+
+                                                <td style="width: 80px">55-44th</td>
+                                                <td style="width: 80px">55-44th</td>
+
+                                                <td style="width: 80px">45-64th</td>
+                                                <td style="width: 80px">45-64th</td>
+                                                <td style="width: 80px">>65</td>
+                                                <td style="width: 80px">>65</td>
+                                                <td style="width: 80px" rowspan="2">LK</td>
+                                                <td style="width: 80px" rowspan="2">PR</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                              
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-item>
+                                            <tr>
+                                                <td>{{item.no}}</td>
+                                                <td>{{item.jenispelayanan}}</td>
+                                                <td>{{item.jumlah}}</td>
+                                                <td>{{item.jenispelayanan}}</td>
+                                                <td>{{item.jumlah}}</td>
+                                                <td>{{item.jenispelayanan}}</td>
+                                                <td>{{item.jumlah}}</td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                    <p-tabPanel header="RL 4.b Data Keadaan Morbiditas Pasien Rawat Inap" leftIcon="fa fa-print">
+                        <div class="p-col-12 ">
+                            <div class="p-grid">
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Awal</label>
+                                    <p-calendar [(ngModel)]="item.tglAwal" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-2">
+                                    <label class="label" for="input">Periode Awal</label>
+                                    <p-calendar [(ngModel)]="item.tglAkhir" [showIcon]="true" [monthNavigator]="true"
+                                        [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                        dateFormat="yy-mm-dd">
+                                    </p-calendar>
+                                </div>
+                                <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                    <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-search"
+                                        pTooltip="Cari" (click)="cari()"></button>
+                                </div>
+                            </div>
+                            <div class="p-grid">
+                                <div class="p-col-12">
+                                    <p-table [value]="dataSource" styleClass="p-datatable-customers" [rowHover]="true"
+                                        [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                        [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple"
+                                        responsiveLayout="scroll">
+                                        <ng-template pTemplate="caption">
+                                            <div class="p-d-flex">
+
+                                                <button type="button" pButton pRipple icon="pi pi-file-excel"
+                                                    (click)="exportExcel()" class="p-button-success p-mr-2"
+                                                    pTooltip="XLS" tooltipPosition="bottom"></button>
+                                            </div>
+                                        </ng-template>
+                                        <ng-template pTemplate="header" let-columns>
+                                            <tr>
+                                                <th rowspan="3">NO</th>
+                                                <th rowspan="3">NO DTD</th>
+                                                <th rowspan="3" style="width: 150px">NO DAFTAR TERPERINCI </th>
+                                                <th rowspan="3" style="width: 150px;text-align:center">GOLONGAN SEBAB
+                                                    PENYAKIT</th>
+                                                <th colspan="18" style="text-align:center">JUMLAH PASIEN KASUS MENURUT GOLONGAN UMUR DAN SEX</th>
+                                                <th colspan="2" style="text-align:center">KASUS BARU MENURUT JENIS KELAMIN</th>
+                                                <th rowspan="3" colspan="2">JUMLAH KASUS BARU (23+24)
+                                                </th>
+                                                <th rowspan="3"> JUMLAH KUNJUNGAN</th>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 80px">0-6hr</td>
+                                                <td style="width: 80px">0-6hr</td>
+                                                <td style="width: 80px">7-28hr</td>
+                                                <td style="width: 80px">7-28hr</td>
+                                                <td style="width: 80px">8hr-< 1th</td>
+                                                <td style="width: 80px">8hr-< 1th</td>
+                                                <td style="width: 80px">1-4th</td>
+                                                <td style="width: 80px">1-4th</td>
+
+                                                <td style="width: 80px">5-14th</td>
+                                                <td style="width: 80px">5-14th</td>
+                                                <td style="width: 80px">15-24th</td>
+                                                <td style="width: 80px">15-24th</td>
+
+                                                <td style="width: 80px">55-44th</td>
+                                                <td style="width: 80px">55-44th</td>
+
+                                                <td style="width: 80px">45-64th</td>
+                                                <td style="width: 80px">45-64th</td>
+                                                <td style="width: 80px">>=65</td>
+                                                <td style="width: 80px">>=65</td>
+                                                <td style="width: 80px" rowspan="2">LK</td>
+                                                <td style="width: 80px" rowspan="2">PR</td>
+                                            </tr>
+                                            <tr>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                                <td style="width: 80px">L</td>
+                                                <td style="width: 80px">P</td>
+                                              
+                                            </tr>
+                                        </ng-template>
+                                        <ng-template pTemplate="body" let-item>
+                                            <tr>
+                                                <td>{{item.no}}</td>
+                                                <td>{{item.jenispelayanan}}</td>
+                                                <td>{{item.jumlah}}</td>
+                                                <td>{{item.jenispelayanan}}</td>
+                                                <td>{{item.jumlah}}</td>
+                                                <td>{{item.jenispelayanan}}</td>
+                                                <td>{{item.jumlah}}</td>
+                                            </tr>
+                                        </ng-template>
+                                    </p-table>
+                                </div>
+                            </div>
+                        </div>
+                    </p-tabPanel>
+                </p-tabView>
+            </div>
+        </div>
+    </div>
+</div>

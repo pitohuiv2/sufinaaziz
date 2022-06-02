@@ -1,0 +1,631 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>Cari Rujukan</h4>
+        <div class="p-grid">
+
+            <div class="p-col-12 p-md-12">
+                <p-accordion>
+                    <p-accordionTab header="Rujukan Berdasarkan Nomor Rujukan">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">No Rujukan </label>
+                                        <input type="text" [(ngModel)]="item.noru" pInputText
+                                            placeholder="No Rujukan" />
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Asal Rujukan</label>
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="ri" name="pelayanan" [value]="1"
+                                                    [(ngModel)]="item.tipe">
+                                                </p-radioButton>
+                                                <label for="ri"> PCare</label>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="rj" name="pelayanan" [value]="2"
+                                                    [(ngModel)]="item.tipe">
+                                                </p-radioButton>
+                                                <label for="rj"> Rumah Sakit</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;" *ngIf="item.tipe == '1'">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search"
+                                            (click)="cari('Rujukan/'+item.noru,'jsonResult')"></button>
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;" *ngIf="item.tipe != '1'">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search"
+                                            (click)="cari('Rujukan/RS/'+item.noru,'jsonResult')"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                    <code [innerHtml]="jsonResult"  class="language-json" pCode></code>
+                                </pre>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Rujukan Berdasarkan Nomor Kartu (1 Record)">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">No Kartu </label>
+                                        <input type="text" [(ngModel)]="item.noka" pInputText placeholder="No Kartu" />
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Asal Rujukan</label>
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="ri" name="pelayanan" [value]="1"
+                                                    [(ngModel)]="item.tipe">
+                                                </p-radioButton>
+                                                <label for="ri"> PCare</label>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="rj" name="pelayanan" [value]="2"
+                                                    [(ngModel)]="item.tipe">
+                                                </p-radioButton>
+                                                <label for="rj"> Rumah Sakit</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;" *ngIf="item.tipe == '1'">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search"
+                                            (click)="cari('Rujukan/Peserta/'+item.noka,'jsonResult2')"></button>
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;" *ngIf="item.tipe != '1'">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search"
+                                            (click)="cari('Rujukan/RS/Peserta/'+item.noka,'jsonResult2')"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                    <code [innerHtml]="jsonResult2"  class="language-json" pCode></code>
+                                </pre>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Rujukan Berdasarkan Nomor Kartu (Multi Record)">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">No Kartu </label>
+                                        <input type="text" [(ngModel)]="item.noka2" pInputText placeholder="No Kartu" />
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Asal Rujukan</label>
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="ri" name="pelayanan" [value]="1"
+                                                    [(ngModel)]="item.tipe">
+                                                </p-radioButton>
+                                                <label for="ri"> PCare</label>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="rj" name="pelayanan" [value]="2"
+                                                    [(ngModel)]="item.tipe">
+                                                </p-radioButton>
+                                                <label for="rj"> Rumah Sakit</label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;" *ngIf="item.tipe == '1'">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search"
+                                            (click)="cari('Rujukan/List/Peserta/'+item.noka2,'jsonResult3')"></button>
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;" *ngIf="item.tipe != '1'">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search"
+                                            (click)="cari('Rujukan/RS/List/Peserta/'+item.noka2,'jsonResult3')"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                    <code [innerHtml]="jsonResult3"  class="language-json" pCode></code>
+                                </pre>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+
+                </p-accordion>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="p-fluid p-formgrid p-mt-3">
+    <div class="card card-w-title">
+        <h4>Pembuatan Rujukan</h4>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-12">
+                <p-accordion>
+                    <p-accordionTab header="Pembuatan Rujukan"  [(selected)]="activeState">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-7">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-6">
+
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="ri" name="pelayanan" [value]="1"
+                                                    [(ngModel)]="itemV2.tipe">
+                                                </p-radioButton>
+                                                <label for="ri"> Insert</label>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <p-radioButton inputId="rj" name="pelayanan" [value]="2"
+                                                    [(ngModel)]="itemV2.tipe">
+                                                </p-radioButton>
+                                                <label for="rj"> Update</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="p-col-12 p-md-12">
+                                        <div class="p-grid">
+                                            <div class="p-col-12 p-md-6" *ngIf="itemV2.tipe == '2'">
+                                                <label class="label" for="input">No Rujukan </label>
+                                                <input type="text" [(ngModel)]="itemV2.noRujukan" pInputText
+                                                    placeholder="No Rujukan" />
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <label class="label" for="input">No SEP </label>
+                                                <input type="text" [(ngModel)]="itemV2.noSep" pInputText
+                                                    placeholder="No SEP" />
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <label class="label" for="input">Tgl Rujukan </label>
+                                                <p-calendar [(ngModel)]="itemV2.tglRujukan" [showIcon]="true"
+                                                    [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                                    [showTime]="false" dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd">
+                                                </p-calendar>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <label class="label" for="input">Tgl Rencana Kunjungan </label>
+                                                <p-calendar [(ngModel)]="itemV2.tglRencanaKunjungan" [showIcon]="true"
+                                                    [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                                    [showTime]="false" dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd">
+                                                </p-calendar>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <label class="label" for="input">Faskes </label>
+                                                <p-autoComplete [(ngModel)]="itemV2.ppkDirujuk"
+                                                    [suggestions]="listFaskes"
+                                                    (completeMethod)="filterAutoCom($event,'listFaskes','referensi/faskes/' + $event.query + '/2','faskes')"
+                                                    field="nama" [dropdown]="true"
+                                                    placeholder="Ketik minimal 3 karakter">
+                                                </p-autoComplete>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <label class="label" for="input">Pelayanan </label>
+                                                <div class="p-grid">
+                                                    <div class="p-col-12 p-md-6">
+                                                        <p-radioButton inputId="ri2" name="pelayanan2" [value]="1"
+                                                            [(ngModel)]="itemV2.jnsPelayanan">
+                                                        </p-radioButton>
+                                                        <label for="ri2"> Rawat Inap</label>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-6">
+                                                        <p-radioButton inputId="rj2" name="pelayanan2" [value]="2"
+                                                            [(ngModel)]="itemV2.jnsPelayanan">
+                                                        </p-radioButton>
+                                                        <label for="rj2"> Rawat Jalan</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <label class="label" for="input">Tipe </label>
+                                                <div class="p-grid">
+                                                    <div class="p-col-12 p-md-4">
+                                                        <p-radioButton inputId="ri22" name="pelayanan22" [value]="0"
+                                                            [(ngModel)]="itemV2.tipeRujukan">
+                                                        </p-radioButton>
+                                                        <label for="ri22"> Penuh</label>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-4">
+                                                        <p-radioButton inputId="rj23" name="pelayanan22" [value]="1"
+                                                            [(ngModel)]="itemV2.tipeRujukan">
+                                                        </p-radioButton>
+                                                        <label for="rj23"> Partial</label>
+                                                    </div>
+                                                    <div class="p-col-12 p-md-4">
+                                                        <p-radioButton inputId="rj22" name="pelayanan22" [value]="2"
+                                                            [(ngModel)]="itemV2.tipeRujukan">
+                                                        </p-radioButton>
+                                                        <label for="rj22"> Rujuk Balik</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <label class="label" for="input">Diagnosa </label>
+                                                <p-autoComplete [(ngModel)]="itemV2.diagRujukan"
+                                                    [suggestions]="listDiagnosa"
+                                                    (completeMethod)="filterAutoCom($event,'listDiagnosa','referensi/diagnosa/' + $event.query,'diagnosa')"
+                                                    [dropdown]="false" field="kode"
+                                                    placeholder="Ketik minimal 3 karakter">
+                                                </p-autoComplete>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <label class="label" for="input">Poli Rujukan </label>
+                                                <p-autoComplete [(ngModel)]="itemV2.poliRujukan"
+                                                    [suggestions]="listPoli"
+                                                    (completeMethod)="filterAutoCom($event,'listPoli','referensi/poli/' + $event.query,'poli')"
+                                                    field="nama" [dropdown]="true"
+                                                    placeholder="Ketik minimal 3 karakter">
+                                                </p-autoComplete>
+                                            </div>
+                                            <div class="p-col-12 p-md-6">
+                                                <label class="label" for="input">Catatan </label>
+                                                <input type="text" [(ngModel)]="itemV2.catatan" pInputText
+                                                    placeholder="Catatan" />
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;" *ngIf="itemV2.tipe == '1'">
+                                        <button pButton type="button" class="p-button-primary p-mr-1" icon="pi pi-save"
+                                            (click)="post('Rujukan/2.0/insert','rujukanInsert', 'jsonResult4')"></button>
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;" *ngIf="itemV2.tipe != '1'">
+                                        <button pButton type="button" class="p-button-primary p-mr-1" icon="pi pi-save"
+                                            (click)="post('Rujukan/2.0/Update','rujukanUpdate', 'jsonResult4')"></button>
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-danger p-mr-1"
+                                            icon="pi pi-refresh" (click)="clear()"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-5">
+                                <pre style="height:300px">
+                                    <code [innerHtml]="jsonResult4"  class="language-json" pCode></code>
+                                </pre>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Data Rujukan"  >
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">Periode Awal</label>
+                                        <p-calendar [(ngModel)]="daftar.periodeAwal" [showIcon]="true"
+                                            [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                            [showTime]="false" dateFormat="yy-mm-dd">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">Periode Akhir</label>
+                                        <p-calendar [(ngModel)]="daftar.periodeAkhir" [showIcon]="true"
+                                            [monthNavigator]="true" [yearNavigator]="true" yearRange="1980:2030"
+                                            [showTime]="false" dateFormat="yy-mm-dd">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">No RM </label>
+                                        <input type="text" [(ngModel)]="daftar.nocm" pInputText placeholder="No RM" />
+                                    </div>
+                                    <div class="p-col-12 p-md-2">
+                                        <label class="label" for="input">No Rujukan</label>
+                                        <input type="text" [(ngModel)]="item.noRujukan" pInputText
+                                            placeholder="No Rujukan" />
+                                    </div>
+
+
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="submit" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search" pTooltip="Cari" (click)="getGridData()"></button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table #dt [columns]="column" [value]="dataSource" styleClass="p-datatable-customers"
+                                    [rowHover]="true" [rows]="20" [showCurrentPageReport]="true"
+                                    [rowsPerPageOptions]="[5,10,25,50]" [paginator]="true" scrollable="true"
+                                    [pageLinks]="5" sortMode="multiple" selectionMode="single">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th style="width: 180px">Aksi</th>
+                                            <th *ngFor="let column of columns" pSortableColumn="{{column.field}}"
+                                                style="width: {{column.width}}">
+                                                {{column.header}} <p-sortIcon field="{{column.field}}"></p-sortIcon>
+
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                            <td style="width: 180px">
+                                                <button pButton type="button" icon="fa fa-edit"
+                                                    class="p-button-rounded p-button-success p-mr-2" pTooltip="Edit"
+                                                    label="" (click)="editRujukan(rowData)"></button>
+
+                                                <button pButton type="button" icon="fa fa-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2"
+                                                    (click)="hapusRuj(rowData)" pTooltip="Hapus" label=""></button>
+
+                                                <button pButton type="button" icon="fa fa-print"
+                                                    class="p-button-rounded p-button-info p-mr-2"
+                                                    (click)="cetak(rowData)" pTooltip="Cetak" label=""></button>
+
+                                            </td>
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                <span class="p-column-title"> {{column.header}} </span>
+                                                {{rowData[column.field]}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Pembuatan Rujukan Khusus">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">No Rujukan </label>
+                                        <input type="text" [(ngModel)]="item.noRujukan" pInputText
+                                            placeholder="No Rujukan " />
+                                    </div>
+                                    <div class="p-col-12 p-md-2" style="margin-top: 15px;">
+                                        <p-checkbox [(ngModel)]="item.diagnosaUtama" binary="true"
+                                            inputId="item.diagnosaUtama">
+                                        </p-checkbox>
+                                        <label class="label" for="item.diagnosaUtama" pTooltip="Diagnosa Utama">
+                                            Utama
+                                        </label>
+                                    </div>
+                                    <div class="p-col-12 p-md-4">
+                                        <label class="label" for="input">Diagnosa</label>
+                                        <p-autoComplete [(ngModel)]="item.diagnosa" [suggestions]="listDiagnosa"
+                                            (completeMethod)="filterAutoCom($event,'listDiagnosa','referensi/diagnosa/' + $event.query ,'diagnosa')"
+                                            field="nama" [dropdown]="true" placeholder="Ketik minimal 3 karakter">
+                                        </p-autoComplete>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-plus"
+                                            (click)="tambah()"></button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table [columns]="column2" [value]="dataSource2" styleClass="p-datatable-customers"
+                                    [rowHover]="true" [rows]="20" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="false" scrollable="true" [pageLinks]="5">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th style="width: 40px">Aksi</th>
+                                            <th *ngFor="let column of columns" style="width: {{column.width}}">
+                                                {{column.header}}
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                            <td style="width: 40px">
+                                                <button pButton type="button" icon="fa fa-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2"
+                                                    (click)="removeData(rowData)" pTooltip="Hapus" label=""></button>
+
+                                            </td>
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                <span class="p-column-title"> {{column.header}} </span>
+                                                {{rowData[column.field]}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+
+                                    <div class="p-col-12 p-md-4">
+                                        <label class="label" for="input">Procedure</label>
+                                        <p-autoComplete [(ngModel)]="item.diagnosaTindakan"
+                                            [suggestions]="listDiagnosa2"
+                                            (completeMethod)="filterAutoCom($event,'listDiagnosa2','referensi/procedure/' + $event.query ,'procedure')"
+                                            field="nama" [dropdown]="true" placeholder="Ketik minimal 3 karakter">
+                                        </p-autoComplete>
+                                    </div>
+
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="submit" class="p-button-primary p-mr-1" icon="pi pi-plus"
+                                            (click)="tambah2()"></button>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12">
+                                <p-table [columns]="column3" [value]="dataSource3" styleClass="p-datatable-customers"
+                                    [rowHover]="true" [rows]="20" [rowsPerPageOptions]="[5,10,25,50]"
+                                    [paginator]="false" scrollable="true" [pageLinks]="5">
+                                    <ng-template pTemplate="header" let-columns>
+                                        <tr>
+                                            <th style="width: 40px">Aksi</th>
+                                            <th *ngFor="let column of columns" style="width: {{column.width}}">
+                                                {{column.header}}
+                                            </th>
+                                        </tr>
+                                    </ng-template>
+
+                                    <ng-template pTemplate="body" let-rowData let-columns="columns"
+                                        let-rowIndex="rowIndex">
+                                        <tr [pSelectableRow]="rowData" [pSelectableRowIndex]="rowIndex">
+                                            <td style="width: 40px">
+                                                <button pButton type="button" icon="fa fa-trash"
+                                                    class="p-button-rounded p-button-danger p-mr-2"
+                                                    (click)="removeData2(rowData)" pTooltip="Hapus" label=""></button>
+
+                                            </td>
+                                            <td *ngFor="let column of columns" style="width: {{column.width}}">
+                                                <span class="p-column-title"> {{column.header}} </span>
+                                                {{rowData[column.field]}}
+                                            </td>
+                                        </tr>
+                                    </ng-template>
+                                </p-table>
+                            </div>
+                        </div>
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-1 p-md-offset-10" style="margin-top: 16px;">
+                                <button pButton pRipple type="button" class="p-button-success p-mr-1" label="Simpan"
+                                    icon="pi pi-save" (click)="saveRujuk('jsonResult5')"></button>
+
+                            </div>
+                            <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                <button pButton pRipple type="button" class="p-button-danger p-mr-1" label="Batal"
+                                    icon="pi pi-refresh" (click)="ClearForm()"></button>
+
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                    <code [innerHtml]="jsonResult5"  class="language-json" pCode></code>
+                                </pre>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="Delete Rujukan Khusus">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">ID Rujukan </label>
+                                        <input type="text" [(ngModel)]="item.idRujukan" pInputText
+                                            placeholder="ID Rujukan " />
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">No Rujukan </label>
+                                        <input type="text" [(ngModel)]="item.noRujukan" pInputText
+                                            placeholder="No Rujukan " />
+                                    </div>
+
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1" icon="pi pi-trash"
+                                            (click)="post('Rujukan/Khusus/delete','hapusKhusus', 'jsonResult6')"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                <code [innerHtml]="jsonResult6"  class="language-json" pCode></code>
+                            </pre>
+                            </div>
+                        </div>
+                    </p-accordionTab>
+                    <p-accordionTab header="List Rujukan Khusus">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Bulan</label>
+                                        <p-dropdown [options]="listBulan" [(ngModel)]="item.bulan" [filter]="true"
+                                            [showClear]="true" placeholder="Bulan" optionLabel="name" appendTo="body">
+                                        </p-dropdown>
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Tahun </label>
+                                        <input type="text" [(ngModel)]="item.tahun" pInputText placeholder="Tahun" />
+                                    </div>
+
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search"
+                                            (click)="cari('Rujukan/Khusus/List/Bulan/'+item.bulan.id+'/Tahun/'+item.tahun,'jsonResult7')"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                    <code [innerHtml]="jsonResult7"  class="language-json" pCode></code>
+                                </pre>
+                            </div>
+                        </div>
+
+
+                    </p-accordionTab>
+                    <p-accordionTab header="List Spesialistik Rujukan">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">Tgl Rujukan</label>
+                                        <p-calendar [(ngModel)]="item.tgl" [showIcon]="true" [monthNavigator]="true"
+                                            [yearNavigator]="true" yearRange="1980:2030" [showTime]="false"
+                                            dateFormat="yy-mm-dd" placeholder="yyyy-mm-dd">
+                                        </p-calendar>
+                                    </div>
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">PPK Rujukan </label>
+                                        <input type="text" [(ngModel)]="item.kodePPK" pInputText
+                                            placeholder="PPK Rujukan" />
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search"
+                                            (click)="cari('Rujukan/ListSpesialistik/PPKRujukan/'+item.kodePPK+'/TglRujukan/date~'+item.tgl+'date~','jsonResult8')"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                    <code [innerHtml]="jsonResult8"  class="language-json" pCode></code>
+                                </pre>
+                            </div>
+                        </div>
+
+                    </p-accordionTab>
+                    <p-accordionTab header="List Sarana">
+                        <div class="p-grid">
+                            <div class="p-col-12 p-md-12">
+                                <div class="p-grid">
+
+                                    <div class="p-col-12 p-md-3">
+                                        <label class="label" for="input">PPK Rujukan </label>
+                                        <input type="text" [(ngModel)]="item.kodePPK" pInputText
+                                            placeholder="PPK Rujukan" />
+                                    </div>
+                                    <div class="p-col-12 p-md-1" style="margin-top: 16px;">
+                                        <button pButton type="button" class="p-button-primary p-mr-1"
+                                            icon="pi pi-search"
+                                            (click)="cari('Rujukan/ListSarana/PPKRujukan/'+item.kodePPK,'jsonResult9')"></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="p-col-12 p-md-12">
+                                <pre style="height:300px">
+                                    <code [innerHtml]="jsonResult9"  class="language-json" pCode></code>
+                                </pre>
+                            </div>
+                        </div>
+
+                    </p-accordionTab>
+                </p-accordion>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,31 @@
+
+
+.p-field-checkbox, .p-field-radiobutton {
+    margin-bottom: 0;
+     display: flex;
+     align-items: center;
+ }
+ .order-badge.order-instock {
+    background: #c8e6c9;
+    color: #256029;
+    margin-right: 2px;
+    // background: none;
+    color: black;
+    border-radius: 15px;
+    border: 1px solid;
+    padding: 2px 7px 2px;
+    font-family: inherit;
+    line-height: 1.72em;
+    text-align: center;
+    /* cursor: pointer; */
+    text-decoration: none;
+    background-color: white;
+    display: inline-block;
+    min-width: 78px;
+    vertical-align: middle;
+    margin-top: 5px;
+}
+.p-menubar .p-menuitem.p-menuitem-active > .p-menuitem-link {
+    background: #e9ecef;
+    position: static;
+}

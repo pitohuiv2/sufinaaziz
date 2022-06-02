@@ -1,0 +1,171 @@
+<div class="p-fluid p-formgrid ">
+    <div class="card card-w-title">
+        <h4>SOAP</h4>
+        <div class="p-grid">
+            <div class="p-col-12">
+                <p-panel header="Detail SOAP" [toggleable]="true">
+                    <div class="p-grid">
+                        <div class="p-col-12">
+                            <p-toolbar styleClass="p-mb-4">
+                                <ng-template pTemplate="left">
+                                    <button pButton pRipple label="Tambah" icon="pi pi-plus"
+                                        class="p-button-success p-mr-2" (click)="openNew()"
+                                        pTooltip="Tambah SOAP"></button>
+                                    <!-- <button pButton pRipple [label]="Delete" icon="pi pi-trash" class="p-button-danger"
+                                        (click)="deleteSelectedProducts()"
+                                        [disabled]="!selectedProducts || !selectedProducts.length"></button> -->
+                                </ng-template>
+
+                                <!-- <ng-template pTemplate="right">
+                                    <p-fileUpload mode="basic" accept="image/*" [maxFileSize]="1000000" label="Import"
+                                        chooseLabel="Import" class="p-mr-2 p-d-inline-block"></p-fileUpload>
+                                    <button pButton pRipple label="Export" icon="pi pi-upload"
+                                        class="p-button-help"></button>
+                                </ng-template> -->
+                            </p-toolbar>
+                            <p-table #dt [columns]="columnKonsul" [value]="dataSourceKonsul"
+                                [(selection)]="selectedData" styleClass="p-datatable-customers" [rowHover]="true"
+                                [rows]="20" [showCurrentPageReport]="true" [rowsPerPageOptions]="[5,10,25,50]"
+                                [paginator]="true" scrollable="true" [pageLinks]="5" sortMode="multiple" dataKey="norec"
+                                [globalFilterFields]="['namalengkap','s','o','a','p']" selectionMode="single">
+                                <ng-template pTemplate="caption">
+                                    <div class="table-header p-grid">
+                                        <div class="p-col-12 p-md-3">
+                                            <span class="p-input-icon-left">
+                                                <i class="pi pi-search"></i>
+                                                <input pInputText type="text"
+                                                    (input)="dt.filterGlobal($event.target.value, 'contains')"
+                                                    placeholder="Filter" />
+                                            </span>
+                                        </div>
+                                    </div>
+                                </ng-template>
+                                <ng-template pTemplate="header" let-columns>
+                                    <tr>
+                                        <th style="width: 120px"></th>
+                                        <th *ngFor="let col of columns" pSortableColumn="{{col.field}}"
+                                            style="width: {{col.width}}">
+                                            {{col.header}}
+                                            <p-sortIcon field="{{col.field}}">
+                                            </p-sortIcon>
+                                        </th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-rowData let-columns="columns" let-rowIndex="rowIndex"
+                                    let-expanded="expanded">
+                                    <tr>
+                                        <td style="width: 120px">
+                                            <button type="button" pButton pRipple [pRowToggler]="rowData"
+                                                class="p-button-text p-button-rounded p-button-plain p-mr-2"
+                                                [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"></button>
+                                            <button pButton type="button" icon="pi pi-check-square"
+                                                class="p-button-rounded p-button p-mr-2" pTooltip="Edit Order" label=""
+                                                (click)="edit(rowData)"></button>
+                                            <button pButton type="button" icon="pi pi-trash"
+                                                class="p-button-rounded p-button-danger p-mr-2" pTooltip="Hapus Order"
+                                                label="" (click)="hapusD(rowData)"></button>
+                                        </td>
+                                        <td *ngFor="let col of columns" style="width: {{col.width}}">
+                                            <span *ngIf="col.isCurrency != undefined">
+                                                {{formatRupiah(rowData[col.field],'')}}</span>
+                                            <span *ngIf="col.isCurrency == undefined">
+                                                {{rowData[col.field]}}</span>
+                                        </td>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="rowexpansion" let-product>
+                                    <tr>
+                                        <td colspan="6">
+                                            <div class="p-p-3">
+                                                <p-table [value]="product.details" dataKey="norec">
+                                                    <ng-template pTemplate="header">
+                                    <tr>
+                                        <th>Detail</th>
+                                    </tr>
+                                </ng-template>
+                                <ng-template pTemplate="body" let-order>
+                                    <tr>
+
+                                        <span *ngFor="let itemz of order.details" [class]="'order-badge order-instock'" style=" text-transform: none;">
+                                            {{itemz.isi}}
+                                            <button pButton type="button" class="p-button-rounded p-button-help p-mr-2"
+                                                label="S" *ngIf="itemz.jenis=='s'" style="padding: 0;
+                                                width: 30px;"></button>
+                                            <button pButton type="button" class="p-button-rounded p-button-help p-mr-2"
+                                                label="O" *ngIf="itemz.jenis=='o'" style="padding: 0;
+                                                width: 30px;"></button>
+                                            <button pButton type="button" class="p-button-rounded p-button-help p-mr-2"
+                                                label="A" *ngIf="itemz.jenis=='a'" style="padding: 0;
+                                                width: 30px;;"></button>
+                                            <button pButton type="button" class="p-button-rounded p-button-help p-mr-2"
+                                                label="P" *ngIf="itemz.jenis=='p'" style="padding: 0;
+                                                width: 30px;;"></button>
+                                        </span>
+
+                                    </tr>
+                                </ng-template>
+
+                            </p-table>
+                        </div>
+                        </td>
+                        </tr>
+                        </ng-template>
+                        </p-table>
+
+                    </div>
+
+
+                    <p-confirmDialog [style]="{width: '450px'}"></p-confirmDialog>
+
+            </div>
+            </p-panel>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<p-dialog [(visible)]="pop_Konsul" [style]="{width: '600px'}" header="Detail SOAP" [modal]="true" styleClass="p-fluid">
+    <ng-template pTemplate="content">
+
+        <div class="p-grid">
+            <div class="p-col-12 p-md-1">
+                <label class="label" style="font-size: 30px;">S</label>
+            </div>
+            <div class="p-col-12 p-md-11">
+                <textarea pInputTextarea [(ngModel)]="item.s" placeholder="S" rows="3" cols="20"></textarea>
+            </div>
+        </div>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-1">
+                <label class="label" style="font-size: 30px;">O</label>
+            </div>
+            <div class="p-col-12 p-md-11">
+                <textarea pInputTextarea [(ngModel)]="item.o" placeholder="O" rows="3" cols="20"></textarea>
+            </div>
+        </div>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-1">
+                <label class="label" style="font-size: 30px;">A</label>
+            </div>
+            <div class="p-col-12 p-md-11">
+                <textarea pInputTextarea [(ngModel)]="item.a" placeholder="A" rows="3" cols="20"></textarea>
+            </div>
+        </div>
+        <div class="p-grid">
+            <div class="p-col-12 p-md-1">
+                <label class="label" style="font-size: 30px;">P</label>
+            </div>
+            <div class="p-col-12 p-md-11">
+                <textarea pInputTextarea [(ngModel)]="item.p" placeholder="P" rows="3" cols="20"></textarea>
+            </div>
+        </div>
+
+    </ng-template>
+
+    <ng-template pTemplate="footer">
+
+        <button pButton pRipple label="Simpan" icon="pi pi-save" class="p-button" (click)="save()"></button>
+        <button pButton pRipple label="Batal" icon="pi pi-times" class="p-button-text" (click)="hideDialog()"></button>
+    </ng-template>
+</p-dialog>
