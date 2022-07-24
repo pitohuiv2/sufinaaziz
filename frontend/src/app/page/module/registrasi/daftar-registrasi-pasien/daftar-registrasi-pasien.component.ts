@@ -177,6 +177,7 @@ export class DaftarRegistrasiPasienComponent implements OnInit {
       { field: 'tglpulang', header: 'Tgl Pulang', width: "140px" },
       { field: 'jenispelayanan', header: 'Jenis Pelayanan', width: "140px" },
       { field: 'kelasditanggung', header: 'Kls Ditanggung', width: "180px" },
+      { field: 'keterangan', header: 'Keterangan', width: "180px" },
       { field: 'nosep', header: 'SEP', width: "120px" },
       { field: '', header: 'Diagnosa', width: "140px" },
     ];

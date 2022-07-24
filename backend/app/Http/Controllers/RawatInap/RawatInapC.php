@@ -233,6 +233,7 @@ class RawatInapC extends ApiController
                             'statuspulangidfk' => $r_NewPD['objectstatuspulangfk'],
                             'tglmeninggal' => $r_NewPD['tglmeninggal'],
                             'tglpulang' => $r_NewPD['tglpulang'],
+                            'nosuratketerangan' =>  $r_NewPD['nosuratketerangan'],
                         ]
                     );
             }
@@ -253,6 +254,7 @@ class RawatInapC extends ApiController
                             'tglmeninggal' => $r_NewPD['tglmeninggal'],
                             'tglpulang' => $r_NewPD['tglpulang'],
                             'keteranganpenyebabkematian' => $r_NewPD['keterangankematian'],
+                            'nosuratketerangan' =>  $r_NewPD['nosuratketerangan']
                         ]
                     );
             }
@@ -267,6 +269,8 @@ class RawatInapC extends ApiController
                             'statuskeluaridfk' => $r_NewPD['objectstatuskeluarfk'],
                             'statuspulangidfk' => $r_NewPD['objectstatuspulangfk'],
                             'tglpulang' => $r_NewPD['tglpulang'],
+                            
+                            'nosuratketerangan' =>  $r_NewPD['nosuratketerangan'],
                         ]
                     );
             }

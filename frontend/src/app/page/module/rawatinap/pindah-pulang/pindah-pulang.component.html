@@ -25,13 +25,15 @@
                                         optionLabel="kondisipasien">
                                     </p-dropdown>
                                 </div>
+
                                 <div class="p-col-12 p-md-12" *ngIf="!showPindah">
                                     <label class="label" for="input">Status Pulang </label>
                                     <p-dropdown [options]="listStatusPulang" [(ngModel)]="item.statusPulang"
                                         [filter]="true" [showClear]="true" placeholder="Status Pulang "
-                                        optionLabel="statuspulang">
+                                        optionLabel="statuspulang" (onChange)="NoSurat($event)">
                                     </p-dropdown>
                                 </div>
+
                                 <div class="p-col-12 p-md-12" style="margin-top: 15px;" *ngIf="showPindah">
                                     <p-checkbox [(ngModel)]="item.rawatGabung" binary="true" inputId="item.rawatGabung"
                                         (onChange)="cekRawatGabung(item.rawatGabung)">
@@ -70,6 +72,19 @@
                                         optionLabel="penyebabkematian" (onChange)="IsiPenyebab($event)">
                                     </p-dropdown>
                                 </div>
+                                   <div class="p-col-12 p-md-12" *ngIf="showMeninggal">
+                                    <label class="label" for="input">Nomor Surat Keterangan Meninggal </label>
+                                    <input type="text" [(ngModel)]="item.nosuratketerangan" pInputText
+                                        placeholder="Nomor Surat Keterangan Meninggal " />
+                                </div>
+
+                                  <div class="p-col-12 p-md-12" *ngIf="showMeninggal">
+                                    <label class="label" for="input">Nomor LP Manual </label>
+                                    <input type="text" [(ngModel)]="item.nolpmanual" pInputText
+                                        placeholder="Disi jika SEP nya adalah KLL " />
+                                </div>
+
+
                                 <div class="p-col-12 p-md-12" *ngIf="PenyebabKematianManual">
                                     <label class="label" for="input"> Isi Penyebab </label>
                                     <input type="text" [(ngModel)]="item.PenyebabKematianText" pInputText

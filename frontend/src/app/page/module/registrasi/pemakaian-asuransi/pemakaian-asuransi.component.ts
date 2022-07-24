@@ -179,6 +179,7 @@ export class PemakaianAsuransiComponent implements OnInit {
     this.listBtn = [
       { label: 'Cetak SEP', icon: 'pi pi-print', command: () => { this.cetakSEP(); } },
       { label: 'Hapus SEP', icon: 'pi pi-trash', command: () => { this.hapusSEP(); } },
+
       { label: 'Kembali', icon: 'fa fa-arrow-left', command: () => { this.cancel(); } },
       { separator: true },
       { label: 'Bukti Layanan', icon: 'pi pi-print', command: () => { this.cetakBuktiLayanan(); } },
@@ -199,6 +200,29 @@ export class PemakaianAsuransiComponent implements OnInit {
     this.listAsalRujukan = [{ name: 'P-Care', id: '1' }, { name: 'RS', id: '2' }];
     this.model.cekNomorPeserta = true
   }
+
+
+ // hapusSEP() {
+
+ //    var stt = 'false'
+ //    if (confirm('Yakin akan menghapus SEP? ')) {
+ //      // Save it!
+ //      stt = 'true';
+ //    } else {
+ //      // Do nothing!
+ //      stt = 'false'
+ //    }
+ //    this.hapusSEP();
+ //  }
+
+
+
+
+
+
+
+
+
 
 
   cetakPersetujuanRanap() {
@@ -316,6 +340,14 @@ export class PemakaianAsuransiComponent implements OnInit {
       + "&idRuangan=" + this.item.ruangan.id + "&view=" + stt, function (e) { });
   }
   hapusSEP() {
+    var stt = 'false'
+    if (confirm('Yakin akan menghapus SEP? ')) {
+      // Save it!
+      stt = 'true';
+    } else {
+      // Do nothing!
+      stt = 'false'
+    }
     let json = {
       "url": "SEP/2.0/delete",
       "method": "DELETE",
@@ -330,6 +362,7 @@ export class PemakaianAsuransiComponent implements OnInit {
     }
     this.apiService.postNonMessage("bridging/bpjs/tools", json).subscribe(e => {
       if (e.metaData.code === "200") {
+        // harusnya save riwayat delete di db
         this.alertService.success("Info", e.metaData.message);
         this.model.generateNoSEP = false;
         this.disableSEP = false;

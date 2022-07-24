@@ -97,9 +97,9 @@ export class PindahPulangComponent implements OnInit, AfterViewInit {
         this.listHubunganKel = e.hubungankeluarga;
         this.listPenyebabKematian = e.penyebabkematian;
         this.idPindah = parseInt(e.idPindah)
-        this.idMeninggal == parseInt(e.idStatusKeluarMeninggal)
+        this.idMeninggal = parseInt(e.idStatusKeluarMeninggal)
         this.idKelompokPasienBPJS = parseInt(e.idKelompokPasienBPJS)
-        this.idStatusKeluarPulang == parseInt(e.idStatusKeluarPulang)
+        this.idStatusKeluarPulang = parseInt(e.idStatusKeluarPulang)
 
       })
   }
@@ -111,6 +111,11 @@ export class PindahPulangComponent implements OnInit, AfterViewInit {
       this.PenyebabKematianManual = false;
     }
   }
+
+
+
+
+
   changeStatus(event) {
     if (event.value.id == this.idPindah) {
       this.showPindah = true
@@ -354,6 +359,11 @@ export class PindahPulangComponent implements OnInit, AfterViewInit {
       namaPembawaPulang = this.item.namaPembawaPulang;
     }
 
+    var nosuratketerangan = null;
+    if(this.item.nosuratketerangan != undefined){
+      nosuratketerangan = this.item.nosuratketerangan;
+    }
+
     var strukorder = {
       norecorder: '',
       norecrpp: '',
@@ -376,7 +386,8 @@ export class PindahPulangComponent implements OnInit, AfterViewInit {
       objectstatuskeluarrencanafk: statusKeluarId,
       nocmfk: this.item.pasien.nocmfk,
       keteranganpulang: "Pulang dengan kondisi : " + kondisiKeluar,
-      keterangankematian: PenyebabKematianText
+      keterangankematian: PenyebabKematianText,
+      nosuratketerangan
 
     }
     var antrianpasiendiperiksa = {
@@ -418,7 +429,8 @@ export class PindahPulangComponent implements OnInit, AfterViewInit {
     }
     let noSuratMeninggal = ""
     if (statusPulang == '4') {
-      noSuratMeninggal = this.item.pasien.noregistrasi
+      // noSuratMeninggal = this.item.pasien.noregistrasi
+        noSuratMeninggal = this.item.nosuratketerangan
     }
     var dateGenerate = {
       'data': {

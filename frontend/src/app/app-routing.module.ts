@@ -110,6 +110,15 @@ import { AccessDeniedComponent, DashboardComponent, LoginComponent, NotFoundComp
                     { canActivate: [AuthGuard], path: 'data-profil-rs', loadChildren: () => import('./page/module/sysadmin/data-profil-rs/data-profil-rs.module').then(m => m.DataProfilRsModule) },
                     { canActivate: [AuthGuard], path: 'data-pegawai', loadChildren: () => import('./page/module/sysadmin/data-pegawai/data-pegawai.module').then(m => m.DataPegawaiModule) },
                     { canActivate: [AuthGuard], path: 'rujukan-bpjs', loadChildren: () => import('./page/module/registrasi/rujukan-bpjs/rujukan-bpjs.module').then(m => m.RujukanBpjsModule) },
+                    
+
+                    { canActivate: [AuthGuard], path: 'kontrol-bpjs', loadChildren: () => import('./page/module/registrasi/kontrol-bpjs/rujukan-bpjs.module').then(m => m.RujukanBpjsModule) },
+                    { canActivate: [AuthGuard], path: 'backdate-bpjs', loadChildren: () => import('./page/module/registrasi/backdate-bpjs/rujukan-bpjs.module').then(m => m.RujukanBpjsModule) },
+                   
+                   
+                   
+
+
                     { canActivate: [AuthGuard], path: 'daftar-pasien-deposit-lebih', loadChildren: () => import('./page/module/kasir/daftar-pasien-deposit-lebih/daftar-pasien-deposit-lebih.module').then(m => m.DaftarPasienDepositLebihModule) },
                     { canActivate: [AuthGuard], path: 'laporan-penerimaan-kasir', loadChildren: () => import('./page/module/kasir/laporan-penerimaan-kasir/laporan-penerimaan-kasir.module').then(m => m.LaporanPenerimaanKasirModule) },
                     { canActivate: [AuthGuard], path: 'laporan-sensus-pasien', loadChildren: () => import('./page/module/registrasi/laporan-sensus-pasien/laporan-sensus-pasien.module').then(m => m.LaporanSensusPasienModule) },
